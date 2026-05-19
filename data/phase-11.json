@@ -1,0 +1,557 @@
+{
+  "id": "phase-11",
+  "title": "Phase 11 — Angular Components, Directives, Forms & Services",
+  "questions": [
+    {
+      "topic": "Angular Components",
+      "type": "theory",
+      "question": "Which decorator marks a class as an Angular component?",
+      "options": [
+        "@NgModule",
+        "@Component",
+        "@Injectable",
+        "@Directive"
+      ],
+      "answer": 1,
+      "explanation": "@Component defines selector, template, and styles."
+    },
+    {
+      "topic": "Angular Components",
+      "type": "theory",
+      "question": "What is the purpose of `selector` in @Component?",
+      "options": [
+        "CSS class name only",
+        "Element/tag or attribute used to instantiate the component",
+        "Route path",
+        "Service token"
+      ],
+      "answer": 1,
+      "explanation": "selector determines how the component is placed in templates."
+    },
+    {
+      "topic": "Angular Components",
+      "type": "theory",
+      "question": "Which lifecycle hook runs after every change detection when @Input values change?",
+      "options": [
+        "ngOnInit",
+        "ngOnChanges",
+        "ngAfterViewInit",
+        "ngDoCheck"
+      ],
+      "answer": 1,
+      "explanation": "ngOnChanges receives SimpleChanges when inputs update."
+    },
+    {
+      "topic": "Angular Components",
+      "type": "code",
+      "question": "When is `ngOnInit` called relative to the first `ngOnChanges`?",
+      "options": [
+        "Before first ngOnChanges",
+        "After the first ngOnChanges (if inputs exist)",
+        "Only on destroy",
+        "Never with inputs"
+      ],
+      "answer": 1,
+      "explanation": "ngOnInit runs once after the first ngOnChanges.",
+      "code": "Component with @Input() id: string;"
+    },
+    {
+      "topic": "Angular Lifecycle",
+      "type": "theory",
+      "question": "Which hook is best for cleaning up subscriptions?",
+      "options": [
+        "ngOnInit",
+        "ngOnDestroy",
+        "ngAfterContentChecked",
+        "constructor"
+      ],
+      "answer": 1,
+      "explanation": "ngOnDestroy is the teardown hook."
+    },
+    {
+      "topic": "Angular Lifecycle",
+      "type": "theory",
+      "question": "What does `ngAfterViewInit` indicate?",
+      "options": [
+        "Component class constructed",
+        "Child views and view queries initialized",
+        "All HTTP complete",
+        "Router activated"
+      ],
+      "answer": 1,
+      "explanation": "View children are available after this hook."
+    },
+    {
+      "topic": "Directives",
+      "type": "theory",
+      "question": "What is the difference between a component and a directive?",
+      "options": [
+        "No difference",
+        "Component has a template; directive augments an existing element",
+        "Directive always has styles",
+        "Component cannot use @Input"
+      ],
+      "answer": 1,
+      "explanation": "Components are directives with their own view."
+    },
+    {
+      "topic": "Directives",
+      "type": "code",
+      "question": "What renders with `*ngIf=\"false\"`?",
+      "options": [
+        "Empty <p> in DOM",
+        "No <p> in DOM (removed)",
+        "<p style=\"display:none\">",
+        "Comment node only always"
+      ],
+      "answer": 1,
+      "explanation": "Structural *ngIf removes the template from DOM when false.",
+      "code": "<p *ngIf=\"false\">Hidden</p>"
+    },
+    {
+      "topic": "Directives",
+      "type": "theory",
+      "question": "What does `*ngFor=\"let item of items; trackBy: trackId\"` optimize?",
+      "options": [
+        "Network caching",
+        "DOM reuse by stable identity when list changes",
+        "Change detection disable",
+        "Lazy loading modules"
+      ],
+      "answer": 1,
+      "explanation": "trackBy helps Angular identify which items moved/changed."
+    },
+    {
+      "topic": "Directives",
+      "type": "theory",
+      "question": "Which is structural directive syntax?",
+      "options": [
+        "[ngClass]",
+        "(click)",
+        "*ngIf",
+        "[hidden]"
+      ],
+      "answer": 2,
+      "explanation": "Asterisk prefix denotes structural directives."
+    },
+    {
+      "topic": "@Input / @Output",
+      "type": "theory",
+      "question": "How does a parent pass data to a child?",
+      "options": [
+        "@Output binding",
+        "Property binding to @Input on child",
+        "providers array",
+        "ViewChild only"
+      ],
+      "answer": 1,
+      "explanation": "[prop]=\"value\" binds to child @Input."
+    },
+    {
+      "topic": "@Input / @Output",
+      "type": "theory",
+      "question": "How does a child notify the parent of an event?",
+      "options": [
+        "@Input emitter",
+        "@Output EventEmitter with (event) binding in parent",
+        "HttpClient",
+        "ngOnChanges"
+      ],
+      "answer": 1,
+      "explanation": "Child emits via EventEmitter; parent listens with (output)=\"handler()\"."
+    },
+    {
+      "topic": "@Input / @Output",
+      "type": "code",
+      "question": "Parent template: `<child [count]=\"n\" (changed)=\"onChange($event)\">`. Child has @Output() changed. What is $event?",
+      "options": [
+        "The child component instance",
+        "Payload passed to emit()",
+        "Always undefined",
+        "MouseEvent"
+      ],
+      "answer": 1,
+      "explanation": "$event in the parent is the value emitted by the child.",
+      "code": "@Output() changed = new EventEmitter<number>();"
+    },
+    {
+      "topic": "@Input / @Output",
+      "type": "theory",
+      "question": "What does `@Input() required: boolean` with `required: true` in Angular 16+ enforce?",
+      "options": [
+        "Runtime throw if missing",
+        "Compile-time check that parent must bind the input",
+        "Automatic two-way binding",
+        "Default value injection"
+      ],
+      "answer": 1,
+      "explanation": "Required inputs are validated at compile time in strict templates."
+    },
+    {
+      "topic": "Template-driven Forms",
+      "type": "theory",
+      "question": "Which module provides ngModel?",
+      "options": [
+        "ReactiveFormsModule",
+        "FormsModule",
+        "HttpClientModule",
+        "CommonModule only"
+      ],
+      "answer": 1,
+      "explanation": "FormsModule exports NgModel for template-driven forms."
+    },
+    {
+      "topic": "Template-driven Forms",
+      "type": "theory",
+      "question": "What does `[(ngModel)]=\"name\"` implement?",
+      "options": [
+        "One-way to view only",
+        "Banana in a box: property + event two-way binding",
+        "Async pipe",
+        "FormGroup binding"
+      ],
+      "answer": 1,
+      "explanation": "[(ngModel)] combines [ngModel] and (ngModelChange)."
+    },
+    {
+      "topic": "Template-driven Forms",
+      "type": "theory",
+      "question": "How do you show validation errors for a template-driven control?",
+      "options": [
+        "form.invalid only",
+        "#ref=\"ngModel\" and ref.invalid after submit/touch",
+        "@Output from input",
+        "Reactive validators only"
+      ],
+      "answer": 1,
+      "explanation": "Export ngModel to a template ref to read errors."
+    },
+    {
+      "topic": "Reactive Forms",
+      "type": "theory",
+      "question": "Which class builds a typed group of controls in code?",
+      "options": [
+        "FormControl only",
+        "FormBuilder.group / FormGroup",
+        "NgForm",
+        "HttpParams"
+      ],
+      "answer": 1,
+      "explanation": "FormBuilder simplifies creating FormGroup hierarchies."
+    },
+    {
+      "topic": "Reactive Forms",
+      "type": "code",
+      "question": "Which is valid reactive setup?",
+      "options": [
+        "Template-driven only",
+        "Requires FormsModule not ReactiveFormsModule",
+        "Needs ReactiveFormsModule imported",
+        "Uses @Input on FormControl"
+      ],
+      "answer": 2,
+      "explanation": "ReactiveFormsModule provides form directives for [formGroup].",
+      "code": "this.form = this.fb.group({ email: ['', Validators.required] });\n// In component with FormBuilder injected"
+    },
+    {
+      "topic": "Reactive Forms",
+      "type": "theory",
+      "question": "What does `formControlName=\"email\"` require on the ancestor?",
+      "options": [
+        "ngModel",
+        "[formGroup] binding to a FormGroup",
+        "routerLink",
+        "*ngIf"
+      ],
+      "answer": 1,
+      "explanation": "formControlName links to a named control inside parent FormGroup."
+    },
+    {
+      "topic": "Reactive Forms",
+      "type": "theory",
+      "question": "How do you subscribe to value changes on a FormControl?",
+      "options": [
+        "control.click()",
+        "control.valueChanges",
+        "NgZone.onStable",
+        "@Output only"
+      ],
+      "answer": 1,
+      "explanation": "valueChanges is an Observable emitting new values."
+    },
+    {
+      "topic": "Services & DI",
+      "type": "theory",
+      "question": "Which decorator marks a class injectable by Angular DI?",
+      "options": [
+        "@Component",
+        "@Injectable",
+        "@NgModule",
+        "@Inject"
+      ],
+      "answer": 1,
+      "explanation": "@Injectable registers the class with the injector."
+    },
+    {
+      "topic": "Services & DI",
+      "type": "theory",
+      "question": "Where should app-wide singleton services be provided in standalone-era best practice?",
+      "options": [
+        "In every component",
+        "root injector via providedIn: 'root'",
+        "Only in AppModule imports",
+        "BrowserModule"
+      ],
+      "answer": 1,
+      "explanation": "providedIn: 'root' registers a tree-shakable singleton."
+    },
+    {
+      "topic": "Services & DI",
+      "type": "theory",
+      "question": "What does `inject(MyService)` do in a functional context (Angular 14+)?",
+      "options": [
+        "Creates a new instance always",
+        "Retrieves dependency from current injection context",
+        "Mocks the service",
+        "Registers a pipe"
+      ],
+      "answer": 1,
+      "explanation": "inject() resolves tokens during construction/injection context."
+    },
+    {
+      "topic": "Services & DI",
+      "type": "theory",
+      "question": "If ServiceA depends on ServiceB, who creates ServiceB?",
+      "options": [
+        "Developer must call new ServiceB()",
+        "Angular injector when A is requested",
+        "HttpClient",
+        "Router"
+      ],
+      "answer": 1,
+      "explanation": "DI container resolves the dependency graph."
+    },
+    {
+      "topic": "Pipes",
+      "type": "theory",
+      "question": "What does the `date` pipe do?",
+      "options": [
+        "Parses JSON dates",
+        "Formats a date value per locale/format string",
+        "Converts to UTC timestamp",
+        "Validates date input"
+      ],
+      "answer": 1,
+      "explanation": "Built-in date pipe formats Date/string/number per pattern."
+    },
+    {
+      "topic": "Pipes",
+      "type": "theory",
+      "question": "Pure pipes in Angular are called when?",
+      "options": [
+        "Every mouse move",
+        "When input reference changes or host change detection runs (pure default)",
+        "Only manually",
+        "On route change only"
+      ],
+      "answer": 1,
+      "explanation": "Pure pipes memoize until input reference changes."
+    },
+    {
+      "topic": "Pipes",
+      "type": "theory",
+      "question": "How do you declare a custom pipe?",
+      "options": [
+        "@Injectable class Pipe",
+        "@Pipe({ name: 'myPipe' }) class implementing PipeTransform",
+        "@Directive only",
+        "@Component with pipe: true"
+      ],
+      "answer": 1,
+      "explanation": "Custom pipes use @Pipe and implement transform()."
+    },
+    {
+      "topic": "Pipes",
+      "type": "code",
+      "question": "Template: `{{ price | currency:'USD' }}`. What appears (en-US)?",
+      "options": [
+        "12.5",
+        "$12.50",
+        "USD 12.5",
+        "12,50 USD"
+      ],
+      "answer": 1,
+      "explanation": "currency pipe formats with symbol and decimals per locale.",
+      "code": "price = 12.5"
+    },
+    {
+      "topic": "Angular Components",
+      "type": "theory",
+      "question": "What is `encapsulation: ViewEncapsulation.Emulated` default behavior?",
+      "options": [
+        "Global styles only",
+        "Adds unique attributes to scope component CSS",
+        "Disables all styles",
+        "Shadow DOM mandatory"
+      ],
+      "answer": 1,
+      "explanation": "Emulated encapsulation scopes styles via _ngcontent attributes."
+    },
+    {
+      "topic": "Directives",
+      "type": "theory",
+      "question": "What does `[ngClass]=\"{ active: isActive }\"` do?",
+      "options": [
+        "Adds static class active",
+        "Toggles class active based on isActive",
+        "Replaces all classes",
+        "Binds style color"
+      ],
+      "answer": 1,
+      "explanation": "Object syntax applies keys when values are truthy."
+    },
+    {
+      "topic": "Directives",
+      "type": "theory",
+      "question": "Attribute directive `[hidden]` differs from `*ngIf` because?",
+      "options": [
+        "hidden removes from DOM",
+        "hidden toggles display but element stays in DOM",
+        "ngIf is attribute only",
+        "They are identical"
+      ],
+      "answer": 1,
+      "explanation": "hidden uses CSS; *ngIf controls template presence."
+    },
+    {
+      "topic": "Template-driven Forms",
+      "type": "theory",
+      "question": "What does `ngForm` represent?",
+      "options": [
+        "Reactive FormGroup",
+        "Top-level form directive with aggregate state",
+        "Router form",
+        "HTTP form encoder"
+      ],
+      "answer": 1,
+      "explanation": "NgForm directive tracks controls registered via ngModel."
+    },
+    {
+      "topic": "Reactive Forms",
+      "type": "theory",
+      "question": "What is `FormArray` used for?",
+      "options": [
+        "Single checkbox",
+        "Dynamic list of controls (e.g., repeating inputs)",
+        "Route parameters",
+        "HTTP headers"
+      ],
+      "answer": 1,
+      "explanation": "FormArray holds an ordered list of AbstractControls."
+    },
+    {
+      "topic": "@Input / @Output",
+      "type": "theory",
+      "question": "Can you rename an @Input for the template API?",
+      "options": [
+        "No",
+        "Yes with @Input('alias')",
+        "Only in modules",
+        "Only for outputs"
+      ],
+      "answer": 1,
+      "explanation": "@Input('alias') exposes a different public property name."
+    },
+    {
+      "topic": "Angular Lifecycle",
+      "type": "theory",
+      "question": "Which hook runs on every change detection cycle?",
+      "options": [
+        "ngOnInit",
+        "ngDoCheck",
+        "ngOnDestroy",
+        "constructor only"
+      ],
+      "answer": 1,
+      "explanation": "ngDoCheck fires during every CD run; use carefully for performance."
+    },
+    {
+      "topic": "Services & DI",
+      "type": "theory",
+      "question": "What is a common pitfall with services provided in a component?",
+      "options": [
+        "Cannot inject HttpClient",
+        "New instance per component instance (not singleton)",
+        "Breaks routing",
+        "Disables pipes"
+      ],
+      "answer": 1,
+      "explanation": "Component providers create a child injector with new service per component."
+    },
+    {
+      "topic": "Angular Components",
+      "type": "theory",
+      "question": "What does `standalone: true` on a component imply?",
+      "options": [
+        "Cannot import anything",
+        "Component can be bootstrapped/imported without declaring in NgModule",
+        "No DI",
+        "No templates"
+      ],
+      "answer": 1,
+      "explanation": "Standalone components declare their own imports."
+    },
+    {
+      "topic": "Reactive Forms",
+      "type": "theory",
+      "question": "How do you mark all controls touched to show errors?",
+      "options": [
+        "form.reset()",
+        "form.markAllAsTouched()",
+        "NgForm.submit()",
+        "Validators.compose"
+      ],
+      "answer": 1,
+      "explanation": "markAllAsTouched propagates touched state."
+    },
+    {
+      "topic": "Pipes",
+      "type": "theory",
+      "question": "Impure pipe `pure: false` is useful when?",
+      "options": [
+        "Never; always avoid",
+        "Transform depends on mutable state not passed as argument",
+        "HTTP caching",
+        "Routing guards"
+      ],
+      "answer": 1,
+      "explanation": "Impure pipes run every CD cycle—use sparingly."
+    },
+    {
+      "topic": "Directives",
+      "type": "theory",
+      "question": "Microsyntax `*ngFor=\"let x of list\"` desugars to?",
+      "options": [
+        "Property binding only",
+        "<ng-template ngFor let-x [ngForOf]=\"list\">",
+        "JavaScript for loop",
+        "Structural style binding"
+      ],
+      "answer": 1,
+      "explanation": "Asterisk wraps content in ng-template with directive instance."
+    },
+    {
+      "topic": "Template-driven Forms",
+      "type": "theory",
+      "question": "Difference between `novalidate` on form and Angular validators?",
+      "options": [
+        "Same thing",
+        "novalidate disables native browser UI; Angular validators still run",
+        "Disables Angular validators",
+        "Enables HTML4 only"
+      ],
+      "answer": 1,
+      "explanation": "novalidate stops browser popup; Angular handles validation separately."
+    }
+  ]
+}

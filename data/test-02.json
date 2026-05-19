@@ -1,0 +1,915 @@
+{
+  "id": "test-02",
+  "title": "Comprehensive Test 2 — Intermediate to Advanced",
+  "toughness": "Intermediate to Advanced — Medium & Hard only",
+  "durationMinutes": 60,
+  "questions": [
+    {
+      "category": "core-java",
+      "topic": "Collections",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "[1, 2]",
+        "[2, 1]",
+        "[1]",
+        "UnsupportedOperationException at runtime"
+      ],
+      "answer": 0,
+      "explanation": "List.of creates an immutable list. stream().filter keeps 1 and 2; order is preserved.",
+      "code": "import java.util.*;\npublic class T {\n  public static void main(String[] a) {\n    var list = List.of(1, 2, 3);\n    System.out.println(list.stream().filter(n -> n < 3).toList());\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "OOP",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which statement about Java interfaces since Java 8 is correct?",
+      "options": [
+        "Interfaces cannot have static methods",
+        "Default methods allow adding methods without breaking implementers",
+        "All interface methods are automatically synchronized",
+        "Interfaces can extend only one class"
+      ],
+      "answer": 1,
+      "explanation": "Default and static methods in interfaces enable API evolution. Interfaces extend other interfaces, not classes."
+    },
+    {
+      "category": "core-java",
+      "topic": "Exceptions",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What happens when this runs?",
+      "options": [
+        "Prints finally then rethrows ArithmeticException",
+        "Prints caught then finally",
+        "Prints only caught",
+        "Compilation error"
+      ],
+      "answer": 1,
+      "explanation": "The catch runs for ArithmeticException, then finally always runs before the exception propagates.",
+      "code": "public class T {\n  public static void main(String[] a) {\n    try {\n      int x = 1 / 0;\n    } catch (ArithmeticException e) {\n      System.out.print(\"caught \");\n    } finally {\n      System.out.print(\"finally\");\n    }\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Generics",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Why is List<Object> not a supertype of List<String> in Java generics?",
+      "options": [
+        "Because String is final",
+        "To preserve type safety at compile time (invariance)",
+        "Because Object is abstract",
+        "Only arrays behave that way, not lists"
+      ],
+      "answer": 1,
+      "explanation": "Generics are invariant: you cannot assign List<String> to List<Object> without unsafe casts."
+    },
+    {
+      "category": "core-java",
+      "topic": "Streams",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "3",
+        "6",
+        "Optional[3]",
+        "Compile error"
+      ],
+      "answer": 0,
+      "explanation": "reduce without identity returns OptionalInt; orElse(0) yields 3 for sum 1+2.",
+      "code": "import java.util.*;\npublic class T {\n  public static void main(String[] a) {\n    System.out.println(Arrays.asList(1, 2).stream().mapToInt(x -> x).reduce((x, y) -> x + y).orElse(0));\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Concurrency",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "How many lines can print \"done\" (best answer)?",
+      "options": [
+        "Exactly once",
+        "At most once",
+        "Exactly twice",
+        "Unbounded — race on unsynchronized check"
+      ],
+      "answer": 3,
+      "explanation": "Double-checked locking without volatile or proper publication can see stale values; also two threads may both pass if not synchronized — classic broken pattern without volatile.",
+      "code": "class T {\n  static boolean ready;\n  public static void main(String[] a) {\n    new Thread(() -> { if (ready) System.out.println(\"done\"); }).start();\n    ready = true;\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "JVM",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Which GC concern is most associated with frequent promotion of short-lived objects to the old generation?",
+      "options": [
+        "Metaspace exhaustion only",
+        "Increased full GC pauses due to old-gen filling",
+        "Stack overflow",
+        "Classloader leaks in PermGen on Java 8 only"
+      ],
+      "answer": 1,
+      "explanation": "Premature tenuring increases old-gen occupancy and can trigger costly full collections."
+    },
+    {
+      "category": "core-java",
+      "topic": "Records",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "What does the compiler synthesize for a public record R(int x)?",
+      "options": [
+        "Only a private constructor",
+        "Canonical constructor, accessors, equals, hashCode, toString",
+        "Mutable setters for each component",
+        "Automatic JPA @Entity mapping"
+      ],
+      "answer": 1,
+      "explanation": "Records are transparent carriers: canonical ctor, component accessors, and Object methods are generated."
+    },
+    {
+      "category": "core-java",
+      "topic": "Modules",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "A class in module A uses com.example.internal.Util from module B where Util is in a non-exported package. What is required?",
+      "options": [
+        "Nothing if both are on the classpath",
+        "B must export the package or use opens to A",
+        "Rename Util to public",
+        "Disable the module path"
+      ],
+      "answer": 1,
+      "explanation": "JPMS requires explicit exports (or qualified exports/opens) for cross-module access to non-exported packages."
+    },
+    {
+      "category": "core-java",
+      "topic": "Memory Model",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "What does volatile guarantee for a field?",
+      "options": [
+        "Atomic read-modify-write for i++",
+        "Visibility and ordering of reads/writes; not compound atomicity",
+        "Locks the entire object",
+        "Makes all fields of the class volatile"
+      ],
+      "answer": 1,
+      "explanation": "volatile ensures happens-before visibility; it does not make increment atomic."
+    },
+    {
+      "category": "dbms",
+      "topic": "SQL Joins",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "Tables: Emp(id,name,dept_id), Dept(id,name). How many rows does this return if Emp has 3 rows (two share dept_id=1, one has dept_id NULL) and Dept has 2 rows?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "2"
+      ],
+      "answer": 1,
+      "explanation": "LEFT JOIN keeps all Emp rows; NULL dept_id still produces one row with NULL dept columns → 3 emp rows matched/NULL-padded.",
+      "code": "SELECT e.name, d.name FROM Emp e LEFT JOIN Dept d ON e.dept_id = d.id;"
+    },
+    {
+      "category": "dbms",
+      "topic": "Normalization",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "A relation has FDs: A→B, B→C, and key A. Highest normal form achieved?",
+      "options": [
+        "1NF",
+        "2NF",
+        "3NF",
+        "BCNF"
+      ],
+      "answer": 2,
+      "explanation": "No transitive dependency B→C on non-key (key is A) — satisfies 3NF; B is not a key so BCNF may fail if B→C with B not superkey."
+    },
+    {
+      "category": "dbms",
+      "topic": "Indexing",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "When is a non-clustered index on (last_name, first_name) most helpful?",
+      "options": [
+        "Updates only primary key",
+        "Queries filter/sort by last_name and optionally first_name",
+        "Full table scans on numeric id",
+        "Deleting all rows"
+      ],
+      "answer": 1,
+      "explanation": "Composite B-tree indexes support prefix searches on leading columns and ordered retrieval."
+    },
+    {
+      "category": "dbms",
+      "topic": "Transactions",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Under READ COMMITTED, which phenomenon can still occur?",
+      "options": [
+        "Dirty read",
+        "Non-repeatable read",
+        "Neither dirty nor non-repeatable",
+        "Phantom-free always"
+      ],
+      "answer": 1,
+      "explanation": "READ COMMITTED prevents dirty reads; another transaction's commit can change rows you read again (non-repeatable read)."
+    },
+    {
+      "category": "dbms",
+      "topic": "SQL",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What does this return (single scalar subquery)?",
+      "options": [
+        "Highest salary value",
+        "Employee name with max salary",
+        "Compile/ syntax error in standard SQL",
+        "Two rows"
+      ],
+      "answer": 0,
+      "explanation": "Scalar subquery returns one value — MAX(salary). Name would need different query (e.g., ORDER BY LIMIT or window).",
+      "code": "SELECT (SELECT MAX(salary) FROM employees);"
+    },
+    {
+      "category": "dbms",
+      "topic": "Window Functions",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "Employees: (Alice,100), (Bob,100), (Cara,90). What does RANK() OVER (ORDER BY salary DESC) assign to Alice and Bob?",
+      "options": [
+        "Both 1",
+        "Alice 1, Bob 2",
+        "Both 2",
+        "Alice 1, Bob 1 with next rank 3"
+      ],
+      "answer": 3,
+      "explanation": "RANK leaves gaps after ties: two rank-1 rows, next rank is 3."
+    },
+    {
+      "category": "dbms",
+      "topic": "Isolation",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Which isolation level prevents phantoms in standard SQL semantics (with proper locking)?",
+      "options": [
+        "READ UNCOMMITTED",
+        "READ COMMITTED",
+        "REPEATABLE READ (in some DBs with gap locks)",
+        "Depends on engine; SERIALIZABLE prevents phantoms"
+      ],
+      "answer": 3,
+      "explanation": "SERIALIZABLE prevents phantoms; in MySQL InnoDB REPEATABLE READ often uses gap locks — answer emphasizes SERIALIZABLE as safe default."
+    },
+    {
+      "category": "dbms",
+      "topic": "Execution Plans",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Nested loop join is typically preferred when:",
+      "options": [
+        "Both inputs are huge unsorted heaps",
+        "Outer is small and inner is indexed on join key",
+        "No indexes exist",
+        "Only CROSS JOIN is legal"
+      ],
+      "answer": 1,
+      "explanation": "Indexed nested loop: few outer rows, cheap index lookups on inner."
+    },
+    {
+      "category": "dbms",
+      "topic": "Deadlock",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Transaction T1: UPDATE A then B. T2: UPDATE B then A. Both use row locks. Likely outcome?",
+      "options": [
+        "Both always succeed",
+        "Deadlock detected; one transaction aborted",
+        "Dirty read",
+        "Immediate cluster shutdown"
+      ],
+      "answer": 1,
+      "explanation": "Circular wait on rows A and B is classic deadlock; DBMS picks a victim."
+    },
+    {
+      "category": "dbms",
+      "topic": "Stored Procedures",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Main advantage of parameterized queries over dynamic SQL string concatenation in procedures?",
+      "options": [
+        "Faster network",
+        "Prevents SQL injection and aids plan reuse",
+        "Eliminates need for indexes",
+        "Removes transactions"
+      ],
+      "answer": 1,
+      "explanation": "Bind parameters separate logic from data, mitigating injection and enabling plan cache reuse."
+    },
+    {
+      "category": "backend",
+      "topic": "Spring DI",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Why is constructor injection preferred over field injection in Spring?",
+      "options": [
+        "Fields are faster",
+        "Dependencies are explicit, immutable, and easier to unit test",
+        "Constructor injection disables @Autowired",
+        "Field injection is required for prototypes"
+      ],
+      "answer": 1,
+      "explanation": "Constructor injection makes required dependencies clear and supports final fields."
+    },
+    {
+      "category": "backend",
+      "topic": "REST",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which HTTP status best fits successful creation of a resource with a Location header?",
+      "options": [
+        "200 OK",
+        "201 Created",
+        "204 No Content",
+        "302 Found"
+      ],
+      "answer": 1,
+      "explanation": "201 Created indicates a new resource; Location identifies its URI."
+    },
+    {
+      "category": "backend",
+      "topic": "JPA",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "What does CascadeType.PERSIST on a parent→child association imply?",
+      "options": [
+        "Deleting parent deletes children automatically",
+        "persist() on parent cascades persist to new children",
+        "Merges always cascade remove",
+        "Lazy loading is disabled"
+      ],
+      "answer": 1,
+      "explanation": "PERSIST cascade propagates entityManager.persist from parent to associated children."
+    },
+    {
+      "category": "backend",
+      "topic": "Spring Boot",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "Where should externalized config for prod profile live by convention?",
+      "options": [
+        "src/main/java/application.properties only",
+        "application-prod.yml on classpath or env-specific config server",
+        "pom.xml",
+        "MANIFEST.MF"
+      ],
+      "answer": 1,
+      "explanation": "Profile-specific files (application-prod.yml) or config server supply environment overrides."
+    },
+    {
+      "category": "backend",
+      "topic": "Testing",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "@WebMvcTest slices which layer primarily?",
+      "options": [
+        "Full database integration",
+        "Controller layer with mocked collaborators",
+        "Only repositories",
+        "Docker containers"
+      ],
+      "answer": 1,
+      "explanation": "@WebMvcTest loads MVC controllers and mocks other beans — fast controller tests."
+    },
+    {
+      "category": "backend",
+      "topic": "Transactions",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "@Transactional(readOnly = true) on a service method primarily hints:",
+      "options": [
+        "No SQLException possible",
+        "Optimization: no flush of dirty state; some DBs route to replicas",
+        "Automatic rollback on any RuntimeException always disabled",
+        "Entity becomes detached immediately"
+      ],
+      "answer": 1,
+      "explanation": "readOnly skips unnecessary dirty checks/flushes and can enable read-replica routing."
+    },
+    {
+      "category": "backend",
+      "topic": "Hibernate",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "N+1 select problem in ORM is best mitigated by:",
+      "options": [
+        "EAGER fetch everywhere",
+        "JOIN FETCH / @EntityGraph / batch fetching for needed associations",
+        "Disabling SQL logging",
+        "Using Serializable isolation"
+      ],
+      "answer": 1,
+      "explanation": "Targeted fetch joins or batch size reduce per-entity lazy queries."
+    },
+    {
+      "category": "backend",
+      "topic": "Security",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "In Spring Security filter chain, where does UsernamePasswordAuthenticationFilter sit relative to authorization?",
+      "options": [
+        "After authorization always",
+        "Before SecurityContext is populated for authenticated requests",
+        "Only in @Controller",
+        "Replaces DispatcherServlet"
+      ],
+      "answer": 1,
+      "explanation": "Authentication filters run early to populate SecurityContext before authorization decisions."
+    },
+    {
+      "category": "backend",
+      "topic": "Validation",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "@Valid on a @RequestBody DTO fails validation. Default Spring MVC response without @ControllerAdvice?",
+      "options": [
+        "200 with empty body",
+        "400 Bad Request (MethodArgumentNotValidException) when configured",
+        "500 always",
+        "302 redirect"
+      ],
+      "answer": 1,
+      "explanation": "Binding/validation errors typically yield 400 unless customized via exception handler."
+    },
+    {
+      "category": "backend",
+      "topic": "Caching",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "@Cacheable unless condition prevents caching when:",
+      "options": [
+        "Method returns null always",
+        "SpEL condition evaluates false for that invocation",
+        "Method is private",
+        "Bean is prototype"
+      ],
+      "answer": 1,
+      "explanation": "unless/unless SpEL guards which results enter the cache."
+    },
+    {
+      "category": "docker",
+      "topic": "Images",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "What does a Docker image layer represent?",
+      "options": [
+        "A running process",
+        "Filesystem diff applied on top of previous layers",
+        "A Kubernetes pod",
+        "A volume mount only"
+      ],
+      "answer": 1,
+      "explanation": "Images are layered FS diffs; containers add a writable layer on top."
+    },
+    {
+      "category": "docker",
+      "topic": "CLI",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "Which command removes stopped containers, unused networks, dangling images, and build cache (interactive)?",
+      "options": [
+        "docker rm -f",
+        "docker system prune",
+        "docker kill all",
+        "docker compose down --volumes always"
+      ],
+      "answer": 1,
+      "explanation": "docker system prune cleans unused Docker objects; add -a for unused images."
+    },
+    {
+      "category": "docker",
+      "topic": "Compose",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "In docker-compose.yml, depends_on ensures:",
+      "options": [
+        "Service B is healthy before A starts (without healthcheck condition)",
+        "Start order only; not application readiness by default",
+        "Automatic load balancing",
+        "TLS termination"
+      ],
+      "answer": 1,
+      "explanation": "depends_on orders container start; health-aware waits need depends_on with condition or wait scripts."
+    },
+    {
+      "category": "docker",
+      "topic": "Volumes",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Bind mount vs named volume: which persists data managed by Docker and is portable across hosts (with driver)?",
+      "options": [
+        "Bind mount to host path only",
+        "Named volume",
+        "tmpfs",
+        "COPY in Dockerfile"
+      ],
+      "answer": 1,
+      "explanation": "Named volumes are managed under Docker storage drivers; bind mounts tie to host paths."
+    },
+    {
+      "category": "docker",
+      "topic": "Networking",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Two containers on the same user-defined bridge network can communicate by:",
+      "options": [
+        "Only localhost:8080 on host",
+        "Container name DNS on the overlay/bridge network",
+        "Must use --link (deprecated)",
+        "Only with host network mode"
+      ],
+      "answer": 1,
+      "explanation": "Embedded DNS resolves service/container names to IPs on custom bridge networks."
+    },
+    {
+      "category": "docker",
+      "topic": "Dockerfile",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Why combine RUN apt-get update && apt-get install in one Dockerfile RUN line?",
+      "options": [
+        "Required by Kubernetes",
+        "Reduces layer count and avoids stale apt cache in intermediate layers",
+        "Makes image non-root",
+        "Enables multi-arch only"
+      ],
+      "answer": 1,
+      "explanation": "Each RUN is a layer; combining commands avoids large intermediate layers with outdated indexes."
+    },
+    {
+      "category": "docker",
+      "topic": "Security",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Running a container with --user 1000:1000 primarily:",
+      "options": [
+        "Disables networking",
+        "Avoids processes running as root inside the container",
+        "Grants CAP_SYS_ADMIN",
+        "Mounts /etc/shadow"
+      ],
+      "answer": 1,
+      "explanation": "Non-root UID/GID limits impact if the container is compromised."
+    },
+    {
+      "category": "docker",
+      "topic": "Resources",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "docker run --memory=512m limits:",
+      "options": [
+        "Host RAM forever globally",
+        "Container cgroup memory limit; OOM kill may occur inside container",
+        "Java heap automatically",
+        "Disk I/O only"
+      ],
+      "answer": 1,
+      "explanation": "cgroups enforce memory ceiling per container; JVM must still be tuned separately."
+    },
+    {
+      "category": "docker",
+      "topic": "Multi-stage",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Multi-stage build benefit for Java apps?",
+      "options": [
+        "More layers always",
+        "Build with JDK in one stage, copy JAR to slim JRE runtime image",
+        "Eliminates need for jar",
+        "Runs tests in production image automatically"
+      ],
+      "answer": 1,
+      "explanation": "Builder stage compiles; final stage ships minimal runtime artifact."
+    },
+    {
+      "category": "docker",
+      "topic": "Compose",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "docker compose up -d --scale api=3 behind one published port without Swarm requires:",
+      "options": [
+        "Nothing; default publish load-balances",
+        "Reverse proxy or routing mesh; host port bind conflicts on multiple containers",
+        "Only host network",
+        "Kubernetes"
+      ],
+      "answer": 1,
+      "explanation": "Publishing same host port for scaled services conflicts; use proxy or don't publish per replica."
+    },
+    {
+      "category": "angular",
+      "topic": "Change Detection",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Default change detection strategy in Angular components is:",
+      "options": [
+        "OnPush only",
+        "CheckAlways (default)",
+        "Manual only",
+        "Zone-less always"
+      ],
+      "answer": 1,
+      "explanation": "Default is CheckAlways unless changeDetection: OnPush is set."
+    },
+    {
+      "category": "angular",
+      "topic": "Routing",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "What does Router navigate with { relativeTo: activatedRoute } enable?",
+      "options": [
+        "Absolute URLs only",
+        "Relative navigation from current route",
+        "Bypassing guards",
+        "SSR only"
+      ],
+      "answer": 1,
+      "explanation": "relativeTo anchors child/sibling routes relative to current ActivatedRoute."
+    },
+    {
+      "category": "angular",
+      "topic": "Forms",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Reactive form control value is disabled. submitted value on form.value?",
+      "options": [
+        "Includes disabled control",
+        "Excludes disabled control by default in form.value",
+        "Throws error",
+        "Resets to null"
+      ],
+      "answer": 1,
+      "explanation": "form.value omits disabled controls; getRawValue() includes them."
+    },
+    {
+      "category": "angular",
+      "topic": "HTTP",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "HttpClient interceptors are useful for:",
+      "options": [
+        "Replacing TypeScript compiler",
+        "Attaching auth headers and central error handling",
+        "Defining CSS themes",
+        "Generating components"
+      ],
+      "answer": 1,
+      "explanation": "Interceptors chain requests/responses for cross-cutting concerns."
+    },
+    {
+      "category": "angular",
+      "topic": "Dependency Injection",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "providedIn: 'root' on an injectable means:",
+      "options": [
+        "New instance per component always",
+        "Singleton in root injector for app lifetime",
+        "Only available in one module",
+        "Provided only in tests"
+      ],
+      "answer": 1,
+      "explanation": "Tree-shakable root singleton unless overridden in a component/provider."
+    },
+    {
+      "category": "angular",
+      "topic": "RxJS",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "What is emitted?",
+      "options": [
+        "1 then complete",
+        "1, 2 then complete",
+        "Only 2",
+        "Infinite 1s"
+      ],
+      "answer": 0,
+      "explanation": "of(1).pipe(concatMap(() => of(1))) emits 1 once then completes; concatMap subscribes to inner sequentially.",
+      "code": "import { of, concatMap } from 'rxjs';\nof(1).pipe(concatMap(() => of(1))).subscribe(console.log);"
+    },
+    {
+      "category": "angular",
+      "topic": "Signals",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "computed(() => expr) signal differs from effect(() => expr) because:",
+      "options": [
+        "computed is async only",
+        "computed derives cached value; effect runs side effects",
+        "effect returns a Signal",
+        "They are identical"
+      ],
+      "answer": 1,
+      "explanation": "computed is pure derivation; effect schedules side effects when dependencies change."
+    },
+    {
+      "category": "angular",
+      "topic": "Performance",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "OnPush component updates when:",
+      "options": [
+        "Never",
+        "Input reference changes, events from template, async pipe emission, markForCheck",
+        "Only zone runs globally",
+        "Only @Output fires"
+      ],
+      "answer": 1,
+      "explanation": "OnPush checks on new inputs, DOM events, observables via async pipe, or explicit markForCheck."
+    },
+    {
+      "category": "angular",
+      "topic": "Guards",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "CanActivate returns UrlTree. What happens?",
+      "options": [
+        "Guard ignored",
+        "Router cancels navigation and redirects per UrlTree",
+        "Component still loads",
+        "HttpClient retries"
+      ],
+      "answer": 1,
+      "explanation": "UrlTree redirect is the modern pattern for conditional navigation denial."
+    },
+    {
+      "category": "angular",
+      "topic": "Standalone",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Standalone component imports array replaces need for:",
+      "options": [
+        "NgModule declaring that component in many cases",
+        "TypeScript",
+        "package.json",
+        "zone.js"
+      ],
+      "answer": 0,
+      "explanation": "Standalone components import dependencies directly, reducing NgModule ceremony."
+    },
+    {
+      "category": "software-development",
+      "topic": "Git",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "git rebase main on a feature branch rewrites commits to:",
+      "options": [
+        "Delete main",
+        "Replay feature commits on top of latest main tip",
+        "Merge main with merge commit only",
+        "Remove all history"
+      ],
+      "answer": 1,
+      "explanation": "Rebase reapplies commits onto a new base for linear history."
+    },
+    {
+      "category": "software-development",
+      "topic": "SOLID",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Open/Closed Principle encourages:",
+      "options": [
+        "Classes open for modification everywhere",
+        "Extension without modifying existing tested code",
+        "One giant class",
+        "No interfaces"
+      ],
+      "answer": 1,
+      "explanation": "Open for extension, closed for modification — use abstractions/strategies."
+    },
+    {
+      "category": "software-development",
+      "topic": "Agile",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Definition of Done in Scrum typically applies to:",
+      "options": [
+        "Only product backlog items in sprint",
+        "Increment — potentially shippable work meeting team standards",
+        "Daily standup notes",
+        "Retrospective actions only"
+      ],
+      "answer": 1,
+      "explanation": "DoD is shared quality bar for work considered complete in the increment."
+    },
+    {
+      "category": "software-development",
+      "topic": "Code Review",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "Effective review comment focuses on:",
+      "options": [
+        "Personal style only",
+        "Correctness, design, security, and maintainability with specifics",
+        "Blame author",
+        "Rewriting entire PR silently"
+      ],
+      "answer": 1,
+      "explanation": "Actionable, respectful feedback on behavior and design beats nitpicks."
+    },
+    {
+      "category": "software-development",
+      "topic": "Microservices",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Saga pattern compensating transactions address:",
+      "options": [
+        "ACID across distributed DBs without coordination",
+        "Long-lived distributed transactions via local txs + compensating steps",
+        "UI routing",
+        "Docker layer caching"
+      ],
+      "answer": 1,
+      "explanation": "Sagas use choreography/orchestration with compensations instead of 2PC."
+    },
+    {
+      "category": "software-development",
+      "topic": "CAP",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "During a network partition, CP system choice implies:",
+      "options": [
+        "Always available writes",
+        "May reject operations to preserve consistency",
+        "No replication",
+        "No leaders"
+      ],
+      "answer": 1,
+      "explanation": "CP sacrifices availability under partition to keep consistent reads/writes."
+    },
+    {
+      "category": "software-development",
+      "topic": "API Design",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Idempotent HTTP method for PUT replacing a resource at a URI:",
+      "options": [
+        "First call creates, repeats same state (same idempotent effect)",
+        "Each call creates new resource always",
+        "Cannot update",
+        "Only DELETE is idempotent"
+      ],
+      "answer": 0,
+      "explanation": "PUT at a URI is idempotent: repeated identical PUT leaves resource in same state."
+    },
+    {
+      "category": "software-development",
+      "topic": "Observability",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "RED metrics for microservices stand for:",
+      "options": [
+        "Random, Error, Debug",
+        "Rate, Errors, Duration",
+        "Redis, Elastic, Docker",
+        "Read, Execute, Delete"
+      ],
+      "answer": 1,
+      "explanation": "Rate (requests), Errors, Duration — common service monitoring triad."
+    },
+    {
+      "category": "software-development",
+      "topic": "Twelve-Factor",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Config in twelve-factor apps should be:",
+      "options": [
+        "Hard-coded in JAR",
+        "Stored in environment / config service, not source",
+        "Only in XML",
+        "Compiled into native image only"
+      ],
+      "answer": 1,
+      "explanation": "III. Config — environment-specific settings via env vars/secrets stores."
+    },
+    {
+      "category": "software-development",
+      "topic": "Coupling",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Strangler fig pattern helps migrate monolith by:",
+      "options": [
+        "Big-bang rewrite",
+        "Incrementally routing functionality to new services around legacy",
+        "Deleting database",
+        "Removing tests"
+      ],
+      "answer": 1,
+      "explanation": "Gradually replace edges of monolith with new implementation behind facade/router."
+    }
+  ]
+}

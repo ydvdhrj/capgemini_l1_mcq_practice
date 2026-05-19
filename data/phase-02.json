@@ -1,0 +1,558 @@
+{
+  "id": "phase-02",
+  "title": "Object-Oriented Programming in Java",
+  "questions": [
+    {
+      "topic": "OOP Fundamentals",
+      "type": "theory",
+      "question": "Which pillar of OOP is primarily achieved using private fields and public getters/setters?",
+      "options": [
+        "Inheritance",
+        "Abstraction",
+        "Polymorphism",
+        "Encapsulation"
+      ],
+      "answer": 3,
+      "explanation": "Encapsulation hides internal state and exposes controlled access."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "A",
+        "D",
+        "AD",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "Runtime type is Dog; overridden speak prints D.",
+      "code": "class Animal { void speak() { System.out.print(\"A\"); } }\nclass Dog extends Animal { void speak() { System.out.print(\"D\"); } }\npublic class Test {\n  public static void main(String[] args) {\n    Animal a = new Dog();\n    a.speak();\n  }\n}"
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "theory",
+      "question": "Which keyword inherits from a superclass in Java?",
+      "options": [
+        "implements",
+        "extends",
+        "inherits",
+        "superclass"
+      ],
+      "answer": 1,
+      "explanation": "classes use extends; implements is for interfaces."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "code",
+      "question": "Which constructor call is implicit in a child class if none is written?",
+      "options": [
+        "super()",
+        "this()",
+        "new Parent()",
+        "None"
+      ],
+      "answer": 0,
+      "explanation": "Compiler inserts super() unless another super(...) is present."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "theory",
+      "question": "Can a class extend more than one class in Java?",
+      "options": [
+        "Yes, with extends A, B",
+        "Yes, using implements for classes",
+        "No, single inheritance for classes",
+        "Only interfaces can be extended"
+      ],
+      "answer": 2,
+      "explanation": "Java classes have single inheritance; multiple interface implementation is allowed."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "code",
+      "question": "What happens?",
+      "options": [
+        "Creates P with default state",
+        "Calls P(int x) with 0",
+        "Runtime error only",
+        "Compile error: no default constructor"
+      ],
+      "answer": 3,
+      "explanation": "Only P(int) exists; compiler does not add default constructor.",
+      "code": "public class P {\n  public P(int x) {}\n  public static void main(String[] args) { new P(); }\n}"
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "practical",
+      "question": "An interface declares void draw();. A concrete class implements it but provides no draw. What happens?",
+      "options": [
+        "Compiles if class is abstract",
+        "Always compiles",
+        "Must be private",
+        "draw becomes static"
+      ],
+      "answer": 0,
+      "explanation": "Concrete classes must implement all interface methods."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "theory",
+      "question": "Which modifier prevents a class from being subclassed?",
+      "options": [
+        "static",
+        "final",
+        "private",
+        "abstract"
+      ],
+      "answer": 1,
+      "explanation": "final on a class blocks extension."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "theory",
+      "question": "Why hide fields as private?",
+      "options": [
+        "To improve JVM speed only",
+        "To enforce validation and invariants at access points",
+        "Because public fields are illegal",
+        "To prevent garbage collection"
+      ],
+      "answer": 1,
+      "explanation": "Encapsulation protects object state and allows controlled mutation."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "code",
+      "question": "Which is proper encapsulation for a balance field?",
+      "options": [
+        "public double balance;",
+        "private double balance; public double getBalance() { return balance; }",
+        "protected balance without methods",
+        "static public balance"
+      ],
+      "answer": 1,
+      "explanation": "Private field with accessor exposes read without uncontrolled write."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "code",
+      "question": "What is wrong with: public class User { public String password; }",
+      "options": [
+        "Nothing; this is best practice",
+        "Password should be exposed via println only",
+        "password must be int",
+        "Sensitive data should not be public fields"
+      ],
+      "answer": 3,
+      "explanation": "Public fields break encapsulation and leak mutable state."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "theory",
+      "question": "JavaBeans-style mutator naming convention is:",
+      "options": [
+        "getFieldname()",
+        "setFieldname(Type value)",
+        "mutateFieldname()",
+        "fieldname(value)"
+      ],
+      "answer": 1,
+      "explanation": "Setters use setX; getters use getX or isX for boolean."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "code",
+      "question": "A class has private int count; and only increment(). Can external code set count directly?",
+      "options": [
+        "Yes, via reflection only in all JDKs",
+        "No, without a setter or public field",
+        "Yes, if in same package",
+        "Yes, via import"
+      ],
+      "answer": 1,
+      "explanation": "Without accessible mutators, external code cannot assign private fields legally."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "practical",
+      "question": "A setter validates age and throws if negative. This illustrates:",
+      "options": [
+        "Polymorphism",
+        "Encapsulation with invariant enforcement",
+        "Multiple inheritance",
+        "Serialization"
+      ],
+      "answer": 1,
+      "explanation": "Centralizing validation in setters is classic encapsulation."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "theory",
+      "question": "Package-private (no modifier) visibility means:",
+      "options": [
+        "Visible everywhere",
+        "Visible only within the same package",
+        "Visible to subclasses only",
+        "Visible only in same file"
+      ],
+      "answer": 1,
+      "explanation": "Default access is package scope."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "theory",
+      "question": "A Car has an Engine. This relationship is best described as:",
+      "options": [
+        "is-a",
+        "inherits-a",
+        "uses-a only at compile time",
+        "has-a (composition/aggregation)"
+      ],
+      "answer": 3,
+      "explanation": "Composition: Car contains an Engine reference."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "code",
+      "question": "Which design expresses is-a?",
+      "options": [
+        "class Garage { List<Car> cars; }",
+        "class ElectricCar extends Car",
+        "class Car { private Engine engine; }",
+        "class Driver { Car car; }"
+      ],
+      "answer": 1,
+      "explanation": "extends models specialization: ElectricCar is a Car."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "theory",
+      "question": "Liskov substitution means:",
+      "options": [
+        "A subclass instance can be used wherever the superclass type is expected",
+        "A superclass can replace subclass always",
+        "Interfaces cannot be substituted",
+        "Only final classes qualify"
+      ],
+      "answer": 0,
+      "explanation": "Subtypes must honor the superclass contract when substituted."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "code",
+      "question": "Given class A { } class B extends A { } — which assignment compiles?",
+      "options": [
+        "A obj = new B();",
+        "B obj = new A();",
+        "A obj = new Object();",
+        "B obj = (B) new Object();"
+      ],
+      "answer": 0,
+      "explanation": "Subclass instance is assignable to superclass reference."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "practical",
+      "question": "Team has many Members but Member is not a Team. Best relationship?",
+      "options": [
+        "Member extends Team",
+        "Team contains List<Member>",
+        "Team extends Member",
+        "Member implements Team"
+      ],
+      "answer": 1,
+      "explanation": "has-a via collection models containment without incorrect is-a."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "theory",
+      "question": "Aggregation differs from strong composition mainly because:",
+      "options": [
+        "Aggregation is only for primitives",
+        "Aggregation uses extends",
+        "Composition forbids references",
+        "Child lifecycle may be independent of container"
+      ],
+      "answer": 3,
+      "explanation": "In aggregation, parts can exist outside the whole."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "code",
+      "question": "What prints?",
+      "options": [
+        "S",
+        "C",
+        "SC",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "Runtime dispatch invokes Circle.draw.",
+      "code": "class Shape { void draw() { System.out.print(\"S\"); } }\nclass Circle extends Shape { void draw() { System.out.print(\"C\"); } }\npublic class App {\n  public static void main(String[] args) {\n    Shape s = new Circle();\n    s.draw();\n  }\n}"
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "theory",
+      "question": "An abstract class can:",
+      "options": [
+        "Contain abstract and concrete methods",
+        "Be instantiated directly always",
+        "Not have fields",
+        "Not extend another class"
+      ],
+      "answer": 0,
+      "explanation": "Abstract classes may mix abstract and concrete members."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "Which is valid?",
+      "options": [
+        "abstract class W { abstract void work(); } W x = new W();",
+        "class J extends W { void work(){} } W x = new J();",
+        "new W() {}",
+        "W must be an interface"
+      ],
+      "answer": 1,
+      "explanation": "Concrete J implements work; can assign to W reference."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "theory",
+      "question": "Pre-Java 8 interface instance methods were implicitly:",
+      "options": [
+        "static and public",
+        "abstract and public",
+        "private",
+        "final"
+      ],
+      "answer": 1,
+      "explanation": "Implicitly public abstract (except static/default added in Java 8)."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "What prints?",
+      "options": [
+        "Compile error",
+        "C",
+        "Nothing",
+        "I"
+      ],
+      "answer": 3,
+      "explanation": "Default method hi inherited prints I.",
+      "code": "interface I { default void hi() { System.out.print(\"I\"); } }\nclass C implements I {}\npublic class T {\n  public static void main(String[] args) { new C().hi(); }\n}"
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "theory",
+      "question": "Method overriding requires:",
+      "options": [
+        "Same name, compatible parameters, instance method, subclass",
+        "Different parameter list",
+        "static in parent and child",
+        "private in child"
+      ],
+      "answer": 0,
+      "explanation": "Override: same signature, instance method, not weaker access."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "Parent has static void m(); Child has static void m(); This is:",
+      "options": [
+        "Overriding",
+        "Hiding (not virtual override)",
+        "Overload",
+        "Illegal"
+      ],
+      "answer": 1,
+      "explanation": "Static methods are resolved at compile time; child hides parent."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "theory",
+      "question": "Which achieves abstraction by defining capability without implementation?",
+      "options": [
+        "Concrete class only",
+        "interface or abstract class",
+        "final class",
+        "package statement"
+      ],
+      "answer": 1,
+      "explanation": "Interfaces and abstract classes define contracts."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "Error"
+      ],
+      "answer": 1,
+      "explanation": "Virtual method invocation uses B's override.",
+      "code": "class A { void show() { System.out.print(\"A\"); } }\nclass B extends A { void show() { System.out.print(\"B\"); } }\npublic class Main {\n  public static void main(String[] args) {\n    A ref = new B();\n    ref.show();\n  }\n}"
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "theory",
+      "question": "@Override annotation helps:",
+      "options": [
+        "Force static binding",
+        "Catch mistakes when method does not actually override",
+        "Improve performance measurably",
+        "Make methods final"
+      ],
+      "answer": 1,
+      "explanation": "Compiler verifies an override exists in superclass."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "Can an interface extend another interface?",
+      "options": [
+        "No",
+        "Yes",
+        "Only if both are classes",
+        "Only with extends class"
+      ],
+      "answer": 1,
+      "explanation": "Interfaces can extend multiple interfaces."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "practical",
+      "question": "Programming to interface List<String> list = new ArrayList<>(); benefits:",
+      "options": [
+        "Locks implementation forever",
+        "Allows swapping implementations with less client change",
+        "Prevents generics",
+        "Removes encapsulation"
+      ],
+      "answer": 1,
+      "explanation": "Clients depend on abstraction, easing replacement."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "code",
+      "question": "What does super.print() do inside a subclass method?",
+      "options": [
+        "Calls static print on Object",
+        "Invokes the superclass version of the method",
+        "Creates a new superclass",
+        "Calls interface default"
+      ],
+      "answer": 1,
+      "explanation": "super targets superclass implementation."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "code",
+      "question": "Immutable class pattern typically includes:",
+      "options": [
+        "All fields private final, no setters, defensive copies",
+        "All fields public",
+        "Only static fields mutable",
+        "finalize method"
+      ],
+      "answer": 0,
+      "explanation": "Immutability: final fields, no mutators, safe copies."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "code",
+      "question": "instanceof checks:",
+      "options": [
+        "Only compile-time types",
+        "Whether an object is an instance of a type at runtime",
+        "Method overriding",
+        "Package name"
+      ],
+      "answer": 1,
+      "explanation": "instanceof evaluates runtime type compatibility."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "Given interface Drawable { void draw(); } class Square implements Drawable { public void draw() { } } — new Square() is:",
+      "options": [
+        "Illegal without extends",
+        "A Drawable and a Square",
+        "Only Drawable at runtime",
+        "Abstract"
+      ],
+      "answer": 1,
+      "explanation": "Square is concrete and implements Drawable."
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "theory",
+      "question": "Constructors are not inherited. Therefore a subclass must:",
+      "options": [
+        "Never call super",
+        "Invoke a superclass constructor (explicitly or via super())",
+        "Redefine Object only",
+        "Be final"
+      ],
+      "answer": 1,
+      "explanation": "Chain to super constructor to initialize inherited state."
+    },
+    {
+      "topic": "Encapsulation",
+      "type": "theory",
+      "question": "Read-only property exposes:",
+      "options": [
+        "public field only",
+        "getter without setter",
+        "setter without getter",
+        "both public fields"
+      ],
+      "answer": 1,
+      "explanation": "Getter without setter provides read-only access."
+    },
+    {
+      "topic": "Has-A & Is-A",
+      "type": "theory",
+      "question": "Favor composition over inheritance when:",
+      "options": [
+        "You need is-a subtype polymorphism always",
+        "You want to reuse behavior without tight coupling",
+        "You need multiple class inheritance",
+        "You want protected access only"
+      ],
+      "answer": 1,
+      "explanation": "Composition reduces fragile base class coupling."
+    },
+    {
+      "topic": "Polymorphism & Abstraction",
+      "type": "code",
+      "question": "What prints?",
+      "options": [
+        "0",
+        "7",
+        "Compile error",
+        "null"
+      ],
+      "answer": 1,
+      "explanation": "Polymorphic call to Impl.val returns 7.",
+      "code": "abstract class Base { abstract int val(); }\nclass Impl extends Base { int val() { return 7; } }\npublic class Run {\n  public static void main(String[] args) {\n    Base b = new Impl();\n    System.out.println(b.val());\n  }\n}"
+    },
+    {
+      "topic": "OOP Fundamentals",
+      "type": "code",
+      "question": "Which members does a subclass inherit from a non-final parent?",
+      "options": [
+        "Only static methods",
+        "Accessible non-private fields and methods (subject to visibility)",
+        "Private fields directly accessible",
+        "Constructors as inherited methods"
+      ],
+      "answer": 1,
+      "explanation": "Inherited members per visibility rules; constructors are not inherited."
+    }
+  ]
+}

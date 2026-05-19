@@ -1,0 +1,567 @@
+{
+  "id": "phase-01",
+  "title": "Java Basics: Hello World through Arrays",
+  "questions": [
+    {
+      "topic": "Hello World",
+      "type": "theory",
+      "question": "What is the correct entry point for a standalone Java application?",
+      "options": [
+        "public static void main(String args)",
+        "public void main(String[] args)",
+        "public static void main(String[] args)",
+        "static void main(String[] args)"
+      ],
+      "answer": 2,
+      "explanation": "Java requires main to be public, static, return void, and accept String[]. Option A omits array brackets; B is not static; D is not public."
+    },
+    {
+      "topic": "Hello World",
+      "type": "theory",
+      "question": "Which statement about System.out.println is true?",
+      "options": [
+        "It writes to stderr by default",
+        "It appends a platform-dependent line separator after the text",
+        "It returns the number of bytes written",
+        "It can only print String literals"
+      ],
+      "answer": 1,
+      "explanation": "println writes to standard output and adds a newline. It returns void, accepts many types via overloads, and uses stdout not stderr."
+    },
+    {
+      "topic": "Hello World",
+      "type": "code",
+      "question": "What does this program print?",
+      "options": [
+        "AB on one line",
+        "A and B on separate lines",
+        "AB with a blank line between",
+        "Compile error"
+      ],
+      "answer": 0,
+      "explanation": "print writes without newline; println adds newline after B, so output is AB on one line.",
+      "code": "public class Demo {\n  public static void main(String[] args) {\n    System.out.print(\"A\");\n    System.out.println(\"B\");\n  }\n}"
+    },
+    {
+      "topic": "Hello World",
+      "type": "practical",
+      "question": "A .java file is named Hello.java but the class is declared as public class HelloWorld. What happens?",
+      "options": [
+        "It compiles and runs normally",
+        "The JVM renames the class automatically",
+        "Compilation fails because the public class name must match the filename",
+        "Only runtime error occurs"
+      ],
+      "answer": 2,
+      "explanation": "The public top-level class name must exactly match the filename (Hello.java requires public class Hello)."
+    },
+    {
+      "topic": "Hello World",
+      "type": "theory",
+      "question": "Which file extension is produced by javac for a class file?",
+      "options": [
+        ".java",
+        ".jar",
+        ".class",
+        ".exe"
+      ],
+      "answer": 2,
+      "explanation": "javac compiles .java source into JVM bytecode stored in .class files."
+    },
+    {
+      "topic": "Hello World",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "6",
+        "33",
+        "123",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "Evaluation is left-to-right: 1+2=3 (int), then 3+\"3\" yields \"33\".",
+      "code": "public class T {\n  public static void main(String[] args) {\n    System.out.println(1 + 2 + \"3\");\n  }\n}"
+    },
+    {
+      "topic": "Hello World",
+      "type": "theory",
+      "question": "Which command compiles Hello.java with the JDK?",
+      "options": [
+        "java Hello.java",
+        "javac Hello.java",
+        "compile Hello.java",
+        "jdk build Hello.java"
+      ],
+      "answer": 1,
+      "explanation": "javac is the compiler. java runs bytecode (or can launch single-file source in newer JDKs)."
+    },
+    {
+      "topic": "Hello World",
+      "type": "code",
+      "question": "How many public top-level classes may a single .java file contain?",
+      "options": [
+        "Unlimited",
+        "Exactly one",
+        "At most two",
+        "Only if they are nested"
+      ],
+      "answer": 1,
+      "explanation": "A compilation unit may have only one public top-level class, and its name must match the file name."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "theory",
+      "question": "Which primitive type can store the value 3.14?",
+      "options": [
+        "int",
+        "char",
+        "boolean",
+        "float"
+      ],
+      "answer": 3,
+      "explanation": "3.14 is a floating-point literal; float and double can hold it. int and char cannot; boolean is true/false."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "code",
+      "question": "What is the type of the expression 'a' + 1?",
+      "options": [
+        "char",
+        "int",
+        "String",
+        "byte"
+      ],
+      "answer": 1,
+      "explanation": "The char 'a' promotes to int before addition with int 1, so the expression type is int (value 98)."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "2.5",
+        "2",
+        "3",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "Integer division truncates toward zero: 5/2 is 2.",
+      "code": "public class D {\n  public static void main(String[] args) {\n    int x = 5 / 2;\n    System.out.println(x);\n  }\n}"
+    },
+    {
+      "topic": "Datatypes",
+      "type": "theory",
+      "question": "Which declaration is valid for a long literal?",
+      "options": [
+        "long n = 100;",
+        "long n = 100L;",
+        "long n = 100.0;",
+        "long n = 100f;"
+      ],
+      "answer": 1,
+      "explanation": "100L is an explicit long literal. 100.0 is double; 100f is float."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "127",
+        "128",
+        "-128",
+        "Compile error"
+      ],
+      "answer": 2,
+      "explanation": "byte overflows: 127 + 1 wraps to -128 in two's complement.",
+      "code": "public class B {\n  public static void main(String[] args) {\n    byte b = 127;\n    b++;\n    System.out.println(b);\n  }\n}"
+    },
+    {
+      "topic": "Datatypes",
+      "type": "theory",
+      "question": "Which wrapper class corresponds to primitive boolean?",
+      "options": [
+        "Boolean",
+        "Bool",
+        "Bit",
+        "Logical"
+      ],
+      "answer": 0,
+      "explanation": "java.lang.Boolean wraps boolean. Bool is not a standard Java wrapper."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "code",
+      "question": "Which assignment causes a compile-time error?",
+      "options": [
+        "int i = 'A';",
+        "char c = 65;",
+        "byte b = 200;",
+        "double d = 10;"
+      ],
+      "answer": 2,
+      "explanation": "200 is out of byte range (-128..127) without explicit cast."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "practical",
+      "question": "A variable is declared as final int MAX = 100;. Which is true?",
+      "options": [
+        "MAX can be reassigned in main",
+        "MAX must be initialized exactly once",
+        "MAX defaults to 0 if not initialized",
+        "final only applies to objects"
+      ],
+      "answer": 1,
+      "explanation": "final fields must be definitely assigned once; reassignment is forbidden."
+    },
+    {
+      "topic": "Datatypes",
+      "type": "code",
+      "question": "What is the result of (int) 9.7?",
+      "options": [
+        "10",
+        "9",
+        "9.7",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "Casting double to int truncates toward zero, yielding 9."
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "3",
+        "1",
+        "0",
+        "3.33"
+      ],
+      "answer": 1,
+      "explanation": "The remainder operator % gives 10 mod 3 = 1.",
+      "code": "public class O {\n  public static void main(String[] args) {\n    int a = 10, b = 3;\n    System.out.println(a % b);\n  }\n}"
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "theory",
+      "question": "Which operator has the highest precedence among these?",
+      "options": [
+        "&&",
+        "||",
+        "==",
+        "!"
+      ],
+      "answer": 3,
+      "explanation": "Unary ! binds tighter than relational == and logical && ||."
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "012",
+        "123",
+        "0123",
+        "Infinite loop"
+      ],
+      "answer": 0,
+      "explanation": "Loop runs for i=0,1,2 printing each without separator: 012.",
+      "code": "public class I {\n  public static void main(String[] args) {\n    int i = 0;\n    while (i < 3) {\n      System.out.print(i);\n      i++;\n    }\n  }\n}"
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "01",
+        "02",
+        "012",
+        "1"
+      ],
+      "answer": 1,
+      "explanation": "When i==1, continue skips print. Prints 0 and 2: 02.",
+      "code": "public class F {\n  public static void main(String[] args) {\n    for (int i = 0; i < 3; i++) {\n      if (i == 1) continue;\n      System.out.print(i);\n    }\n  }\n}"
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "theory",
+      "question": "In a switch on String, if no case matches and there is no default:",
+      "options": [
+        "Compilation error",
+        "NullPointerException always",
+        "Execution falls through all cases",
+        "The switch completes with no branch taken"
+      ],
+      "answer": 3,
+      "explanation": "Without a match and without default, no statements in the switch run."
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "code",
+      "question": "What is the value of true ? 1 : 2.0?",
+      "options": [
+        "1",
+        "2.0",
+        "1.0",
+        "Compile error"
+      ],
+      "answer": 2,
+      "explanation": "Numeric promotion: int 1 promotes to double to match 2.0, result is 1.0."
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "C"
+      ],
+      "answer": 2,
+      "explanation": "Missing break after case 5 causes fall-through to case 6, printing AB.",
+      "code": "public class S {\n  public static void main(String[] args) {\n    int x = 5;\n    switch (x) {\n      case 5: System.out.print(\"A\");\n      case 6: System.out.print(\"B\"); break;\n      default: System.out.print(\"C\");\n    }\n  }\n}"
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "theory",
+      "question": "Which loop is guaranteed to execute its body at least once?",
+      "options": [
+        "for loop",
+        "enhanced for",
+        "while loop",
+        "do-while loop"
+      ],
+      "answer": 3,
+      "explanation": "do-while checks condition after the body."
+    },
+    {
+      "topic": "Operators & Control Flow",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "true",
+        "false",
+        "1",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "1<2 is true but 2<1 is false; && yields false.",
+      "code": "public class L {\n  public static void main(String[] args) {\n    System.out.println(1 < 2 && 2 < 1);\n  }\n}"
+    },
+    {
+      "topic": "Methods",
+      "type": "theory",
+      "question": "Which is true about method overloading?",
+      "options": [
+        "Return type alone can distinguish overloads",
+        "Parameter lists must differ",
+        "Overloading requires inheritance",
+        "Static methods cannot be overloaded"
+      ],
+      "answer": 1,
+      "explanation": "Overloading is same method name with different parameter lists."
+    },
+    {
+      "topic": "Methods",
+      "type": "code",
+      "question": "What does this program print?",
+      "options": [
+        "23",
+        "5",
+        "6",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "add returns int sum 5.",
+      "code": "public class M {\n  static int add(int a, int b) { return a + b; }\n  public static void main(String[] args) {\n    System.out.println(add(2, 3));\n  }\n}"
+    },
+    {
+      "topic": "Methods",
+      "type": "theory",
+      "question": "What does the return type void indicate?",
+      "options": [
+        "The method returns null",
+        "The method returns zero",
+        "The method cannot have parameters",
+        "The method returns no value"
+      ],
+      "answer": 3,
+      "explanation": "void means no value is returned to the caller."
+    },
+    {
+      "topic": "Methods",
+      "type": "code",
+      "question": "Which call matches void greet(String name) { ... }?",
+      "options": [
+        "int x = greet(\"Ann\");",
+        "greet();",
+        "greet(\"Ann\");",
+        "greet(name: \"Ann\");"
+      ],
+      "answer": 2,
+      "explanation": "void methods are invoked as statements with required arguments."
+    },
+    {
+      "topic": "Methods",
+      "type": "practical",
+      "question": "A method parameter int x is reassigned to 10 inside the method. The caller's variable:",
+      "options": [
+        "Becomes 10",
+        "Is unchanged",
+        "Compile error",
+        "Becomes 0"
+      ],
+      "answer": 1,
+      "explanation": "Primitives are passed by value; reassigning the copy does not affect the caller."
+    },
+    {
+      "topic": "Methods",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "3",
+        "12",
+        "2",
+        "Compile error"
+      ],
+      "answer": 0,
+      "explanation": "f() returns 1, f(2) returns 2, sum is 3.",
+      "code": "public class R {\n  static int f() { return 1; }\n  static int f(int x) { return x; }\n  public static void main(String[] args) {\n    System.out.println(f() + f(2));\n  }\n}"
+    },
+    {
+      "topic": "Methods",
+      "type": "theory",
+      "question": "Which access modifier allows a method to be visible only within its own class?",
+      "options": [
+        "public",
+        "protected",
+        "default (package-private)",
+        "private"
+      ],
+      "answer": 3,
+      "explanation": "private restricts visibility to the declaring class only."
+    },
+    {
+      "topic": "Methods",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Compile error"
+      ],
+      "answer": 2,
+      "explanation": "Varargs collects three ints into an array of length 3.",
+      "code": "public class V {\n  static void print(int... nums) {\n    System.out.println(nums.length);\n  }\n  public static void main(String[] args) {\n    print(1, 2, 3);\n  }\n}"
+    },
+    {
+      "topic": "Arrays",
+      "type": "theory",
+      "question": "What is the index of the first element in a Java array?",
+      "options": [
+        "1",
+        "0",
+        "-1",
+        "Depends on array size"
+      ],
+      "answer": 1,
+      "explanation": "Java arrays are zero-indexed."
+    },
+    {
+      "topic": "Arrays",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "Index 1 is the second element, value 2.",
+      "code": "public class A {\n  public static void main(String[] args) {\n    int[] a = {1, 2, 3};\n    System.out.println(a[1]);\n  }\n}"
+    },
+    {
+      "topic": "Arrays",
+      "type": "code",
+      "question": "What is matrix.length for int[][] matrix = new int[3][4];?",
+      "options": [
+        "3",
+        "4",
+        "12",
+        "7"
+      ],
+      "answer": 0,
+      "explanation": "matrix.length is the number of rows (first dimension), which is 3."
+    },
+    {
+      "topic": "Arrays",
+      "type": "theory",
+      "question": "Which creates an int array of length 5 with all elements zero?",
+      "options": [
+        "int[] a = new int[5];",
+        "int[] a = {5};",
+        "int a[5];",
+        "int[] a = new int[]5;"
+      ],
+      "answer": 0,
+      "explanation": "new int[5] allocates five default-initialized zeros."
+    },
+    {
+      "topic": "Arrays",
+      "type": "code",
+      "question": "What does this print?",
+      "options": [
+        "nullnull",
+        "a b",
+        "Compile error",
+        "ab"
+      ],
+      "answer": 3,
+      "explanation": "Enhanced for prints each string concatenated: ab.",
+      "code": "public class E {\n  public static void main(String[] args) {\n    String[] s = {\"a\", \"b\"};\n    for (String x : s) System.out.print(x);\n  }\n}"
+    },
+    {
+      "topic": "Arrays",
+      "type": "practical",
+      "question": "You access arr[5] on int[] arr = new int[3]. What happens at runtime?",
+      "options": [
+        "Returns 0",
+        "Returns null",
+        "ArrayIndexOutOfBoundsException",
+        "Compilation fails"
+      ],
+      "answer": 2,
+      "explanation": "Valid compile but index 5 is out of bounds for length 3."
+    },
+    {
+      "topic": "Arrays",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "3",
+        "1",
+        "2",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "After sort, ascending order starts with 1.",
+      "code": "import java.util.Arrays;\npublic class C {\n  public static void main(String[] args) {\n    int[] a = {3, 1, 2};\n    Arrays.sort(a);\n    System.out.println(a[0]);\n  }\n}"
+    },
+    {
+      "topic": "Arrays",
+      "type": "theory",
+      "question": "Can the length field of an array be changed after creation?",
+      "options": [
+        "Yes, with array.resize()",
+        "Yes, by reassignment",
+        "No, length is fixed",
+        "Only for primitive arrays"
+      ],
+      "answer": 2,
+      "explanation": "Array length is final for a given array instance."
+    }
+  ]
+}

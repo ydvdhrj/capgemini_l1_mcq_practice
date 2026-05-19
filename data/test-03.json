@@ -1,0 +1,911 @@
+{
+  "id": "test-03",
+  "title": "Comprehensive Test 3 — Advanced / Challenge",
+  "toughness": "Advanced / Challenge — Medium & Hard (Hard focus)",
+  "durationMinutes": 60,
+  "questions": [
+    {
+      "category": "core-java",
+      "topic": "String Pool",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What is printed (Java 17+ with compact strings)?",
+      "options": [
+        "true true",
+        "true false",
+        "false false",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "s2 is interned literal pool reference; s3 is new String(s1) — different object, s1==s2 true, s1==s3 false.",
+      "code": "public class T {\n  public static void main(String[] a) {\n    String s1 = \"hi\";\n    String s2 = \"hi\";\n    String s3 = new String(s1);\n    System.out.println(s1 == s2);\n    System.out.println(s1 == s3);\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Optional",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "Output?",
+      "options": [
+        "5",
+        "0",
+        "Optional.empty",
+        "NoSuchElementException"
+      ],
+      "answer": 0,
+      "explanation": "map on present Optional chains; orElse only if empty — value is 5.",
+      "code": "import java.util.*;\npublic class T {\n  public static void main(String[] a) {\n    System.out.println(Optional.of(5).map(n -> n).orElse(0));\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Streams",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "Terminal operation used twice on same stream — result?",
+      "options": [
+        "Second collect returns same list",
+        "IllegalStateException: stream already operated upon",
+        "Empty list",
+        "Undefined but compiles"
+      ],
+      "answer": 1,
+      "explanation": "Streams are single-use; second terminal throws IllegalStateException."
+    },
+    {
+      "category": "core-java",
+      "topic": "CompletableFuture",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "thenApplyAsync vs thenApply on default executor — key difference?",
+      "options": [
+        "thenApply always blocks calling thread",
+        "thenApplyAsync runs callback on ForkJoinPool/common pool (unless executor supplied)",
+        "Identical",
+        "thenApplyAsync is deprecated"
+      ],
+      "answer": 1,
+      "explanation": "Async variant schedules on executor; sync runs on completing thread (or caller)."
+    },
+    {
+      "category": "core-java",
+      "topic": "Class Loading",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Parent delegation model loads class com.app.Foo. Order?",
+      "options": [
+        "App loader first always",
+        "Bootstrap → Platform → App loader if not found upward",
+        "Random loader",
+        "Only bootstrap"
+      ],
+      "answer": 1,
+      "explanation": "Loaders delegate up before defining; prevents core class spoofing."
+    },
+    {
+      "category": "core-java",
+      "topic": "Varhandles",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Compared to synchronized, VarHandle compareAndSet offers:",
+      "options": [
+        "Always slower",
+        "Lock-free atomic conditional update on fields/arrays",
+        "Only for static fields",
+        "GC root pinning"
+      ],
+      "answer": 1,
+      "explanation": "VarHandles expose CAS and ordered access for low-level concurrency."
+    },
+    {
+      "category": "core-java",
+      "topic": "Sealed Classes",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "sealed class Shape permits Circle, Square. Class Triangle extends Shape —",
+      "options": [
+        "Allowed if public",
+        "Compile error unless Triangle is permitted",
+        "Runtime error only",
+        "Allowed in same file only always"
+      ],
+      "answer": 1,
+      "explanation": "Subclasses must be explicitly permitted or be in same package/module as sealed class."
+    },
+    {
+      "category": "core-java",
+      "topic": "Garbage Collection",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "G1 GC region evacuation failure often indicates:",
+      "options": [
+        "Too small heap or humongous objects fragmentation pressure",
+        "Too many interfaces",
+        "Missing main method",
+        "Only classloader leak"
+      ],
+      "answer": 0,
+      "explanation": "Evacuation failure triggers Full GC — often heap pressure or humongous allocations."
+    },
+    {
+      "category": "core-java",
+      "topic": "ForkJoin",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "RecursiveTask fork/join — common pitfall?",
+      "options": [
+        "Too few tasks",
+        "Splitting work too fine causes overhead exceeding benefit",
+        "Cannot use thread pools",
+        "Always single-threaded"
+      ],
+      "answer": 1,
+      "explanation": "Excessive decomposition thrashes work-stealing; balance threshold matters."
+    },
+    {
+      "category": "core-java",
+      "topic": "Reflection",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "setAccessible(true) on private field in Java 9+ module without opens:",
+      "options": [
+        "Always allowed",
+        "InaccessibleObjectException unless module opens package",
+        "Only in applets",
+        "Ignored silently"
+      ],
+      "answer": 1,
+      "explanation": "Strong encapsulation blocks illegal reflective access across module boundaries."
+    },
+    {
+      "category": "dbms",
+      "topic": "GROUP BY",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "Valid standard SQL?",
+      "options": [
+        "SELECT dept, MAX(sal) FROM emp",
+        "SELECT dept, name, MAX(sal) FROM emp GROUP BY dept",
+        "SELECT dept, MAX(sal) FROM emp GROUP BY dept, name",
+        "SELECT MAX(sal) FROM emp GROUP BY dept HAVING COUNT(*) > 1"
+      ],
+      "answer": 0,
+      "explanation": "Non-aggregated columns must appear in GROUP BY; A is valid; B invalid (name not grouped)."
+    },
+    {
+      "category": "dbms",
+      "topic": "NULL",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "WHERE col NOT IN (SELECT ...) when subquery returns NULL row:",
+      "options": [
+        "Rows match normally",
+        "Unknown/false behavior — NOT IN with NULL in set filters unpredictably",
+        "All rows returned",
+        "Syntax error"
+      ],
+      "answer": 1,
+      "explanation": "NULL in NOT IN subquery yields UNKNOWN; row excluded — use NOT EXISTS instead."
+    },
+    {
+      "category": "dbms",
+      "topic": "CTEs",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "Recursive CTE missing termination condition causes:",
+      "options": [
+        "Faster query",
+        "Runaway recursion until DB limit/error",
+        "Automatic LIMIT 100",
+        "Index-only scan"
+      ],
+      "answer": 1,
+      "explanation": "Recursive member must converge; otherwise max recursion exceeded."
+    },
+    {
+      "category": "dbms",
+      "topic": "Locking",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "SELECT ... FOR UPDATE SKIP LOCKED is used for:",
+      "options": [
+        "Serializing all readers",
+        "Work-queue patterns — skip rows locked by others",
+        "DDL migrations",
+        "Backup only"
+      ],
+      "answer": 1,
+      "explanation": "SKIP LOCKED lets concurrent workers grab available rows without blocking."
+    },
+    {
+      "category": "dbms",
+      "topic": "MVCC",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "PostgreSQL MVCC old row versions are cleaned by:",
+      "options": [
+        "Immediate delete on UPDATE",
+        "VACUUM (autovacuum) reclaiming dead tuples",
+        "DROP TABLE",
+        "Only restart"
+      ],
+      "answer": 1,
+      "explanation": "Updates leave dead tuples until vacuum reclaims space."
+    },
+    {
+      "category": "dbms",
+      "topic": "Indexes",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Covering index (index-only scan) requires:",
+      "options": [
+        "Clustered index only",
+        "All selected columns present in index including INCLUDE columns",
+        "Full table scan",
+        "No WHERE clause"
+      ],
+      "answer": 1,
+      "explanation": "Planner can satisfy query from index without heap fetch when visibility map allows."
+    },
+    {
+      "category": "dbms",
+      "topic": "Replication",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Async replication lag means:",
+      "options": [
+        "Standby has committed transactions not yet applied",
+        "Primary cannot write",
+        "No failover possible",
+        "Synchronous commits on primary"
+      ],
+      "answer": 0,
+      "explanation": "Replica may trail primary; RPO/RTO implications for failover."
+    },
+    {
+      "category": "dbms",
+      "topic": "Query Optimization",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Correlated subquery in SELECT list executed:",
+      "options": [
+        "Once per database",
+        "Once per outer row typically",
+        "Never",
+        "Only at commit"
+      ],
+      "answer": 1,
+      "explanation": "Correlation re-evaluates subquery for each outer row unless decorrelated."
+    },
+    {
+      "category": "dbms",
+      "topic": "Constraints",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "DEFERRABLE INITIALLY DEFERRED foreign key allows:",
+      "options": [
+        "Violations forever",
+        "Checking FK at COMMIT within transaction",
+        "No transactions",
+        "Only on temp tables"
+      ],
+      "answer": 1,
+      "explanation": "Constraint checked at end of statement or transaction per definition."
+    },
+    {
+      "category": "dbms",
+      "topic": "Partitioning",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Partition pruning helps when:",
+      "options": [
+        "Query filters on partition key",
+        "Always without WHERE",
+        "Only for views",
+        "Using CROSS JOIN"
+      ],
+      "answer": 0,
+      "explanation": "Optimizer scans relevant partitions only when predicates match partition key."
+    },
+    {
+      "category": "backend",
+      "topic": "Spring Security",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "CSRF protection in Spring Security for state-changing browser forms typically uses:",
+      "options": [
+        "JWT in header only",
+        "Synchronizer token pattern / cookie+header for SPA",
+        "No protection needed",
+        "Basic auth only"
+      ],
+      "answer": 1,
+      "explanation": "CSRF tokens or cookie-based patterns protect session cookie clients; APIs often disable with stateless JWT."
+    },
+    {
+      "category": "backend",
+      "topic": "Spring Boot",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "@ConditionalOnProperty activates bean when:",
+      "options": [
+        "Property matches specified name/value in Environment",
+        "Application is web",
+        "Always",
+        "JUnit runs"
+      ],
+      "answer": 0,
+      "explanation": "Conditional annotations gate auto-config based on classpath and properties."
+    },
+    {
+      "category": "backend",
+      "topic": "OAuth2",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Resource server validates:",
+      "options": [
+        "Client secret only",
+        "Access token (JWT or opaque introspection) on each request",
+        "Refresh token on every API call",
+        "Session cookie from browser only always"
+      ],
+      "answer": 1,
+      "explanation": "Bearer access token proves authorization for resource access."
+    },
+    {
+      "category": "backend",
+      "topic": "Spring Security",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Method-level @PreAuthorize uses:",
+      "options": [
+        "Servlet filter only",
+        "AOP proxy with SecurityExpressionRoot evaluating SpEL",
+        "JdbcTemplate",
+        "Hibernate interceptor"
+      ],
+      "answer": 1,
+      "explanation": "@EnableMethodSecurity wires AOP advisors for pre/post authorization."
+    },
+    {
+      "category": "backend",
+      "topic": "JPA",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Persistence context flush before query causes:",
+      "options": [
+        "Lost updates always",
+        "Pending changes may be written to DB so query sees consistent state",
+        "Detached entities merge automatically",
+        "No SQL"
+      ],
+      "answer": 1,
+      "explanation": "Auto-flush synchronizes persistence context before certain queries."
+    },
+    {
+      "category": "backend",
+      "topic": "Reactive",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "WebFlux with bounded elastic scheduler is suited for:",
+      "options": [
+        "Blocking JDBC on elastic threads, not on event loop",
+        "All blocking on netty event loop",
+        "Replacing HTTP",
+        "Only @RestController MVC"
+      ],
+      "answer": 0,
+      "explanation": "Never block event loop; offload blocking work to boundedElastic."
+    },
+    {
+      "category": "backend",
+      "topic": "Circuit Breaker",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Resilience4j circuit OPEN state:",
+      "options": [
+        "Passes all calls through",
+        "Fails fast without calling downstream",
+        "Half-open forever",
+        "Only for databases"
+      ],
+      "answer": 1,
+      "explanation": "OPEN rejects calls immediately until probe transitions to half-open."
+    },
+    {
+      "category": "backend",
+      "topic": "Kafka",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Consumer group rebalancing occurs when:",
+      "options": [
+        "Members join/leave or partitions change",
+        "Every message",
+        "Only on broker restart never",
+        "Producer sends"
+      ],
+      "answer": 0,
+      "explanation": "Group coordinator redistributes partition assignments on membership changes."
+    },
+    {
+      "category": "backend",
+      "topic": "API Versioning",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Header-based versioning (Accept: application/vnd.company.v2+json) advantage:",
+      "options": [
+        "Breaks caching always",
+        "URI stays stable; clients negotiate version",
+        "Requires new hostname",
+        "Disables content negotiation"
+      ],
+      "answer": 1,
+      "explanation": "Media type versioning keeps URLs clean while supporting multiple representations."
+    },
+    {
+      "category": "backend",
+      "topic": "Actuator",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Exposing /actuator/env in production without security:",
+      "options": [
+        "Recommended",
+        "Leaks configuration/secrets — must secure or disable sensitive endpoints",
+        "Required for health",
+        "Replaces Vault"
+      ],
+      "answer": 1,
+      "explanation": "Actuator endpoints can expose sensitive data; lock down with Spring Security."
+    },
+    {
+      "category": "docker",
+      "topic": "Networks",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "host network mode means container:",
+      "options": [
+        "Gets isolated IP only",
+        "Shares host network namespace (no separate docker0 IP)",
+        "Cannot bind ports",
+        "Uses only DNS"
+      ],
+      "answer": 1,
+      "explanation": "host mode removes network isolation — container uses host interfaces."
+    },
+    {
+      "category": "docker",
+      "topic": "Inspect",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "Find container IP on custom bridge:",
+      "options": [
+        "docker logs",
+        "docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <id>",
+        "docker rm",
+        "docker commit"
+      ],
+      "answer": 1,
+      "explanation": "inspect shows network attachments and IPs per network."
+    },
+    {
+      "category": "docker",
+      "topic": "Overlay",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Docker overlay network driver primarily used for:",
+      "options": [
+        "Single-host bridge only",
+        "Multi-host container networking (Swarm/K8s CNI integrations)",
+        "Static linking",
+        "Replacing DNS"
+      ],
+      "answer": 1,
+      "explanation": "overlay encapsulates cross-node container traffic in distributed setups."
+    },
+    {
+      "category": "docker",
+      "topic": "iptables",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Published port -p 8080:80 creates DNAT via:",
+      "options": [
+        "Manual ssh only",
+        "docker-proxy/iptables rules forwarding host:8080 to container:80",
+        "Changes image CMD",
+        "Removes bridge"
+      ],
+      "answer": 1,
+      "explanation": "Port publishing sets up forwarding from host to container IP:port."
+    },
+    {
+      "category": "docker",
+      "topic": "Healthcheck",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "HEALTHCHECK failing status causes:",
+      "options": [
+        "Immediate image delete",
+        "Container marked unhealthy; orchestrators may restart",
+        "Network removal only",
+        "Volume wipe"
+      ],
+      "answer": 1,
+      "explanation": "Unhealthy state signals supervisors (Swarm/K8s via probes) to act."
+    },
+    {
+      "category": "docker",
+      "topic": "BuildKit",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "BuildKit cache mount RUN --mount=type=cache benefits:",
+      "options": [
+        "Slower builds",
+        "Persists package manager caches between builds without bloating final image",
+        "Only for Windows",
+        "Disables multi-stage"
+      ],
+      "answer": 1,
+      "explanation": "Cache mounts speed installs while keeping final image slim."
+    },
+    {
+      "category": "docker",
+      "topic": "seccomp",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Default Docker seccomp profile:",
+      "options": [
+        "Allows all syscalls",
+        "Blocks dangerous syscalls; can be customized",
+        "Only for privileged containers",
+        "Replaces AppArmor always"
+      ],
+      "answer": 1,
+      "explanation": "Seccomp filters syscall surface; custom profiles tighten further."
+    },
+    {
+      "category": "docker",
+      "topic": "Registry",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Image digest pull (@sha256:...) ensures:",
+      "options": [
+        "Latest tag always",
+        "Immutable content-addressed image regardless of tag movement",
+        "Smaller download",
+        "No layers"
+      ],
+      "answer": 1,
+      "explanation": "Digest pins exact manifest for reproducible deploys."
+    },
+    {
+      "category": "docker",
+      "topic": "Compose",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Compose profiles allow:",
+      "options": [
+        "Random container names",
+        "Activating optional services with --profile debug",
+        "Deleting volumes always",
+        "Only one service"
+      ],
+      "answer": 1,
+      "explanation": "Profiles enable conditional service groups in one compose file."
+    },
+    {
+      "category": "docker",
+      "topic": "cgroups v2",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "With cgroups v2, memory and CPU limits are:",
+      "options": [
+        "Ignored",
+        "Unified hierarchy controlled via cgroupfs/systemd delegation",
+        "Only for VMs",
+        "Set in Dockerfile ENV"
+      ],
+      "answer": 1,
+      "explanation": "Modern Docker uses cgroup v2 unified tree for resource limits."
+    },
+    {
+      "category": "angular",
+      "topic": "RxJS",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "How many values logged?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "Infinite"
+      ],
+      "answer": 1,
+      "explanation": "of(3) emits once; map doubles to 6; take(1) forwards that single value then completes.",
+      "code": "import { of } from 'rxjs';\nimport { map, take } from 'rxjs/operators';\nof(3).pipe(map(x => x * 2), take(1)).subscribe(console.log);"
+    },
+    {
+      "category": "angular",
+      "topic": "Templates",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "*ngIf=\"user; else guest\" — else block template requires:",
+      "options": [
+        "ng-template #guest",
+        "div #guest only",
+        "@Component guest",
+        "router-outlet"
+      ],
+      "answer": 0,
+      "explanation": "Else reference points to ng-template with matching local ref."
+    },
+    {
+      "category": "angular",
+      "topic": "RxJS",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "switchMap vs mergeMap for HTTP autocomplete — prefer switchMap because:",
+      "options": [
+        "It runs all requests in parallel always",
+        "It cancels prior inner observable when new search term arrives",
+        "It buffers all",
+        "It is slower always"
+      ],
+      "answer": 1,
+      "explanation": "switchMap unsubscribes previous inner subscription on new outer emission — avoids race."
+    },
+    {
+      "category": "angular",
+      "topic": "Change Detection",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "async pipe in template primarily:",
+      "options": [
+        "Blocks UI thread",
+        "Subscribes and marks branch for check on emit; auto-unsubscribes",
+        "Converts to Promise only",
+        "Disables OnPush"
+      ],
+      "answer": 1,
+      "explanation": "async pipe manages subscription lifecycle and triggers CD for OnPush."
+    },
+    {
+      "category": "angular",
+      "topic": "NgZone",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "runOutsideAngular used when:",
+      "options": [
+        "You need extra CD cycles",
+        "Heavy work should not trigger global change detection each tick",
+        "Routing fails",
+        "Forms invalid"
+      ],
+      "answer": 1,
+      "explanation": "Run frequent non-UI work outside zone; re-enter when updating bindings."
+    },
+    {
+      "category": "angular",
+      "topic": "ControlValueAccessor",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Custom form control integrates with reactive forms via:",
+      "options": [
+        "@Input only",
+        "Implementing ControlValueAccessor and providing NG_VALUE_ACCESSOR",
+        "HttpClient",
+        "RouterModule"
+      ],
+      "answer": 1,
+      "explanation": "CVA bridges custom UI widgets to Angular forms API."
+    },
+    {
+      "category": "angular",
+      "topic": "SSR",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Angular Universal transferState avoids:",
+      "options": [
+        "Client bootstrap",
+        "Re-fetching same API data on client after SSR HTML",
+        "Using HTTP",
+        "Components"
+      ],
+      "answer": 1,
+      "explanation": "Serialized state hydrates client without duplicate HTTP for initial data."
+    },
+    {
+      "category": "angular",
+      "topic": "Signals",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "effect() cannot write to signals that are read in the same effect without:",
+      "options": [
+        "Nothing",
+        "Potential infinite loop — use untracked() or redesign",
+        "Always allowed",
+        "Only in NgModule"
+      ],
+      "answer": 1,
+      "explanation": "Writing to dependencies inside same effect retriggers — use untracked for benign writes."
+    },
+    {
+      "category": "angular",
+      "topic": "Router",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "runGuardsAndResolvers: 'paramsOrQueryParamsChange' re-runs resolvers when:",
+      "options": [
+        "Never",
+        "Route params or query params change on same route config",
+        "Only module loads",
+        "Only on first navigation"
+      ],
+      "answer": 1,
+      "explanation": "Fine-grained control for resolver refresh without component destroy."
+    },
+    {
+      "category": "angular",
+      "topic": "Bundle",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Lazy-loaded route chunk loading failure (network) — best UX:",
+      "options": [
+        "Silent fail",
+        "Retry or error route; router error handler / custom preloading strategy",
+        "Disable lazy loading always",
+        "Delete service worker"
+      ],
+      "answer": 1,
+      "explanation": "Handle failed dynamic import with retry feedback or fallback navigation."
+    },
+    {
+      "category": "software-development",
+      "topic": "Design Patterns",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Strategy pattern intent:",
+      "options": [
+        "One instance globally",
+        "Encapsulate interchangeable algorithms behind common interface",
+        "Convert interface",
+        "Notify observers"
+      ],
+      "answer": 1,
+      "explanation": "Strategy defines family of algorithms delegating behavior at runtime."
+    },
+    {
+      "category": "software-development",
+      "topic": "Testing",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Test pyramid suggests:",
+      "options": [
+        "Most tests are slow UI E2E",
+        "Many fast unit tests, fewer integration, fewest E2E",
+        "Only manual tests",
+        "No unit tests"
+      ],
+      "answer": 1,
+      "explanation": "Pyramid favors cheap unit tests at base, minimal brittle E2E at top."
+    },
+    {
+      "category": "software-development",
+      "topic": "Event-Driven",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Eventual consistency in event-sourced systems means:",
+      "options": [
+        "No consistency ever",
+        "Readers may lag until projections catch up",
+        "Synchronous 2PC required",
+        "No events stored"
+      ],
+      "answer": 1,
+      "explanation": "Projections/read models update asynchronously after events append."
+    },
+    {
+      "category": "software-development",
+      "topic": "DDD",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Aggregate root responsibility:",
+      "options": [
+        "Map every table 1:1",
+        "Enforce invariants for cluster of entities; external refs by id only",
+        "Handle HTTP only",
+        "Replace repositories"
+      ],
+      "answer": 1,
+      "explanation": "Aggregate boundary is consistency boundary; outside references use identity."
+    },
+    {
+      "category": "software-development",
+      "topic": "CI/CD",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Blue-green deployment reduces downtime by:",
+      "options": [
+        "Deleting old version first",
+        "Switching traffic from idle (green) environment after validation",
+        "Only feature flags",
+        "Manual FTP"
+      ],
+      "answer": 1,
+      "explanation": "Two environments; cutover router/load balancer after green is healthy."
+    },
+    {
+      "category": "software-development",
+      "topic": "Threat Modeling",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "STRIDE spoofing threat mitigated often by:",
+      "options": [
+        "Ignoring auth",
+        "Strong authentication and token validation",
+        "More logging only",
+        "Bigger servers"
+      ],
+      "answer": 1,
+      "explanation": "Spoofing identity — mitigate with authn, MFA, signed tokens."
+    },
+    {
+      "category": "software-development",
+      "topic": "Contracts",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Consumer-driven contract tests verify:",
+      "options": [
+        "Database schema only",
+        "Provider meets expectations defined by consumer interactions",
+        "UI colors",
+        "Git hooks"
+      ],
+      "answer": 1,
+      "explanation": "Pact-style contracts ensure API compatibility with consumer-defined examples."
+    },
+    {
+      "category": "software-development",
+      "topic": "Latency",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Little's Law L = λW relates:",
+      "options": [
+        "CPU to RAM",
+        "Average items in system = arrival rate × average time in system",
+        "Threads to cores only",
+        "Disk to network"
+      ],
+      "answer": 1,
+      "explanation": "Queueing theory: concurrency, throughput, and residence time."
+    },
+    {
+      "category": "software-development",
+      "topic": "Feature Flags",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "Kill switch for bad release should:",
+      "options": [
+        "Require redeploy",
+        "Disable feature via flag/config without full rollback when possible",
+        "Drop database",
+        "Clear logs"
+      ],
+      "answer": 1,
+      "explanation": "Runtime flags can disable paths quickly while investigating."
+    },
+    {
+      "category": "software-development",
+      "topic": "Anti-patterns",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Distributed monolith anti-pattern means:",
+      "options": [
+        "Too many small services",
+        "Tightly coupled services requiring coordinated deploys — defeats independence",
+        "Single JVM",
+        "Using REST"
+      ],
+      "answer": 1,
+      "explanation": "Services share DB/chatty sync calls and deploy together — microservices cost without benefits."
+    }
+  ]
+}

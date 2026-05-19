@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L1 Training MCQ Practice</title>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <h1>L1 Training MCQ Practice</h1>
+      <p class="subtitle">Phases · Comprehensive Tests · Core Java · DBMS · Backend · Angular · DevOps</p>
+    </div>
+  </header>
+
+  <main id="app">
+    <section id="home-view" class="view active">
+      <div class="home-intro card">
+        <h2>Practice Modes</h2>
+        <p>Phase practice (42 MCQs each) or timed comprehensive tests (60 MCQs, 1 hour).</p>
+        <ul class="rules">
+          <li>Answers are hidden until you submit.</li>
+          <li>Tests auto-submit when the 1-hour timer ends.</li>
+          <li>Green = correct, Red = wrong in the review.</li>
+        </ul>
+      </div>
+
+      <section class="tests-section card">
+        <h2 class="section-heading">Comprehensive Tests</h2>
+        <p class="section-desc">60 questions · 1 hour · All six subject areas</p>
+        <div id="test-cards" class="test-cards"></div>
+      </section>
+
+      <h2 class="section-heading phases-heading">Topic Phases</h2>
+      <div id="phase-groups" class="phase-groups"></div>
+    </section>
+
+    <section id="test-intro-view" class="view">
+      <div class="test-intro-card card" id="test-intro-content"></div>
+      <div class="test-intro-actions">
+        <button type="button" id="btn-intro-back" class="btn btn-ghost">← Back</button>
+        <button type="button" id="btn-start-test" class="btn btn-primary">Start Test (1 Hour)</button>
+      </div>
+    </section>
+
+    <section id="quiz-view" class="view">
+      <div class="quiz-toolbar card">
+        <button type="button" id="btn-back" class="btn btn-ghost">← Back</button>
+        <div class="quiz-meta">
+          <h2 id="quiz-title"></h2>
+          <p id="quiz-topics" class="topics-list"></p>
+          <div class="quiz-stats">
+            <div id="timer-wrap" class="timer-wrap hidden">
+              <span class="timer-label">Time left</span>
+              <span id="timer-display" class="timer-display">60:00</span>
+            </div>
+            <div class="progress-wrap">
+              <span id="progress-text">0 / 0 answered</span>
+              <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form id="quiz-form" class="quiz-form"></form>
+      <div class="quiz-actions card sticky-actions">
+        <button type="button" id="btn-submit" class="btn btn-primary" disabled>Submit</button>
+        <p id="submit-hint" class="hint">All questions must be answered before submit.</p>
+      </div>
+    </section>
+
+    <section id="results-view" class="view">
+      <div class="score-card card" id="score-summary"></div>
+      <div id="review-container" class="review-container"></div>
+      <div class="results-actions">
+        <button type="button" id="btn-retry" class="btn btn-secondary">Retry</button>
+        <button type="button" id="btn-home" class="btn btn-ghost">Home</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>13 phases · 3 comprehensive tests · 726+ questions</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

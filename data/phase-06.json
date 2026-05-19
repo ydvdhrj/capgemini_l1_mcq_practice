@@ -1,0 +1,559 @@
+{
+  "questions": [
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "What is the primary purpose of JUnit in Java projects?",
+      "options": [
+        "Compile source code faster",
+        "Write and run automated unit tests",
+        "Deploy applications to servers",
+        "Generate REST API documentation"
+      ],
+      "answer": 1,
+      "explanation": "JUnit is a unit-testing framework for Java. It lets you define test methods, assert expected outcomes, and run tests as part of build pipelines (Maven/Gradle) or the IDE."
+    },
+    {
+      "topic": "JUnit",
+      "type": "annotation",
+      "question": "Which JUnit 5 annotation marks a method as a single test case?",
+      "options": [
+        "@TestClass",
+        "@RunWith",
+        "@Test",
+        "@Before"
+      ],
+      "answer": 2,
+      "explanation": "@Test (org.junit.jupiter.api.Test) identifies an executable test method. @BeforeEach/@AfterEach handle setup/teardown; @RunWith is JUnit 4 style."
+    },
+    {
+      "topic": "JUnit",
+      "type": "annotation",
+      "question": "In JUnit 5, which annotation runs once before each test method in the class?",
+      "options": [
+        "@BeforeAll",
+        "@BeforeEach",
+        "@Setup",
+        "@Init"
+      ],
+      "answer": 1,
+      "explanation": "@BeforeEach executes before every @Test. @BeforeAll runs once per class before any test (often for expensive shared setup)."
+    },
+    {
+      "topic": "JUnit",
+      "type": "code",
+      "question": "What does this assertion verify?",
+      "options": [
+        "x is greater than y",
+        "x equals y (with optional message)",
+        "The test is ignored",
+        "x is not null"
+      ],
+      "answer": 1,
+      "explanation": "assertEquals(expected, actual) checks value equality (using equals for objects). The optional message appears on failure.",
+      "code": "assertEquals(42, result, \"calculation failed\");"
+    },
+    {
+      "topic": "JUnit",
+      "type": "code",
+      "question": "How many times will the test method run?",
+      "options": [
+        "Once",
+        "Twice",
+        "Three times",
+        "Zero times (compile error)"
+      ],
+      "answer": 2,
+      "explanation": "@ParameterizedTest with @ValueSource(ints = {1, 2, 3}) runs the test once per provided value, so three executions.",
+      "code": "@ParameterizedTest\n@ValueSource(ints = {1, 2, 3})\nvoid isPositive(int n) {\n  assertTrue(n > 0);\n}"
+    },
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "What is a key benefit of using @DisplayName on tests?",
+      "options": [
+        "Skips slow tests automatically",
+        "Provides human-readable names in reports",
+        "Runs tests in parallel only",
+        "Replaces @Test entirely"
+      ],
+      "answer": 1,
+      "explanation": "@DisplayName lets you describe tests clearly in IDE and CI output instead of showing only method names like testUserLogin_failureCase."
+    },
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "When should you prefer @Disabled on a test?",
+      "options": [
+        "When the test must always run in CI",
+        "When a test is temporarily broken or not applicable",
+        "To speed up compilation",
+        "To mock dependencies"
+      ],
+      "answer": 1,
+      "explanation": "@Disabled excludes a test from execution while keeping it in the codebase—useful for flaky tests under investigation or environment-specific cases."
+    },
+    {
+      "topic": "JUnit",
+      "type": "code",
+      "question": "What exception-related assertion is most appropriate?",
+      "options": [
+        "assertNull",
+        "assertThrows",
+        "assertTimeout",
+        "assertAll"
+      ],
+      "answer": 1,
+      "explanation": "assertThrows(ExpectedException.class, () -> service.doWork()) verifies that the lambda throws the specified exception type.",
+      "code": "assertThrows(IllegalArgumentException.class,\n  () -> service.parse(\"\"));"
+    },
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "What does assertTimeout do in JUnit 5?",
+      "options": [
+        "Asserts two values are equal within a time window",
+        "Fails if the executable exceeds the given duration",
+        "Waits forever for async code",
+        "Measures code coverage"
+      ],
+      "answer": 1,
+      "explanation": "assertTimeout(Duration, Executable) fails the test if the code block runs longer than the limit—useful for performance regressions."
+    },
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "In a typical Maven project, where do unit tests live?",
+      "options": [
+        "src/main/java",
+        "src/test/java",
+        "src/integration/java",
+        "resources/test"
+      ],
+      "answer": 1,
+      "explanation": "Convention places production code under src/main/java and tests under src/test/java, compiled and run by the surefire plugin."
+    },
+    {
+      "topic": "JUnit",
+      "type": "annotation",
+      "question": "Which annotation groups related tests and can apply tags at class level in JUnit 5?",
+      "options": [
+        "@Suite",
+        "@Nested",
+        "@Group",
+        "@CategoryOnly"
+      ],
+      "answer": 1,
+      "explanation": "@Nested creates inner test classes for hierarchical organization. @Tag filters tests; @Suite composes multiple test classes."
+    },
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "What is the difference between unit tests and integration tests in backend practice?",
+      "options": [
+        "Unit tests always use a database; integration tests do not",
+        "Unit tests isolate a small unit with mocks; integration tests wire real collaborators",
+        "There is no difference",
+        "Integration tests run only on Fridays"
+      ],
+      "answer": 1,
+      "explanation": "Unit tests focus on one class or method with dependencies stubbed. Integration tests verify components together (e.g., Spring context, database)."
+    },
+    {
+      "topic": "JUnit",
+      "type": "code",
+      "question": "What will happen when this test runs (assuming list is empty)?",
+      "options": [
+        "Test passes silently",
+        "Test fails with AssertionFailedError",
+        "Compilation error",
+        "JUnit skips the test"
+      ],
+      "answer": 1,
+      "explanation": "assertFalse on an empty list returns true for isEmpty(), so the assertion fails because the condition is false.",
+      "code": "List<String> list = new ArrayList<>();\nassertFalse(list.isEmpty());"
+    },
+    {
+      "topic": "JUnit",
+      "type": "theory",
+      "question": "Why use assertAll in JUnit 5?",
+      "options": [
+        "Run tests in parallel on all CPU cores",
+        "Report all assertion failures in a group instead of stopping at the first",
+        "Disable assertions",
+        "Generate Mockito mocks"
+      ],
+      "answer": 1,
+      "explanation": "assertAll executes multiple assertions and reports every failure together—helpful when validating several fields of one object."
+    },
+    {
+      "topic": "Mockito",
+      "type": "theory",
+      "question": "What problem does Mockito solve in unit testing?",
+      "options": [
+        "Database migration",
+        "Creating test doubles (mocks) for dependencies",
+        "HTTP load balancing",
+        "JSON serialization"
+      ],
+      "answer": 1,
+      "explanation": "Mockito lets you create mock objects that simulate collaborators, define behavior with when/thenReturn, and verify interactions."
+    },
+    {
+      "topic": "Mockito",
+      "type": "code",
+      "question": "What does this line create?",
+      "options": [
+        "A real UserRepository connected to H2",
+        "A mock instance of UserRepository",
+        "A spy of an existing bean",
+        "A static mock for all tests"
+      ],
+      "answer": 1,
+      "explanation": "Mockito.mock(Class) or @Mock creates a proxy implementing the type; methods return defaults until stubbed.",
+      "code": "UserRepository repo = mock(UserRepository.class);"
+    },
+    {
+      "topic": "Mockito",
+      "type": "annotation",
+      "question": "Which JUnit 5 extension initializes @Mock fields automatically?",
+      "options": [
+        "@ExtendWith(SpringExtension.class) only",
+        "@ExtendWith(MockitoExtension.class)",
+        "@RunWith(JUnit4.class)",
+        "@EnableMocking"
+      ],
+      "answer": 1,
+      "explanation": "MockitoExtension (or @ExtendWith(MockitoExtension.class)) injects mocks and handles strict stubbing in JUnit 5 tests."
+    },
+    {
+      "topic": "Mockito",
+      "type": "code",
+      "question": "When findById(1L) is called on the mock, what does it return?",
+      "options": [
+        "null always",
+        "Optional.of(user)",
+        "Optional.empty()",
+        "Throws exception"
+      ],
+      "answer": 1,
+      "explanation": "when(...).thenReturn(...) stubs the method. Here findById(1L) returns Optional.of(user); other arguments use default (empty Optional).",
+      "code": "when(repo.findById(1L)).thenReturn(Optional.of(user));\nOptional<User> u = repo.findById(1L);"
+    },
+    {
+      "topic": "Mockito",
+      "type": "code",
+      "question": "What does verify(repo).save(user) assert?",
+      "options": [
+        "save was never called",
+        "save was called exactly once with this user",
+        "save returns user",
+        "repo is not a mock"
+      ],
+      "answer": 1,
+      "explanation": "verify checks interaction: that save(user) was invoked on the mock. Use times(n), never(), etc. for finer control.",
+      "code": "service.register(user);\nverify(repo).save(user);"
+    },
+    {
+      "topic": "Mockito",
+      "type": "theory",
+      "question": "What is the difference between mock and spy in Mockito?",
+      "options": [
+        "Spy calls real methods by default; mock does not unless stubbed",
+        "Mock always hits the database",
+        "Spy cannot verify interactions",
+        "They are identical"
+      ],
+      "answer": 0,
+      "explanation": "A spy wraps a real object and delegates to it unless a method is stubbed. A mock has no real implementation—all methods are stubbed or return defaults."
+    },
+    {
+      "topic": "Mockito",
+      "type": "code",
+      "question": "What is wrong with stubbing a void method this way?",
+      "options": [
+        "Nothing; it is correct",
+        "void methods use doNothing()/doThrow() with when or doAnswer",
+        "You must use @Spy",
+        "verify cannot be used"
+      ],
+      "answer": 1,
+      "explanation": "For void methods use doThrow(...).when(mock).method() or doNothing().when(mock).method() because thenReturn does not apply to void.",
+      "code": "when(emailService.send(any())).thenReturn(true); // void send()"
+    },
+    {
+      "topic": "Mockito",
+      "type": "theory",
+      "question": "What does ArgumentMatchers.anyString() match?",
+      "options": [
+        "Only null",
+        "Only empty string",
+        "Any String including null (with nullable matchers)",
+        "Only literal \"any\""
+      ],
+      "answer": 2,
+      "explanation": "anyString() matches any String argument when stubbing or verifying. Use nullable(Class) when null must be accepted explicitly."
+    },
+    {
+      "topic": "Mockito",
+      "type": "annotation",
+      "question": "What does @InjectMocks do?",
+      "options": [
+        "Injects Spring beans from application context",
+        "Creates an instance and injects @Mock/@Spy fields into it",
+        "Mocks static methods only",
+        "Starts embedded database"
+      ],
+      "answer": 1,
+      "explanation": "@InjectMocks constructs the class under test and tries to inject mocks into constructor/setters/fields—ideal for testing a service with mocked DAO."
+    },
+    {
+      "topic": "Mockito",
+      "type": "theory",
+      "question": "Why avoid mocking types you do not own (e.g., JDK or third-party concrete classes)?",
+      "options": [
+        "It is illegal in Java",
+        "It couples tests to implementation details and can break on upgrades; prefer wrapping or interfaces",
+        "Mockito cannot mock interfaces",
+        "Mocks are slower than real objects always"
+      ],
+      "answer": 1,
+      "explanation": "Mocking concrete libraries you do not control is fragile. Prefer your own interfaces or adapters so tests stay stable."
+    },
+    {
+      "topic": "Mockito",
+      "type": "code",
+      "question": "How many times was deleteAll called after this test logic?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "answer": 2,
+      "explanation": "verify(repo, times(2)).deleteAll() passes only if deleteAll was invoked twice. The service code must call it twice.",
+      "code": "verify(repo, times(2)).deleteAll();"
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "What role does Hibernate play in a Java application?",
+      "options": [
+        "A web server",
+        "An ORM that maps Java objects to relational tables",
+        "A message broker",
+        "A build tool"
+      ],
+      "answer": 1,
+      "explanation": "Hibernate implements JPA-style object-relational mapping: entities become rows, associations become foreign keys, and HQL/Criteria query objects."
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "What is the Hibernate Session in classic API terms?",
+      "options": [
+        "A browser HTTP session",
+        "A single-threaded workspace between app and database for CRUD and queries",
+        "A JWT token store",
+        "A Git branch"
+      ],
+      "answer": 1,
+      "explanation": "Session (now often EntityManager in JPA) tracks persistent entities, manages transactions, and synchronizes state with the database."
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "What does SessionFactory represent?",
+      "options": [
+        "One database row",
+        "A thread-safe factory expensive to create; produces Sessions/EntityManagers",
+        "A REST controller",
+        "A Mockito mock"
+      ],
+      "answer": 1,
+      "explanation": "SessionFactory is built once from configuration (XML or properties) and is heavy to create. It spawns lightweight Session instances per unit of work."
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "Which configuration file is commonly used for Hibernate settings in older setups?",
+      "options": [
+        "application.yml only",
+        "hibernate.cfg.xml or persistence.xml",
+        "pom.xml",
+        "Dockerfile"
+      ],
+      "answer": 1,
+      "explanation": "hibernate.cfg.xml (native Hibernate) or META-INF/persistence.xml (JPA) define datasource, dialect, and mapping resources."
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "What is a Hibernate dialect used for?",
+      "options": [
+        "UI theming",
+        "Generating SQL appropriate to the database vendor",
+        "Encrypting passwords",
+        "Mocking repositories"
+      ],
+      "answer": 1,
+      "explanation": "Dialect translates HQL/Criteria and DDL to vendor-specific SQL (MySQL, PostgreSQL, etc.) and handles pagination syntax differences."
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "What does hbm2ddl.auto=update typically do in development?",
+      "options": [
+        "Deletes all data on startup",
+        "Adjusts schema to match mappings (adds columns/tables; risky in production)",
+        "Disables Hibernate",
+        "Creates only indexes"
+      ],
+      "answer": 1,
+      "explanation": "update compares mappings to schema and applies incremental DDL. Never rely on it blindly in production—use migrations (Flyway/Liquibase)."
+    },
+    {
+      "topic": "Hibernate ORM",
+      "type": "theory",
+      "question": "How does Hibernate relate to JPA?",
+      "options": [
+        "They are unrelated",
+        "JPA is a specification; Hibernate is a popular implementation",
+        "JPA replaces JDBC entirely",
+        "Hibernate only works with MongoDB"
+      ],
+      "answer": 1,
+      "explanation": "JPA defines annotations and EntityManager API. Hibernate implements JPA and adds proprietary features (e.g., @Formula, extra fetch modes)."
+    },
+    {
+      "topic": "Entities",
+      "type": "annotation",
+      "question": "Which annotation marks a class as a JPA/Hibernate entity?",
+      "options": [
+        "@TableOnly",
+        "@Entity",
+        "@Component",
+        "@Repository"
+      ],
+      "answer": 1,
+      "explanation": "@Entity (javax/jakarta.persistence.Entity) declares a persistent class. @Table optionally names the table; @Id marks primary key."
+    },
+    {
+      "topic": "Entities",
+      "type": "annotation",
+      "question": "What does @Id on a field indicate?",
+      "options": [
+        "The field is optional",
+        "Primary key column for the entity",
+        "Foreign key only",
+        "Transient field"
+      ],
+      "answer": 1,
+      "explanation": "@Id designates the primary key. Combine with @GeneratedValue for identity/sequence/table strategies."
+    },
+    {
+      "topic": "Entities",
+      "type": "annotation",
+      "question": "Which strategy generates numeric keys using database IDENTITY columns?",
+      "options": [
+        "GenerationType.SEQUENCE",
+        "GenerationType.IDENTITY",
+        "GenerationType.UUID",
+        "GenerationType.MANUAL only"
+      ],
+      "answer": 1,
+      "explanation": "IDENTITY uses auto-increment (MySQL AUTO_INCREMENT, SQL Server IDENTITY). SEQUENCE uses a separate sequence object common in Oracle/PostgreSQL."
+    },
+    {
+      "topic": "Entities",
+      "type": "annotation",
+      "question": "What does @Column(name = \"email_addr\") do?",
+      "options": [
+        "Creates a new table",
+        "Maps the field to column email_addr",
+        "Marks field read-only in UI",
+        "Enables caching"
+      ],
+      "answer": 1,
+      "explanation": "@Column customizes column name, length, nullable, unique constraints. Default name is field name unless overridden."
+    },
+    {
+      "topic": "Entities",
+      "type": "theory",
+      "question": "What is the difference between transient and persistent entity state?",
+      "options": [
+        "Transient is in memory only, not associated with a Session; persistent is managed and tracked",
+        "They are the same",
+        "Persistent means deleted",
+        "Transient means cached in Redis"
+      ],
+      "answer": 0,
+      "explanation": "New objects are transient until persisted (save). Persistent entities are attached to a persistence context; detached after Session closes."
+    },
+    {
+      "topic": "Mappings",
+      "type": "annotation",
+      "question": "Which mapping describes a many-to-one association from Order to Customer?",
+      "options": [
+        "@OneToMany on Order.customer",
+        "@ManyToOne on Order.customer",
+        "@ManyToMany on Order only",
+        "@Embedded on Customer"
+      ],
+      "answer": 1,
+      "explanation": "@ManyToOne places the foreign key on the owning side (Order table has customer_id). @OneToMany is the inverse on Customer."
+    },
+    {
+      "topic": "Mappings",
+      "type": "annotation",
+      "question": "In @OneToMany(mappedBy = \"department\"), what does mappedBy mean?",
+      "options": [
+        "This side owns the foreign key",
+        "The other entity owns the relationship; this is the inverse side",
+        "Maps to a database view",
+        "Uses eager fetch always"
+      ],
+      "answer": 1,
+      "explanation": "mappedBy points to the field on the child that owns the FK. The child (@ManyToOne) side owns the association in bidirectional mappings."
+    },
+    {
+      "topic": "Mappings",
+      "type": "annotation",
+      "question": "What does @JoinColumn specify?",
+      "options": [
+        "Java package name",
+        "Foreign key column details on the owning side",
+        "HTTP path",
+        "Cache region name"
+      ],
+      "answer": 1,
+      "explanation": "@JoinColumn(name = \"dept_id\") defines FK column name and optional referencedColumnName for @ManyToOne/@OneToOne owning side."
+    },
+    {
+      "topic": "Mappings",
+      "type": "annotation",
+      "question": "When should you use @Embedded and @Embeddable?",
+      "options": [
+        "For many-to-many only",
+        "To map a value object (e.g., Address) into columns of the parent table",
+        "To create stored procedures",
+        "For REST DTOs only"
+      ],
+      "answer": 1,
+      "explanation": "@Embeddable types flatten into the parent table columns (street, city) without a separate Address table—good for composite value objects."
+    },
+    {
+      "topic": "Mappings",
+      "type": "annotation",
+      "question": "What does @ManyToMany with @JoinTable define?",
+      "options": [
+        "A single-column primary key",
+        "A join table linking two entities",
+        "A Hibernate cache region",
+        "A Spring bean"
+      ],
+      "answer": 1,
+      "explanation": "@JoinTable names the link table and join columns for both sides. Many-to-many often needs explicit ownership and fetch strategy."
+    }
+  ]
+}

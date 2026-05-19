@@ -1,0 +1,555 @@
+{
+  "id": "phase-03",
+  "title": "Java APIs: Objects, I/O, Collections, Concurrency",
+  "questions": [
+    {
+      "topic": "Object/String",
+      "type": "code",
+      "question": "What does \"Java\".length() return?",
+      "options": [
+        "3",
+        "4",
+        "5",
+        "Compile error"
+      ],
+      "answer": 1,
+      "explanation": "length() counts char units: J-a-v-a = 4."
+    },
+    {
+      "topic": "Object/String",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "true",
+        "false",
+        "Compile error",
+        "null"
+      ],
+      "answer": 0,
+      "explanation": "String literals may be interned in the pool, so == can be true for same literal content.",
+      "code": "public class S {\n  public static void main(String[] args) {\n    String a = \"hi\";\n    String b = \"hi\";\n    System.out.println(a == b);\n  }\n}"
+    },
+    {
+      "topic": "Object/String",
+      "type": "theory",
+      "question": "String.equals compares:",
+      "options": [
+        "Reference identity only",
+        "Length only",
+        "Hash codes only",
+        "Character sequence content"
+      ],
+      "answer": 3,
+      "explanation": "String.equals compares content; == compares references."
+    },
+    {
+      "topic": "Object/String",
+      "type": "code",
+      "question": "What does new StringBuilder(\"ab\").append(\"c\").toString() yield?",
+      "options": [
+        "abc",
+        "ab c",
+        "Compile error",
+        "ab"
+      ],
+      "answer": 0,
+      "explanation": "StringBuilder mutates then toString returns abc."
+    },
+    {
+      "topic": "Exceptions",
+      "type": "theory",
+      "question": "Which is unchecked?",
+      "options": [
+        "IOException",
+        "SQLException",
+        "NullPointerException",
+        "ClassNotFoundException"
+      ],
+      "answer": 2,
+      "explanation": "NullPointerException extends RuntimeException."
+    },
+    {
+      "topic": "Exceptions",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "AB",
+        "A only",
+        "B only",
+        "No output"
+      ],
+      "answer": 0,
+      "explanation": "Exception caught prints A; finally always runs printing B.",
+      "code": "public class E {\n  public static void main(String[] args) {\n    try {\n      int x = 1 / 0;\n    } catch (ArithmeticException e) {\n      System.out.print(\"A\");\n    } finally {\n      System.out.print(\"B\");\n    }\n  }\n}"
+    },
+    {
+      "topic": "Exceptions",
+      "type": "theory",
+      "question": "try-with-resources requires resources to implement:",
+      "options": [
+        "Closeable or AutoCloseable",
+        "Serializable only",
+        "Runnable",
+        "Cloneable"
+      ],
+      "answer": 0,
+      "explanation": "AutoCloseable enables automatic close."
+    },
+    {
+      "topic": "File I/O",
+      "type": "theory",
+      "question": "java.nio.file.Path is obtained commonly via:",
+      "options": [
+        "FileReader.path()",
+        "new FileInputStream(Path)",
+        "System.path()",
+        "Paths.get(...) or Path.of(...)"
+      ],
+      "answer": 3,
+      "explanation": "NIO Path factories are Paths.get / Path.of."
+    },
+    {
+      "topic": "File I/O",
+      "type": "practical",
+      "question": "Reading all lines from a text file in modern Java often uses:",
+      "options": [
+        "Files.readAllLines(path)",
+        "File.read()",
+        "InputStream.readLine()",
+        "String.readFile()"
+      ],
+      "answer": 0,
+      "explanation": "Files.readAllLines reads entire file into List<String>."
+    },
+    {
+      "topic": "Generics",
+      "type": "theory",
+      "question": "List<String> list = new ArrayList<>(); uses:",
+      "options": [
+        "Raw types",
+        "Diamond operator type inference",
+        "Wildcard capture",
+        "Erasure elimination"
+      ],
+      "answer": 1,
+      "explanation": "<> lets compiler infer ArrayList<String> from left-hand side."
+    },
+    {
+      "topic": "Generics",
+      "type": "code",
+      "question": "Which compiles?",
+      "options": [
+        "List<int> nums = new ArrayList<>();",
+        "List<?> wild = new ArrayList<Object>(); wild.add(\"x\");",
+        "List<? extends Number> n = new ArrayList<Integer>();",
+        "List<String> a = new ArrayList<Integer>();"
+      ],
+      "answer": 2,
+      "explanation": "extends wildcard allows assignment from ArrayList<Integer>; others fail."
+    },
+    {
+      "topic": "Collections",
+      "type": "theory",
+      "question": "HashSet iteration order is:",
+      "options": [
+        "Insertion order guaranteed",
+        "Sorted order",
+        "Not guaranteed",
+        "Reverse insertion"
+      ],
+      "answer": 2,
+      "explanation": "HashSet does not maintain insertion order."
+    },
+    {
+      "topic": "Collections",
+      "type": "code",
+      "question": "What does Map.of(\"a\", 1, \"b\", 2).get(\"a\") return?",
+      "options": [
+        "Optional[1]",
+        "2",
+        "null",
+        "1"
+      ],
+      "answer": 3,
+      "explanation": "Immutable map factory returns 1 for key a."
+    },
+    {
+      "topic": "Collections",
+      "type": "theory",
+      "question": "ArrayList get(int) complexity is:",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n log n)"
+      ],
+      "answer": 0,
+      "explanation": "Random access by index on ArrayList is constant time."
+    },
+    {
+      "topic": "Streams",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "6",
+        "123",
+        "3",
+        "Compile error"
+      ],
+      "answer": 0,
+      "explanation": "Stream sum of 1+2+3 is 6.",
+      "code": "import java.util.*;\npublic class St {\n  public static void main(String[] args) {\n    int sum = Arrays.asList(1,2,3).stream().mapToInt(x->x).sum();\n    System.out.println(sum);\n  }\n}"
+    },
+    {
+      "topic": "Streams",
+      "type": "theory",
+      "question": "Terminal operations on a Stream:",
+      "options": [
+        "Can be chained after another terminal",
+        "Produce a result or side-effect and close the pipeline",
+        "Are always lazy",
+        "Cannot throw exceptions"
+      ],
+      "answer": 1,
+      "explanation": "Terminal ops trigger processing; stream should not be reused."
+    },
+    {
+      "topic": "Regex",
+      "type": "code",
+      "question": "Does \"cat123\".matches(\"cat\\\\d+\")?",
+      "options": [
+        "true",
+        "false",
+        "Compile error in matches",
+        "Only if case insensitive"
+      ],
+      "answer": 0,
+      "explanation": "\\d+ means one or more digits; cat123 matches."
+    },
+    {
+      "topic": "Regex",
+      "type": "theory",
+      "question": "Pattern.compile(\"a.b\") matches:",
+      "options": [
+        "Only ab literally",
+        "nothing",
+        "a.*b multiline only",
+        "a followed by any char then b"
+      ],
+      "answer": 3,
+      "explanation": ". is any char except line terminator by default."
+    },
+    {
+      "topic": "Multithreading",
+      "type": "theory",
+      "question": "Starting a new thread correctly uses:",
+      "options": [
+        "Thread.start()",
+        "Thread.run() alone for a new OS thread",
+        "Runnable.begin()",
+        "Process.fork()"
+      ],
+      "answer": 0,
+      "explanation": "start() creates new thread; run() alone runs on current thread."
+    },
+    {
+      "topic": "Multithreading",
+      "type": "code",
+      "question": "What is a risk of unsynchronized counter++ from multiple threads?",
+      "options": [
+        "Lost updates/race conditions",
+        "Compile error always",
+        "Automatic locking",
+        "GC failure"
+      ],
+      "answer": 0,
+      "explanation": "++ is read-modify-write not atomic without synchronization."
+    },
+    {
+      "topic": "Object/String",
+      "type": "code",
+      "question": "What does String.format(\"%d\", 3.9) do?",
+      "options": [
+        "Prints 3",
+        "Prints 4",
+        "IllegalFormatConversionException",
+        "Prints 3.9"
+      ],
+      "answer": 2,
+      "explanation": "%d expects integral; double 3.9 throws IllegalFormatConversionException."
+    },
+    {
+      "topic": "Object/String",
+      "type": "theory",
+      "question": "Object.equals default behavior (before override) is:",
+      "options": [
+        "Content equality",
+        "Same as == reference equality",
+        "Compares hashCode",
+        "Always false"
+      ],
+      "answer": 1,
+      "explanation": "Object.equals defaults to reference identity."
+    },
+    {
+      "topic": "Exceptions",
+      "type": "code",
+      "question": "Can catch(IOException e) appear before catch(Exception e)?",
+      "options": [
+        "Yes always",
+        "If exceptions are unchecked only",
+        "Only in finally",
+        "No; more specific catch must come first"
+      ],
+      "answer": 3,
+      "explanation": "Subclass/specific exceptions must appear before general ones."
+    },
+    {
+      "topic": "Exceptions",
+      "type": "theory",
+      "question": "throw vs throws:",
+      "options": [
+        "Identical keywords",
+        "throw raises an exception; throws declares checked exceptions on method",
+        "throws raises; throw declares",
+        "Both declare only"
+      ],
+      "answer": 1,
+      "explanation": "throw is statement; throws is method signature clause."
+    },
+    {
+      "topic": "File I/O",
+      "type": "code",
+      "question": "BufferedReader is often wrapped around:",
+      "options": [
+        "FileReader or InputStreamReader",
+        "FileWriter only",
+        "PrintStream",
+        "SocketChannel exclusively"
+      ],
+      "answer": 0,
+      "explanation": "BufferedReader decorates character input readers."
+    },
+    {
+      "topic": "Generics",
+      "type": "theory",
+      "question": "Type erasure means at runtime:",
+      "options": [
+        "List<String> and List<Integer> share the same raw List type",
+        "Generics remain fully reified",
+        "Wildcards become primitives",
+        "No List exists"
+      ],
+      "answer": 0,
+      "explanation": "Generic type parameters are erased at runtime."
+    },
+    {
+      "topic": "Collections",
+      "type": "code",
+      "question": "Which collection forbids duplicate elements by Set contract?",
+      "options": [
+        "ArrayList",
+        "HashSet",
+        "PriorityQueue always allows duplicates as Set",
+        "LinkedList as Set"
+      ],
+      "answer": 1,
+      "explanation": "Set implementations enforce uniqueness."
+    },
+    {
+      "topic": "Collections",
+      "type": "theory",
+      "question": "TreeMap keeps entries:",
+      "options": [
+        "In insertion order",
+        "By value only",
+        "Unordered",
+        "Sorted by key natural order/comparator"
+      ],
+      "answer": 3,
+      "explanation": "Red-black tree orders keys."
+    },
+    {
+      "topic": "Streams",
+      "type": "code",
+      "question": "filter(x -> x % 2 == 0) on [1,2,3,4] then count() equals:",
+      "options": [
+        "2",
+        "4",
+        "1",
+        "0"
+      ],
+      "answer": 0,
+      "explanation": "Even elements 2 and 4 give count 2."
+    },
+    {
+      "topic": "Streams",
+      "type": "practical",
+      "question": "parallelStream() may help when:",
+      "options": [
+        "Tasks are large CPU-bound with little shared mutable state",
+        "Single-element list always",
+        "Strict global order required for all side effects",
+        "Many threads write one unsynchronized file handle"
+      ],
+      "answer": 0,
+      "explanation": "Parallel helps sizable CPU work without contention."
+    },
+    {
+      "topic": "Regex",
+      "type": "code",
+      "question": "\"aaaa\".replaceAll(\"a+\", \"b\") becomes:",
+      "options": [
+        "b",
+        "bbbb",
+        "aba",
+        "aaaa"
+      ],
+      "answer": 0,
+      "explanation": "Greedy a+ matches all a's replaced by single b."
+    },
+    {
+      "topic": "Multithreading",
+      "type": "theory",
+      "question": "synchronized provides:",
+      "options": [
+        "Mutual exclusion and visibility for monitors",
+        "Faster than volatile always",
+        "Distributed locking across JVMs",
+        "Guaranteed deadlock freedom"
+      ],
+      "answer": 0,
+      "explanation": "Intrinsic lock excludes concurrent entry and establishes happens-before."
+    },
+    {
+      "topic": "Multithreading",
+      "type": "code",
+      "question": "ExecutorService.submit(Callable) returns:",
+      "options": [
+        "void",
+        "Thread",
+        "Optional",
+        "Future"
+      ],
+      "answer": 3,
+      "explanation": "submit yields Future to retrieve result later."
+    },
+    {
+      "topic": "Exceptions",
+      "type": "practical",
+      "question": "catch(IOException | SQLException e) requires:",
+      "options": [
+        "Exceptions in union must be unrelated",
+        "No duplicate types; no subclass-superclass pair in union",
+        "Both unchecked",
+        "finally not allowed"
+      ],
+      "answer": 1,
+      "explanation": "Multi-catch alternatives cannot be related by inheritance."
+    },
+    {
+      "topic": "File I/O",
+      "type": "theory",
+      "question": "Files.writeString(path, text) (Java 11+) by default encodes as:",
+      "options": [
+        "ISO-8859-1",
+        "UTF-8",
+        "UTF-16",
+        "ASCII only"
+      ],
+      "answer": 1,
+      "explanation": "writeString defaults to UTF-8."
+    },
+    {
+      "topic": "Generics",
+      "type": "code",
+      "question": "To add elements to a generic collection parameter, PECS suggests:",
+      "options": [
+        "? extends T",
+        "? super T",
+        "?",
+        "raw List"
+      ],
+      "answer": 1,
+      "explanation": "Consumer super: ? super T allows adding T."
+    },
+    {
+      "topic": "Collections",
+      "type": "code",
+      "question": "Queue.poll() on an empty LinkedList used as queue returns:",
+      "options": [
+        "null",
+        "throws NoSuchElementException",
+        "0",
+        "Optional.empty only"
+      ],
+      "answer": 0,
+      "explanation": "poll returns null when empty; element() throws."
+    },
+    {
+      "topic": "Streams",
+      "type": "theory",
+      "question": "Collectors.toList() in Java 8 typically produces:",
+      "options": [
+        "Immutable list",
+        "Primitive array",
+        "Set",
+        "Mutable ArrayList"
+      ],
+      "answer": 3,
+      "explanation": "toList collector yields mutable list implementation."
+    },
+    {
+      "topic": "Regex",
+      "type": "theory",
+      "question": "Anchors ^ and $ match:",
+      "options": [
+        "Start and end of line/input (mode dependent)",
+        "Any digit",
+        "Word boundary only",
+        "Literal caret always"
+      ],
+      "answer": 0,
+      "explanation": "^ start, $ end (MULTILINE affects line vs entire input)."
+    },
+    {
+      "topic": "Multithreading",
+      "type": "code",
+      "question": "volatile ensures:",
+      "options": [
+        "Atomicity of i++",
+        "Visibility of writes across threads",
+        "Replaces all synchronized blocks",
+        "Thread ordering"
+      ],
+      "answer": 1,
+      "explanation": "volatile establishes visibility; does not make i++ atomic."
+    },
+    {
+      "topic": "Object/String",
+      "type": "practical",
+      "question": "Comparing strings by content should use:",
+      "options": [
+        "==",
+        "equals (or equalsIgnoreCase if needed)",
+        "compareTo only for identity",
+        "hashCode alone"
+      ],
+      "answer": 1,
+      "explanation": "equals compares characters; == compares references."
+    },
+    {
+      "topic": "Multithreading",
+      "type": "theory",
+      "question": "Thread.sleep(millis) can throw:",
+      "options": [
+        "IOException",
+        "InterruptedException",
+        "NullPointerException always",
+        "ClassCastException"
+      ],
+      "answer": 1,
+      "explanation": "sleep declares InterruptedException."
+    }
+  ]
+}

@@ -1,0 +1,551 @@
+{
+  "questions": [
+    {
+      "topic": "INNER JOIN",
+      "type": "code",
+      "question": "What does an INNER JOIN return?",
+      "options": [
+        "All rows from both tables regardless of match",
+        "Only rows where the join condition matches in both tables",
+        "All rows from the left table and NULLs for the right",
+        "Only rows from the table listed first"
+      ],
+      "answer": 1,
+      "explanation": "INNER JOIN keeps only matching pairs satisfying ON/WHERE join predicates. Non-matching rows from either side are excluded."
+    },
+    {
+      "topic": "LEFT JOIN",
+      "type": "code",
+      "question": "Given customers (all) LEFT JOIN orders ON customer_id, customers with no orders appear as:",
+      "options": [
+        "Included with NULL order columns",
+        "Duplicated once per missing order",
+        "Only if INNER JOIN is also used",
+        "Excluded from results"
+      ],
+      "answer": 0,
+      "explanation": "LEFT JOIN preserves all left-table rows. Unmatched right-side columns are padded with NULL."
+    },
+    {
+      "topic": "RIGHT JOIN",
+      "type": "code",
+      "question": "RIGHT JOIN is equivalent to:",
+      "options": [
+        "CROSS JOIN with a filter",
+        "FULL OUTER JOIN in MySQL natively",
+        "INNER JOIN with reversed tables",
+        "LEFT JOIN with swapped table order"
+      ],
+      "answer": 3,
+      "explanation": "A RIGHT JOIN b ON ... equals b LEFT JOIN a ON ... MySQL has no native FULL OUTER JOIN."
+    },
+    {
+      "topic": "CROSS JOIN",
+      "type": "code",
+      "question": "SELECT * FROM A CROSS JOIN B with |A|=3 and |B|=4 returns how many rows?",
+      "options": [
+        "12",
+        "3",
+        "4",
+        "7"
+      ],
+      "answer": 0,
+      "explanation": "CROSS JOIN is the Cartesian product: every row of A paired with every row of B → 3 × 4 = 12."
+    },
+    {
+      "topic": "SELF JOIN",
+      "type": "code",
+      "question": "A SELF JOIN is used to:",
+      "options": [
+        "Join a table to itself using aliases",
+        "Join two unrelated databases",
+        "Automatically create indexes",
+        "Replace subqueries entirely"
+      ],
+      "answer": 0,
+      "explanation": "SELF JOIN treats one table as two via aliases, e.g., employee to manager in the same employees table."
+    },
+    {
+      "topic": "JOIN",
+      "type": "code",
+      "question": "Which finds customers who placed at least one order?",
+      "options": [
+        "SELECT DISTINCT c.* FROM customers c INNER JOIN orders o ON c.id = o.customer_id;",
+        "SELECT c.* FROM customers c CROSS JOIN orders o;",
+        "SELECT c.* FROM customers c RIGHT JOIN orders o ON 1=0;",
+        "SELECT c.* FROM customers c LEFT JOIN orders o ON c.id = o.customer_id WHERE o.id IS NULL;"
+      ],
+      "answer": 0,
+      "explanation": "INNER JOIN returns only customers with matching orders. LEFT JOIN ... IS NULL finds customers with NO orders."
+    },
+    {
+      "topic": "Subqueries",
+      "type": "code",
+      "question": "What is a subquery?",
+      "options": [
+        "An index on a foreign key",
+        "A trigger fired before INSERT",
+        "A query nested inside another query",
+        "A stored procedure parameter"
+      ],
+      "answer": 2,
+      "explanation": "Subqueries appear in SELECT, FROM, WHERE, etc., and execute as part of the outer query."
+    },
+    {
+      "topic": "Subqueries",
+      "type": "code",
+      "question": "Which uses a subquery correctly to find employees earning above average salary?",
+      "options": [
+        "SELECT AVG(salary) FROM employees WHERE salary > salary;",
+        "SELECT * FROM employees WHERE salary > AVG(salary);",
+        "SELECT * FROM employees WHERE salary > (SELECT AVG(salary) FROM employees);",
+        "SELECT * FROM employees HAVING salary > AVG(salary);"
+      ],
+      "answer": 2,
+      "explanation": "AVG(salary) is an aggregate over the whole table and must be computed in a subquery (or CTE) for row-wise comparison."
+    },
+    {
+      "topic": "Subqueries",
+      "type": "code",
+      "question": "A subquery in the FROM clause is often called a:",
+      "options": [
+        "Inline view / derived table",
+        "Primary key",
+        "Checkpoint",
+        "Shard"
+      ],
+      "answer": 0,
+      "explanation": "FROM (SELECT ...) AS alias creates a derived table usable like any other table in the outer query."
+    },
+    {
+      "topic": "EXISTS",
+      "type": "code",
+      "question": "SELECT * FROM dept d WHERE EXISTS (SELECT 1 FROM emp e WHERE e.dept_id = d.id); returns departments that:",
+      "options": [
+        "Have at least one employee",
+        "Have exactly one employee",
+        "Have the highest budget",
+        "Have no employees"
+      ],
+      "answer": 0,
+      "explanation": "EXISTS is TRUE when the subquery returns any row. Matching employees make the department appear."
+    },
+    {
+      "topic": "EXISTS",
+      "type": "code",
+      "question": "NOT EXISTS is often preferred over NOT IN when the subquery column:",
+      "options": [
+        "Is a primary key only",
+        "Is always constant",
+        "Is indexed",
+        "May contain NULLs (NOT IN behavior becomes tricky)"
+      ],
+      "answer": 3,
+      "explanation": "NOT IN with NULLs in the subquery result can yield UNKNOWN and filter unexpectedly. NOT EXISTS handles NULLs safely."
+    },
+    {
+      "topic": "CASE",
+      "type": "code",
+      "question": "What does this expression return for salary 15000?",
+      "code": "CASE\n  WHEN salary < 10000 THEN 'Junior'\n  WHEN salary < 20000 THEN 'Mid'\n  ELSE 'Senior'\nEND",
+      "options": [
+        "NULL",
+        "Junior",
+        "Mid",
+        "Senior"
+      ],
+      "answer": 2,
+      "explanation": "15000 satisfies salary < 20000 (second branch). First branch fails; ELSE not reached."
+    },
+    {
+      "topic": "COALESCE",
+      "type": "code",
+      "question": "COALESCE(phone, email, 'N/A') returns:",
+      "options": [
+        "The first NULL argument",
+        "The first non-NULL argument left to right",
+        "Concatenation of all arguments",
+        "Always 'N/A'"
+      ],
+      "answer": 1,
+      "explanation": "COALESCE returns the first non-NULL value. If phone and email are NULL, returns 'N/A'."
+    },
+    {
+      "topic": "Views",
+      "type": "theory",
+      "question": "A view in MySQL is:",
+      "options": [
+        "A saved query presenting data like a virtual table",
+        "An index on multiple columns",
+        "A transaction log file",
+        "A physical copy of data stored separately"
+      ],
+      "answer": 0,
+      "explanation": "Views store the SELECT definition; rows are computed at query time (unless materialized, which MySQL does not do natively like some systems)."
+    },
+    {
+      "topic": "Views",
+      "type": "code",
+      "question": "CREATE VIEW active_users AS SELECT * FROM users WHERE status = 'active'; allows:",
+      "options": [
+        "Bypassing all permissions always",
+        "Storing triggers inside the view file on disk",
+        "Querying active_users like a table",
+        "Automatic backup of users"
+      ],
+      "answer": 2,
+      "explanation": "Views are queried with SELECT. Updatable views have restrictions. Permissions still apply; views are catalog objects, not arbitrary files."
+    },
+    {
+      "topic": "Indexes",
+      "type": "theory",
+      "question": "The primary benefit of an index on a frequently filtered column is:",
+      "options": [
+        "Elimination of all full table scans always",
+        "Guaranteed smaller row size",
+        "Faster lookups and range scans at cost of extra storage and write overhead",
+        "Automatic normalization to 3NF"
+      ],
+      "answer": 2,
+      "explanation": "Indexes speed reads but must be maintained on INSERT/UPDATE/DELETE. Optimizer may still choose full scans for small tables or low selectivity."
+    },
+    {
+      "topic": "Indexes",
+      "type": "theory",
+      "question": "A UNIQUE index ensures:",
+      "options": [
+        "No two rows have the same value in the indexed column(s)",
+        "The column cannot contain NULL",
+        "The table has only one index",
+        "Queries never need WHERE clause"
+      ],
+      "answer": 0,
+      "explanation": "UNIQUE allows multiple NULLs in MySQL (NULL != NULL for uniqueness checks). It does not limit index count."
+    },
+    {
+      "topic": "Constraints",
+      "type": "code",
+      "question": "FOREIGN KEY (dept_id) REFERENCES departments(id) enforces:",
+      "options": [
+        "dept_id values must exist in departments.id (or be NULL if allowed)",
+        "departments can be dropped while employees reference them without error",
+        "Automatic index on departments.name",
+        "dept_id must be unique globally across all tables"
+      ],
+      "answer": 0,
+      "explanation": "Foreign keys enforce referential integrity to parent keys. Dropping referenced parents typically fails unless CASCADE is defined."
+    },
+    {
+      "topic": "Constraints",
+      "type": "code",
+      "question": "CHECK (price > 0) on a products table:",
+      "options": [
+        "Indexes price automatically in all versions",
+        "Replaces NOT NULL on price",
+        "Rejects inserts/updates with non-positive price (when enforced)",
+        "Creates a primary key on price"
+      ],
+      "answer": 2,
+      "explanation": "CHECK constraints validate row data. MySQL 8.0.16+ enforces CHECK; older versions parsed but ignored them."
+    },
+    {
+      "topic": "Transactions",
+      "type": "theory",
+      "question": "In ACID, 'A' stands for Atomicity, meaning:",
+      "options": [
+        "Schema changes are versioned",
+        "All operations in a transaction succeed or none persist",
+        "Data is always available during failures",
+        "Concurrent transactions never conflict"
+      ],
+      "answer": 1,
+      "explanation": "Atomicity: transaction is all-or-nothing. Availability relates to CAP; isolation handles concurrency; schema versioning is separate."
+    },
+    {
+      "topic": "Transactions",
+      "type": "theory",
+      "question": "Isolation prevents:",
+      "options": [
+        "Dirty reads, non-repeatable reads, and phantom reads (depending on level)",
+        "All use of indexes",
+        "Any form of JOIN",
+        "DDL statements entirely"
+      ],
+      "answer": 0,
+      "explanation": "Isolation levels (READ UNCOMMITTED through SERIALIZABLE) control visibility of concurrent changes. They do not ban JOINs or DDL categorically."
+    },
+    {
+      "topic": "Transactions",
+      "type": "code",
+      "question": "After ROLLBACK, uncommitted changes in the current transaction are:",
+      "options": [
+        "Undone",
+        "Visible to all users",
+        "Moved to a view",
+        "Committed to disk"
+      ],
+      "answer": 0,
+      "explanation": "ROLLBACK reverses changes made since the last COMMIT or transaction start."
+    },
+    {
+      "topic": "Normalization",
+      "type": "theory",
+      "question": "First Normal Form (1NF) requires:",
+      "options": [
+        "No transitive dependencies",
+        "Boyce-Codd key constraints only",
+        "No repeating groups; atomic column values",
+        "No partial dependencies on composite keys"
+      ],
+      "answer": 2,
+      "explanation": "1NF: atomic values, no repeating groups. 2NF removes partial dependencies; 3NF removes transitive dependencies; BCNF strengthens key dependencies."
+    },
+    {
+      "topic": "Normalization",
+      "type": "theory",
+      "question": "A table with columns (student_id, course_id, course_name) where course_name depends only on course_id violates:",
+      "options": [
+        "Only BCNF",
+        "1NF only",
+        "2NF if (student_id, course_id) is the key",
+        "No normal form rules"
+      ],
+      "answer": 2,
+      "explanation": "course_name depends on part of composite key (course_id only) → partial dependency → not 2NF. Split Course table to fix."
+    },
+    {
+      "topic": "Normalization",
+      "type": "theory",
+      "question": "Third Normal Form (3NF) eliminates:",
+      "options": [
+        "Repeating groups",
+        "Partial dependencies",
+        "Transitive dependencies on non-key attributes",
+        "All JOINs in queries"
+      ],
+      "answer": 2,
+      "explanation": "3NF: no non-key attribute depends transitively on the key. JOINs remain necessary to recombine normalized data."
+    },
+    {
+      "topic": "Normalization",
+      "type": "theory",
+      "question": "BCNF is stricter than 3NF when:",
+      "options": [
+        "Tables have no primary keys",
+        "All columns are VARCHAR",
+        "Only one row exists",
+        "Every determinant is a candidate key"
+      ],
+      "answer": 3,
+      "explanation": "BCNF requires every functional determinant to be a superkey. Some 3NF tables fail BCNF when overlapping candidate keys exist."
+    },
+    {
+      "topic": "OLTP vs OLAP",
+      "type": "theory",
+      "question": "OLTP workloads typically involve:",
+      "options": [
+        "Read-only CSV imports exclusively",
+        "Schema-less document storage only",
+        "Short transactional reads/writes on normalized schemas",
+        "Bulk historical aggregations on denormalized star schemas only"
+      ],
+      "answer": 2,
+      "explanation": "OLTP handles day-to-day transactions (orders, payments). OLAP focuses on analytical queries over large historical datasets."
+    },
+    {
+      "topic": "OLTP vs OLAP",
+      "type": "theory",
+      "question": "OLAP systems are optimized for:",
+      "options": [
+        "Disabling indexes",
+        "High-volume single-row INSERT latency",
+        "Complex aggregations and reporting across many rows",
+        "Enforcing row-level locks on every SELECT"
+      ],
+      "answer": 2,
+      "explanation": "OLAP favors scan-heavy analytics, often on columnar or denormalized models. OLTP favors quick transactional operations."
+    },
+    {
+      "topic": "Star Schema",
+      "type": "theory",
+      "question": "In a star schema, the fact table:",
+      "options": [
+        "Contains descriptive attributes like customer name only",
+        "Stores measurable metrics and foreign keys to dimension tables",
+        "Replaces all indexes",
+        "Must be in 1NF only with repeating groups"
+      ],
+      "answer": 1,
+      "explanation": "Fact tables hold measures (sales_amount, quantity) and keys to dimensions (date, product, store). Descriptive attributes live in dimensions."
+    },
+    {
+      "topic": "Star Schema",
+      "type": "theory",
+      "question": "Dimension tables in a star schema are typically:",
+      "options": [
+        "Empty placeholders",
+        "Always wider than fact tables in row count",
+        "Only stored as JSON blobs",
+        "Denormalized with descriptive attributes for filtering/grouping"
+      ],
+      "answer": 3,
+      "explanation": "Dimensions denormalize labels (product name, category) for simpler analytic queries. Facts usually have far more rows than dimensions."
+    },
+    {
+      "topic": "Stored Procedures",
+      "type": "code",
+      "question": "A stored procedure in MySQL is:",
+      "options": [
+        "An ER diagram export",
+        "A client-side JavaScript function only",
+        "A precompiled collection of SQL/statements stored in the database",
+        "A type of index"
+      ],
+      "answer": 2,
+      "explanation": "Stored procedures persist in the DB and can encapsulate logic, accept parameters, and reduce round trips."
+    },
+    {
+      "topic": "Stored Procedures",
+      "type": "code",
+      "question": "CALL get_employee(5); executes:",
+      "options": [
+        "A DDL migration script",
+        "A stored procedure named get_employee with argument 5",
+        "A SELECT on table CALL",
+        "An automatic COMMIT only"
+      ],
+      "answer": 1,
+      "explanation": "CALL invokes a stored procedure. Arguments map to procedure parameters."
+    },
+    {
+      "topic": "Triggers",
+      "type": "code",
+      "question": "A BEFORE INSERT trigger runs:",
+      "options": [
+        "After the row is written to disk",
+        "Before the insert operation, allowing validation or modification",
+        "Only on SELECT statements",
+        "Only when the server starts"
+      ],
+      "answer": 1,
+      "explanation": "BEFORE triggers fire prior to the triggering event; can validate or set NEW column values. AFTER triggers run following the event."
+    },
+    {
+      "topic": "Triggers",
+      "type": "theory",
+      "question": "Triggers are commonly used to:",
+      "options": [
+        "Replace all foreign keys",
+        "Speed up every SELECT by 10x guaranteed",
+        "Avoid transactions entirely",
+        "Enforce audit logging or derived updates automatically"
+      ],
+      "answer": 3,
+      "explanation": "Triggers automate actions on DML events (audit trails, maintaining summary tables). Overuse can complicate debugging and performance."
+    },
+    {
+      "topic": "Events",
+      "type": "code",
+      "question": "MySQL EVENT (Event Scheduler) is used to:",
+      "options": [
+        "Replace JOIN syntax",
+        "Create primary keys automatically",
+        "Run scheduled SQL at defined times or intervals",
+        "Handle user click events in the browser"
+      ],
+      "answer": 2,
+      "explanation": "Events schedule recurring jobs (cleanup, rollups). Requires event_scheduler enabled. Unrelated to frontend UI events."
+    },
+    {
+      "topic": "Events",
+      "type": "theory",
+      "question": "To use MySQL scheduled events, you typically need:",
+      "options": [
+        "A CROSS JOIN in every query",
+        "event_scheduler = ON and appropriate privileges",
+        "Only a SELECT privilege",
+        "Disabling InnoDB"
+      ],
+      "answer": 1,
+      "explanation": "The Event Scheduler must be enabled (SET GLOBAL event_scheduler = ON) and the user needs EVENT privilege."
+    },
+    {
+      "topic": "FULL OUTER JOIN",
+      "type": "theory",
+      "question": "How do you simulate FULL OUTER JOIN in MySQL (which lacks native syntax)?",
+      "options": [
+        "Use LEFT JOIN UNION RIGHT JOIN with deduplication logic",
+        "Use CROSS JOIN only",
+        "Use GROUP BY only",
+        "It is impossible to combine unmatched rows from both sides"
+      ],
+      "answer": 0,
+      "explanation": "UNION of LEFT JOIN and RIGHT JOIN (excluding duplicates from inner matches) approximates FULL OUTER JOIN."
+    },
+    {
+      "topic": "Subqueries",
+      "type": "code",
+      "question": "Correlated subquery means:",
+      "options": [
+        "The subquery runs exactly once always",
+        "The subquery cannot appear in WHERE",
+        "The subquery must return multiple columns always",
+        "The inner query references columns from the outer query"
+      ],
+      "answer": 3,
+      "explanation": "Correlated subqueries depend on outer row values and are re-evaluated per outer row (conceptually), unlike independent subqueries."
+    },
+    {
+      "topic": "Indexes",
+      "type": "theory",
+      "question": "A composite index on (last_name, first_name) best supports filters on:",
+      "options": [
+        "Any column order without prefix",
+        "Only ORDER BY RAND()",
+        "first_name alone always equally",
+        "last_name alone or last_name and first_name together (left-prefix rule)"
+      ],
+      "answer": 3,
+      "explanation": "B-tree composite indexes follow left-prefix: useful for last_name, or last_name + first_name, not typically first_name alone."
+    },
+    {
+      "topic": "Transactions",
+      "type": "theory",
+      "question": "Durability in ACID means:",
+      "options": [
+        "Views are automatically refreshed",
+        "Committed data survives crashes after recovery",
+        "Transactions are always serial",
+        "No locks are ever taken"
+      ],
+      "answer": 1,
+      "explanation": "Once committed, changes persist via redo logs and storage even if the server crashes (recovery replays committed work)."
+    },
+    {
+      "topic": "CASE",
+      "type": "code",
+      "question": "Simple CASE: CASE status WHEN 'A' THEN 1 WHEN 'I' THEN 0 END differs from searched CASE because:",
+      "options": [
+        "Simple CASE compares status to each WHEN value for equality",
+        "Simple CASE cannot return numbers",
+        "Searched CASE only works in HAVING",
+        "They are identical in all cases"
+      ],
+      "answer": 0,
+      "explanation": "Simple CASE is shorthand for equality checks. Searched CASE uses arbitrary boolean WHEN conditions."
+    },
+    {
+      "topic": "JOIN",
+      "type": "code",
+      "question": "SELECT * FROM a NATURAL JOIN b joins tables on:",
+      "options": [
+        "Primary key of a only",
+        "Random columns chosen by optimizer",
+        "Every column regardless of name",
+        "All columns with the same name in both tables"
+      ],
+      "answer": 3,
+      "explanation": "NATURAL JOIN equijoins all identically named columns. Can produce unexpected results if extra同名 columns exist; explicit ON is usually clearer."
+    }
+  ]
+}

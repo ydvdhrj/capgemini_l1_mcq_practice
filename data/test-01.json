@@ -1,0 +1,913 @@
+{
+  "id": "test-01",
+  "title": "Comprehensive Test 1 — Mixed Difficulty",
+  "toughness": "Mixed — Easy, Medium & Hard",
+  "durationMinutes": 60,
+  "questions": [
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which keyword declares a class that cannot be subclassed?",
+      "options": [
+        "extends",
+        "implements",
+        "final",
+        "static"
+      ],
+      "answer": 2,
+      "explanation": "The final keyword on a class prevents inheritance. extends/implements relate to inheritance; static is unrelated."
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "What is the default value of an uninitialized int field in a Java object?",
+      "options": [
+        "0",
+        "null",
+        "undefined",
+        "-1"
+      ],
+      "answer": 0,
+      "explanation": "Primitive int fields default to 0. null applies only to reference types."
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "easy",
+      "type": "code",
+      "question": "What does this code print?",
+      "options": [
+        "5",
+        "6",
+        "Compile error",
+        "Runtime error"
+      ],
+      "answer": 0,
+      "explanation": "Post-increment (i++) returns the old value (5) then increments i.",
+      "code": "public class Demo {\n  public static void main(String[] args) {\n    int i = 5;\n    System.out.println(i++);\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which statement about Java interfaces (Java 8+) is correct?",
+      "options": [
+        "Interfaces can have private instance methods callable from default methods",
+        "All interface methods must be public abstract",
+        "Interfaces cannot extend other interfaces",
+        "default methods must be static"
+      ],
+      "answer": 0,
+      "explanation": "Java 8+ allows default and static methods; private instance methods were added in Java 9 for code reuse inside interfaces."
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What is printed?",
+      "options": [
+        "true",
+        "false",
+        "Compile error",
+        "RuntimeException"
+      ],
+      "answer": 1,
+      "explanation": "String literals are interned; == compares references. new String(\"hi\") creates a distinct heap object.",
+      "code": "public class Eq {\n  public static void main(String[] args) {\n    String a = \"hi\";\n    String b = new String(\"hi\");\n    System.out.println(a == b);\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which collection guarantees insertion order and allows duplicates?",
+      "options": [
+        "HashSet",
+        "TreeSet",
+        "ArrayList",
+        "PriorityQueue"
+      ],
+      "answer": 2,
+      "explanation": "ArrayList maintains insertion order. HashSet/TreeSet are Set implementations; PriorityQueue orders by priority, not insertion."
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "A method declares `throws IOException` but the caller does not handle or declare it. What happens?",
+      "options": [
+        "Compiles; IOException is unchecked",
+        "Compile-time error",
+        "Runs but logs a warning",
+        "JVM wraps it in RuntimeException automatically"
+      ],
+      "answer": 1,
+      "explanation": "IOException is a checked exception; callers must catch it or declare throws. Unchecked exceptions need no handling."
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "What is the output?",
+      "options": [
+        "[A, B]",
+        "[A]",
+        "UnsupportedOperationException at runtime",
+        "Compile error"
+      ],
+      "answer": 2,
+      "explanation": "Arrays.asList returns a fixed-size list backed by the array; structural modifications throw UnsupportedOperationException.",
+      "code": "import java.util.*;\npublic class L {\n  public static void main(String[] args) {\n    List<String> list = Arrays.asList(\"A\", \"B\");\n    list.add(\"C\");\n    System.out.println(list);\n  }\n}"
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "In polymorphism, which binding applies when invoking an overridden instance method through a superclass reference?",
+      "options": [
+        "Static binding at compile time based on reference type",
+        "Dynamic binding at runtime based on actual object type",
+        "Binding is undefined for overridden methods",
+        "Only private methods use dynamic binding"
+      ],
+      "answer": 1,
+      "explanation": "Instance method calls are virtually dispatched: the JVM selects the implementation from the runtime object's class."
+    },
+    {
+      "category": "core-java",
+      "topic": "Core Java",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Which is true about try-with-resources?",
+      "options": [
+        "Resources must implement AutoCloseable",
+        "catch blocks are mandatory",
+        "finally always runs before close()",
+        "It cannot be used with multiple resources"
+      ],
+      "answer": 0,
+      "explanation": "try-with-resources requires AutoCloseable (or Closeable). Multiple resources are supported; close runs in reverse order after try/catch/finally."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which SQL clause filters rows before grouping?",
+      "options": [
+        "HAVING",
+        "WHERE",
+        "ORDER BY",
+        "GROUP BY"
+      ],
+      "answer": 1,
+      "explanation": "WHERE filters rows before aggregation. HAVING filters groups after GROUP BY."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "A primary key column must be:",
+      "options": [
+        "Nullable and non-unique",
+        "Unique and not null",
+        "A foreign key",
+        "Always an integer"
+      ],
+      "answer": 1,
+      "explanation": "Primary keys uniquely identify rows and cannot be NULL."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which normal form removes partial dependency on a composite key?",
+      "options": [
+        "1NF",
+        "2NF",
+        "3NF",
+        "BCNF"
+      ],
+      "answer": 1,
+      "explanation": "Second normal form (2NF) eliminates partial dependencies of non-key attributes on part of a composite primary key."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "What does ACID stand for in transactions?",
+      "options": [
+        "Atomicity, Consistency, Isolation, Durability",
+        "Availability, Consistency, Integrity, Distribution",
+        "Atomicity, Concurrency, Indexing, Durability",
+        "Authentication, Consistency, Isolation, Data"
+      ],
+      "answer": 0,
+      "explanation": "ACID: Atomicity (all-or-nothing), Consistency (valid state), Isolation (concurrent safety), Durability (committed survives failure)."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "How many rows does this INNER JOIN return if Orders has 3 rows (all with valid customer_id) and Customers has 2 matching customers?",
+      "options": [
+        "2",
+        "3",
+        "6",
+        "0"
+      ],
+      "answer": 1,
+      "explanation": "INNER JOIN returns matching combinations; each order row joins its customer once, so 3 rows.",
+      "code": "SELECT o.id FROM Orders o\nINNER JOIN Customers c ON o.customer_id = c.id;"
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which isolation level prevents dirty reads but allows non-repeatable reads?",
+      "options": [
+        "READ UNCOMMITTED",
+        "READ COMMITTED",
+        "REPEATABLE READ",
+        "SERIALIZABLE"
+      ],
+      "answer": 1,
+      "explanation": "READ COMMITTED blocks dirty reads. Non-repeatable reads can still occur when another transaction updates a row you re-read."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "You need to list employees who have no department assignment. Which pattern is correct?",
+      "options": [
+        "INNER JOIN departments",
+        "LEFT JOIN departments WHERE departments.id IS NULL",
+        "CROSS JOIN departments",
+        "WHERE departments.id = 0"
+      ],
+      "answer": 1,
+      "explanation": "LEFT JOIN keeps all employees; filtering WHERE dept side IS NULL finds rows with no match (no department)."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "A table is in 3NF but has a determinant that is not a superkey (non-trivial FD X→Y where X is not a superkey). What applies?",
+      "options": [
+        "Still BCNF",
+        "Violates BCNF; may need decomposition",
+        "Violates 1NF only",
+        "No normalization issue"
+      ],
+      "answer": 1,
+      "explanation": "BCNF requires every determinant in a functional dependency to be a superkey. 3NF can still violate BCNF in edge cases."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Two transactions both read balance=100, add 50, write 150 without proper isolation. What anomaly occurred?",
+      "options": [
+        "Dirty read",
+        "Lost update",
+        "Phantom read only",
+        "Deadlock only"
+      ],
+      "answer": 1,
+      "explanation": "Lost update: concurrent reads and writes overwrite each other; one increment is lost without locking or serializable isolation."
+    },
+    {
+      "category": "dbms",
+      "topic": "DBMS",
+      "difficulty": "hard",
+      "type": "code",
+      "question": "Which query returns the second-highest salary using standard SQL (no LIMIT tricks on empty sets)?",
+      "options": [
+        "SELECT MAX(salary) FROM emp WHERE salary < (SELECT MAX(salary) FROM emp)",
+        "SELECT salary FROM emp ORDER BY salary LIMIT 1 OFFSET 1",
+        "SELECT TOP 2 salary FROM emp",
+        "SELECT MIN(salary) FROM emp"
+      ],
+      "answer": 0,
+      "explanation": "Nested MAX finds the maximum below the overall max, i.e. second highest. LIMIT/OFFSET works but option A is portable subquery style.",
+      "code": "-- employees(salary)\n-- 100, 200, 300 => returns 200"
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "In Spring Boot, which annotation marks the main application entry class?",
+      "options": [
+        "@Controller",
+        "@SpringBootApplication",
+        "@Entity",
+        "@Autowired"
+      ],
+      "answer": 1,
+      "explanation": "@SpringBootApplication combines @Configuration, @EnableAutoConfiguration, and @ComponentScan."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which HTTP method is idempotent and typically used to retrieve a resource?",
+      "options": [
+        "POST",
+        "GET",
+        "PATCH",
+        "CONNECT"
+      ],
+      "answer": 1,
+      "explanation": "GET is safe and idempotent for reads. POST creates; PATCH may be non-idempotent depending on semantics."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "What does ORM stand for in Hibernate context?",
+      "options": [
+        "Object-Relational Mapping",
+        "Open Resource Model",
+        "Operational Risk Management",
+        "Ordered Record Merge"
+      ],
+      "answer": 0,
+      "explanation": "Hibernate maps Java objects to relational tables and handles persistence operations."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which Spring annotation injects dependencies by type when multiple beans exist and one is marked primary?",
+      "options": [
+        "@Resource only",
+        "@Autowired with @Qualifier or @Primary",
+        "@Transactional",
+        "@RequestMapping"
+      ],
+      "answer": 1,
+      "explanation": "@Autowired resolves by type; @Qualifier disambiguates. @Primary designates a default bean when multiple candidates exist."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "In REST, what status code should represent successful resource creation?",
+      "options": [
+        "200 OK",
+        "201 Created",
+        "204 No Content",
+        "302 Found"
+      ],
+      "answer": 1,
+      "explanation": "201 Created indicates a new resource was created, often with a Location header. 200 is generic success; 204 has no body."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which Hibernate fetch strategy loads associated collection when the parent entity is loaded?",
+      "options": [
+        "Lazy (default for collections)",
+        "Eager always for all associations",
+        "Fetch is not configurable",
+        "Only @Transactional controls fetch"
+      ],
+      "answer": 0,
+      "explanation": "Collections default to LAZY; they load when accessed inside an active session. EAGER loads immediately with parent."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "A @RestController method returns an object. Which component serializes it to JSON by default in Spring Boot?",
+      "options": [
+        "HttpMessageConverter (Jackson)",
+        "JSP view resolver",
+        "Hibernate Session",
+        "FilterChain only"
+      ],
+      "answer": 0,
+      "explanation": "MappingJackson2HttpMessageConverter (Jackson) serializes @ResponseBody return values to JSON when Accept/content-type is JSON."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Spring Security filter chain runs before which component handles @RequestMapping?",
+      "options": [
+        "DispatcherServlet",
+        "EntityManager",
+        "DataSource",
+        "Tomcat APR"
+      ],
+      "answer": 0,
+      "explanation": "Security filters execute in the servlet container chain before requests reach DispatcherServlet and controller methods."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Why is `@Transactional` on a private method often ineffective in Spring?",
+      "options": [
+        "Spring uses JDK proxy/CGLIB on the bean; self-invocation bypasses the proxy",
+        "Private methods are always transactional",
+        "Hibernate ignores private methods",
+        "Transactions require public static methods only"
+      ],
+      "answer": 0,
+      "explanation": "Transactional advice applies via proxy. Calling a private @Transactional method from within the same class bypasses the proxy."
+    },
+    {
+      "category": "backend",
+      "topic": "Backend",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "JWT access tokens stored only in localStorage are criticized because:",
+      "options": [
+        "They expire too quickly",
+        "XSS can steal tokens from browser storage",
+        "They cannot contain claims",
+        "Servers cannot validate them"
+      ],
+      "answer": 1,
+      "explanation": "localStorage is accessible to JavaScript; XSS attacks can exfiltrate tokens. HttpOnly cookies mitigate XSS token theft."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "What is a Docker image?",
+      "options": [
+        "A running process",
+        "A read-only template for containers",
+        "A volume mount",
+        "A Git branch"
+      ],
+      "answer": 1,
+      "explanation": "Images are immutable templates; containers are runnable instances of images."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which command lists running containers?",
+      "options": [
+        "docker images",
+        "docker ps",
+        "docker build",
+        "docker pull"
+      ],
+      "answer": 1,
+      "explanation": "docker ps shows running containers; docker images lists images."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "In Git, which command creates a new branch and switches to it?",
+      "options": [
+        "git merge",
+        "git checkout -b feature",
+        "git stash pop",
+        "git revert HEAD"
+      ],
+      "answer": 1,
+      "explanation": "git checkout -b (or git switch -c) creates and checks out a branch. merge combines histories."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "What is the purpose of a Docker volume?",
+      "options": [
+        "Store images on disk",
+        "Persist data outside the container writable layer",
+        "Replace Dockerfile",
+        "Encrypt container traffic"
+      ],
+      "answer": 1,
+      "explanation": "Volumes persist data independently of container lifecycle, surviving container removal unless explicitly deleted."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "Which Dockerfile instruction sets the default command when a container starts?",
+      "options": [
+        "FROM",
+        "CMD or ENTRYPOINT",
+        "EXPOSE only",
+        "MAINTAINER"
+      ],
+      "answer": 1,
+      "explanation": "CMD/ENTRYPOINT define what runs at container start. FROM sets base image; EXPOSE documents ports."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "What does `docker compose up -d` do?",
+      "options": [
+        "Deletes all volumes",
+        "Starts services defined in compose file in detached mode",
+        "Builds images without starting",
+        "Pushes to registry"
+      ],
+      "answer": 1,
+      "explanation": "-d runs containers in the background. compose up creates/starts services per docker-compose.yml."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which Git command safely updates your feature branch with latest main without a merge commit?",
+      "options": [
+        "git push --force",
+        "git rebase main",
+        "git reset --hard origin/main",
+        "git clean -fd"
+      ],
+      "answer": 1,
+      "explanation": "Rebase replays commits on top of main for linear history. force push and hard reset are destructive if misused."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Multi-stage Docker builds primarily help by:",
+      "options": [
+        "Running multiple containers in one process",
+        "Separating build dependencies from a smaller runtime image",
+        "Eliminating the need for .dockerignore",
+        "Making containers privileged"
+      ],
+      "answer": 1,
+      "explanation": "Build stages compile artifacts in one image and copy only outputs to a slim runtime stage, reducing attack surface and size."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "hard",
+      "type": "practical",
+      "question": "A container cannot reach a service on the host machine at localhost:5432. On Linux, a common fix is:",
+      "options": [
+        "Use host.docker.internal or host network mode where supported",
+        "Change PostgreSQL to port 80 only",
+        "Remove bridge networking entirely always",
+        "Set CMD to localhost"
+      ],
+      "answer": 0,
+      "explanation": "Inside a container, localhost is the container itself. host.docker.internal (or --network host on Linux) reaches the host."
+    },
+    {
+      "category": "docker",
+      "topic": "Docker",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Which statement about image layers is correct?",
+      "options": [
+        "Each Dockerfile instruction can create a layer; shared layers are cached and reused",
+        "Layers are writable at runtime in running containers",
+        "docker pull always rebuilds from scratch ignoring cache",
+        "Images cannot share layers between repositories"
+      ],
+      "answer": 0,
+      "explanation": "Union filesystem layers stack read-only; build cache reuses unchanged layers. Container writable layer is separate."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which decorator marks a class as an Angular component?",
+      "options": [
+        "@Injectable",
+        "@Component",
+        "@NgModule",
+        "@Pipe"
+      ],
+      "answer": 1,
+      "explanation": "@Component defines template, selector, and styles. @NgModule groups declarations."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which module is required for template-driven forms (ngModel)?",
+      "options": [
+        "FormsModule",
+        "HttpClientModule",
+        "RouterModule only",
+        "BrowserModule only"
+      ],
+      "answer": 0,
+      "explanation": "FormsModule provides NgModel and template-driven form directives. Reactive forms use ReactiveFormsModule."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "What does the Angular router use to navigate between views?",
+      "options": [
+        "URL paths and route configuration",
+        "Only localStorage keys",
+        "SQL queries",
+        "Docker compose"
+      ],
+      "answer": 0,
+      "explanation": "RouterModule maps paths to components via routes array and routerLink/router.navigate."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "In reactive forms, which class represents a single control with validators?",
+      "options": [
+        "FormGroup",
+        "FormControl",
+        "FormArray only",
+        "NgForm"
+      ],
+      "answer": 1,
+      "explanation": "FormControl tracks value and validation for one field. FormGroup aggregates controls."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "medium",
+      "type": "code",
+      "question": "What binding syntax passes a number (not string) to a child @Input()?",
+      "options": [
+        "value=\"42\"",
+        "[value]=\"42\"",
+        "(value)=\"42\"",
+        "*value=\"42\""
+      ],
+      "answer": 1,
+      "explanation": "Property binding [value]=\"42\" passes number 42. value=\"42\" passes string \"42\"."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "HttpClient GET returns what type by default?",
+      "options": [
+        "Promise<string>",
+        "Observable of the response body",
+        "XMLHttpRequest sync",
+        "BehaviorSubject"
+      ],
+      "answer": 1,
+      "explanation": "HttpClient methods return Observables; subscribe or async pipe consumes them."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "medium",
+      "type": "practical",
+      "question": "A route should load a module lazily. Which configuration is correct?",
+      "options": [
+        "{ path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }",
+        "{ path: 'admin', component: AdminModule }",
+        "{ path: '**', redirectTo: 'admin' } only",
+        "{ path: 'admin', providers: [AdminModule] }"
+      ],
+      "answer": 0,
+      "explanation": "loadChildren with dynamic import enables lazy loading and smaller initial bundle."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "What is the purpose of Angular's async pipe?",
+      "options": [
+        "Subscribes to Observables/Promises in template and unsubscribes automatically",
+        "Makes HTTP synchronous",
+        "Replaces HttpClient",
+        "Compiles TypeScript"
+      ],
+      "answer": 0,
+      "explanation": "async pipe handles subscribe/unsubscribe in templates, reducing memory leaks from forgotten subscriptions."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Change detection runs and a child uses OnPush. When will the child update?",
+      "options": [
+        "Never",
+        "When @Input references change, events originate in child, or async pipe emits",
+        "On every browser tick globally always",
+        "Only on route change"
+      ],
+      "answer": 1,
+      "explanation": "OnPush checks inputs by reference, events from component/subtree, and async pipe updates— not every parent change by default."
+    },
+    {
+      "category": "angular",
+      "topic": "Angular",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "An HTTP interceptor should add an auth header. Where is it registered?",
+      "options": [
+        "providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }]",
+        "declarations array",
+        "bootstrapModule exports",
+        "styles.scss"
+      ],
+      "answer": 0,
+      "explanation": "HTTP_INTERCEPTORS multi-provider registers interceptors in the HttpClient chain."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "Which SDLC phase typically produces requirements and scope documents?",
+      "options": [
+        "Deployment only",
+        "Planning / Requirements",
+        "Maintenance only",
+        "Coding only"
+      ],
+      "answer": 1,
+      "explanation": "Early phases capture requirements and planning before design and implementation."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "In Agile Scrum, who owns prioritizing the product backlog?",
+      "options": [
+        "Scrum Master",
+        "Product Owner",
+        "Every developer equally",
+        "QA lead only"
+      ],
+      "answer": 1,
+      "explanation": "The Product Owner maximizes value and orders backlog items. Scrum Master facilitates process."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "The 'S' in SOLID stands for:",
+      "options": [
+        "Single Responsibility Principle",
+        "Simple Singleton Pattern",
+        "Secure Socket Layer",
+        "Static Service Locator"
+      ],
+      "answer": 0,
+      "explanation": "Single Responsibility: a class should have one reason to change."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "easy",
+      "type": "theory",
+      "question": "In the testing pyramid, which layer is usually the largest?",
+      "options": [
+        "Unit tests",
+        "E2E UI tests only",
+        "Manual tests only",
+        "Production monitoring"
+      ],
+      "answer": 0,
+      "explanation": "Pyramid favors many fast unit tests, fewer integration tests, and few slow E2E tests."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Open/Closed Principle means:",
+      "options": [
+        "Open source only; closed source forbidden",
+        "Open for extension, closed for modification",
+        "All classes must be final",
+        "APIs must use POST only"
+      ],
+      "answer": 1,
+      "explanation": "Software entities should be extendable without modifying existing tested code (e.g. via interfaces/strategy)."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Which is a REST constraint?",
+      "options": [
+        "Stateful server session required for every call",
+        "Uniform interface (e.g. resources identified by URIs)",
+        "SOAP envelope mandatory",
+        "Binary-only payloads"
+      ],
+      "answer": 1,
+      "explanation": "REST emphasizes statelessness, uniform interface, cacheability, layered system, and optional code-on-demand."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "Factory Method pattern is used to:",
+      "options": [
+        "Execute SQL faster",
+        "Delegate object creation to subclasses or helpers",
+        "Replace all interfaces",
+        "Disable polymorphism"
+      ],
+      "answer": 1,
+      "explanation": "Factory Method lets subclasses decide which concrete product to instantiate, decoupling client from concrete types."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "medium",
+      "type": "theory",
+      "question": "CI/CD pipeline 'continuous integration' primarily means:",
+      "options": [
+        "Deploying to production once a year",
+        "Frequently merging code and running automated builds/tests",
+        "Only manual QA sign-off",
+        "Disabling version control"
+      ],
+      "answer": 1,
+      "explanation": "CI integrates changes often with automated build/test feedback. CD extends toward automated delivery/deployment."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Liskov Substitution Principle implies:",
+      "options": [
+        "Subtypes must be substitutable for base types without breaking program correctness",
+        "All inheritance is banned",
+        "Subclasses may throw new checked exceptions arbitrarily widening contracts",
+        "Private methods override public ones"
+      ],
+      "answer": 0,
+      "explanation": "Subtypes must honor the behavioral contract of the base type; strengthening preconditions or weakening postconditions violates LSP."
+    },
+    {
+      "category": "software-development",
+      "topic": "Software Development",
+      "difficulty": "hard",
+      "type": "theory",
+      "question": "Dependency Inversion Principle suggests:",
+      "options": [
+        "High-level modules depend on abstractions, not concrete low-level details",
+        "Main() must import every concrete class",
+        "Databases must be hard-coded in UI",
+        "Globals are preferred over injection"
+      ],
+      "answer": 0,
+      "explanation": "Depend on interfaces/abstractions; details implement those abstractions. Enables testability and flexibility."
+    }
+  ]
+}

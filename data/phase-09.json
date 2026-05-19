@@ -1,0 +1,554 @@
+{
+  "questions": [
+    {
+      "topic": "Spring Boot REST",
+      "type": "theory",
+      "question": "What does spring-boot-starter-web bring to a project?",
+      "options": [
+        "Only JPA",
+        "Spring MVC, embedded Tomcat, Jackson for REST",
+        "Only RabbitMQ",
+        "Angular CLI"
+      ],
+      "answer": 1,
+      "explanation": "starter-web bundles MVC, Jackson JSON, validation API, and embedded servlet container for REST applications."
+    },
+    {
+      "topic": "Spring Boot REST",
+      "type": "annotation",
+      "question": "What does @SpringBootApplication combine?",
+      "options": [
+        "@Entity and @Table",
+        "@Configuration, @EnableAutoConfiguration, @ComponentScan",
+        "@Feign and @Eureka",
+        "@Test only"
+      ],
+      "answer": 1,
+      "explanation": "@SpringBootApplication is a convenience meta-annotation enabling auto-config and component scanning from the main class package."
+    },
+    {
+      "topic": "Spring Boot REST",
+      "type": "theory",
+      "question": "What is spring-boot-starter-data-jpa?",
+      "options": [
+        "CSS framework",
+        "Spring Data JPA, Hibernate, JDBC starter for repositories",
+        "Security only",
+        "Gateway router"
+      ],
+      "answer": 1,
+      "explanation": "It pulls Hibernate as JPA provider, Spring Data repositories, and transaction management for database access."
+    },
+    {
+      "topic": "JPA Repository",
+      "type": "annotation",
+      "question": "What does JpaRepository<T, ID> extend?",
+      "options": [
+        "HttpServlet",
+        "PagingAndSortingRepository and QueryByExampleExecutor among others",
+        "RabbitTemplate",
+        "JwtDecoder"
+      ],
+      "answer": 1,
+      "explanation": "JpaRepository adds flush, batch delete, and JPA-specific methods atop CrudRepository and PagingAndSortingRepository."
+    },
+    {
+      "topic": "JPA Repository",
+      "type": "code",
+      "question": "How is this method implemented?",
+      "options": [
+        "Manual SQL in XML only",
+        "Spring Data derives query from method name findByLastName",
+        "Compiler magic only",
+        "Not supported"
+      ],
+      "answer": 1,
+      "explanation": "Query derivation parses findByLastName → WHERE lastName = ?. Custom queries use @Query JPQL or native SQL.",
+      "code": "List<User> findByLastName(String lastName);"
+    },
+    {
+      "topic": "JPA Repository",
+      "type": "annotation",
+      "question": "What does @Modifying on repository method indicate?",
+      "options": [
+        "Read-only query",
+        "UPDATE or DELETE query that changes data; often needs @Transactional",
+        "Creates new table",
+        "Feign call"
+      ],
+      "answer": 1,
+      "explanation": "@Modifying with @Query for UPDATE/DELETE requires clearAutomatically/flush and transactional context."
+    },
+    {
+      "topic": "JPA Repository",
+      "type": "annotation",
+      "question": "What does @Query(value=\"...\", nativeQuery=true) do?",
+      "options": [
+        "JPQL only",
+        "Executes SQL directly against database",
+        "Calls REST API",
+        "Starts Eureka"
+      ],
+      "answer": 1,
+      "explanation": "nativeQuery=true runs vendor SQL. JPQL (default false) operates on entity names and fields."
+    },
+    {
+      "topic": "Security Filter Chain",
+      "type": "theory",
+      "question": "What is Spring Security filter chain?",
+      "options": [
+        "JUnit test chain",
+        "Ordered servlet filters handling authn/authz before reaching DispatcherServlet",
+        "Hibernate cache chain",
+        "Git hooks"
+      ],
+      "answer": 1,
+      "explanation": "SecurityFilterChain beans configure filters for session, JWT, CSRF, authorization rules on each request."
+    },
+    {
+      "topic": "Security Filter Chain",
+      "type": "theory",
+      "question": "Where does UsernamePasswordAuthenticationFilter sit conceptually?",
+      "options": [
+        "After response sent",
+        "Processes login form/basic auth and creates Authentication",
+        "Replaces database",
+        "Only in Angular"
+      ],
+      "answer": 1,
+      "explanation": "It attempts authentication from credentials and delegates to AuthenticationManager; success stores SecurityContext."
+    },
+    {
+      "topic": "JWT Basics",
+      "type": "theory",
+      "question": "What are typical JWT sections?",
+      "options": [
+        "Header, Payload, Signature",
+        "Only password hash",
+        "SQL, HTML, CSS",
+        "Topic, Type, Question"
+      ],
+      "answer": 0,
+      "explanation": "JWT is header.algorithm + payload.claims + signature. Server verifies signature with secret/public key."
+    },
+    {
+      "topic": "JWT Basics",
+      "type": "theory",
+      "question": "Should sensitive data be stored unencrypted in JWT payload?",
+      "options": [
+        "Yes, always",
+        "No—payload is Base64-encoded not encrypted; anyone can read claims",
+        "JWT encrypts automatically",
+        "Only in dev"
+      ],
+      "answer": 1,
+      "explanation": "JWTs are signed for integrity, not confidential by default. Use HTTPS and minimal claims; short expiry."
+    },
+    {
+      "topic": "JWT Basics",
+      "type": "code",
+      "question": "What validates JWT on each request in stateless APIs?",
+      "options": [
+        "@Entity",
+        "OncePerRequestFilter or oauth2ResourceServer JWT decoder in filter chain",
+        "@Scheduled",
+        "Pageable"
+      ],
+      "answer": 1,
+      "explanation": "BearerTokenAuthenticationFilter or custom filter parses Authorization: Bearer <token>, validates signature and expiry.",
+      "code": "// Filter extracts Bearer token, sets SecurityContext"
+    },
+    {
+      "topic": "@PreAuthorize",
+      "type": "annotation",
+      "question": "What does @PreAuthorize(\"hasRole('ADMIN')\") require?",
+      "options": [
+        "Nothing",
+        "@EnableMethodSecurity and method intercepted by AOP",
+        "Only @Entity",
+        "RabbitMQ"
+      ],
+      "answer": 1,
+      "explanation": "Enable method security (@EnableMethodSecurity). SpEL in @PreAuthorize checks roles/authorities before method runs."
+    },
+    {
+      "topic": "@PreAuthorize",
+      "type": "annotation",
+      "question": "Difference between hasRole('USER') and hasAuthority('ROLE_USER')?",
+      "options": [
+        "Identical always",
+        "hasRole adds ROLE_ prefix implicitly; hasAuthority matches exact string",
+        "hasRole is for JWT only",
+        "hasAuthority is deprecated"
+      ],
+      "answer": 1,
+      "explanation": "hasRole('USER') checks ROLE_USER authority. hasAuthority('ROLE_USER') is explicit—know your granted authority strings."
+    },
+    {
+      "topic": "Spring Security",
+      "type": "theory",
+      "question": "What is Authentication vs Authorization?",
+      "options": [
+        "Same thing",
+        "Authentication proves identity; authorization decides access rights",
+        "Authz is login form",
+        "Authn is JWT only"
+      ],
+      "answer": 1,
+      "explanation": "Authentication (who are you) precedes authorization (what you may do)—roles, scopes, @PreAuthorize rules."
+    },
+    {
+      "topic": "Eureka",
+      "type": "theory",
+      "question": "What is Netflix Eureka used for in microservices?",
+      "options": [
+        "ORM",
+        "Service registry: instances register and clients discover service locations",
+        "Message broker",
+        "CSS framework"
+      ],
+      "answer": 1,
+      "explanation": "Eureka server holds service instance metadata; clients heartbeat and fetch registry for load-balanced calls."
+    },
+    {
+      "topic": "Eureka",
+      "type": "annotation",
+      "question": "Which annotation enables Eureka client registration?",
+      "options": [
+        "@EnableEurekaClient or @EnableDiscoveryClient",
+        "@EnableWebMvc",
+        "@Entity",
+        "@RabbitListener"
+      ],
+      "answer": 0,
+      "explanation": "Spring Cloud Netflix uses @EnableDiscoveryClient (preferred) to register with Eureka or other registries."
+    },
+    {
+      "topic": "Feign",
+      "type": "theory",
+      "question": "What is OpenFeign in Spring Cloud?",
+      "options": [
+        "Database driver",
+        "Declarative REST client interface with annotations mapping to HTTP calls",
+        "Unit test library",
+        "View template"
+      ],
+      "answer": 1,
+      "explanation": "@FeignClient(name=\"order-service\") interface methods become HTTP requests with load balancing via discovery."
+    },
+    {
+      "topic": "Feign",
+      "type": "annotation",
+      "question": "What does @FeignClient(\"inventory-service\") need at runtime?",
+      "options": [
+        "Manual socket code",
+        "Service discovery or explicit URL; Feign + LoadBalancer",
+        "Only JPA",
+        "Thymeleaf"
+      ],
+      "answer": 1,
+      "explanation": "Feign resolves service name through Eureka/Consul or url attribute. @EnableFeignClients scans interfaces."
+    },
+    {
+      "topic": "Gateway",
+      "type": "theory",
+      "question": "What is Spring Cloud Gateway's primary role?",
+      "options": [
+        "JPA provider",
+        "API gateway: routing, filtering, cross-cutting concerns at edge",
+        "Embedded Tomcat only",
+        "Mockito runner"
+      ],
+      "answer": 1,
+      "explanation": "Gateway routes external requests to internal services, applying predicates/filters (auth, rate limit, rewrite paths)."
+    },
+    {
+      "topic": "Gateway",
+      "type": "theory",
+      "question": "Gateway vs direct client-to-many-services?",
+      "options": [
+        "Gateway always slower with no benefits",
+        "Single entry point, centralized SSL, routing, and policies",
+        "Clients must know all ports",
+        "Gateway replaces database"
+      ],
+      "answer": 1,
+      "explanation": "Clients call gateway host; gateway load-balances to service instances hiding internal topology."
+    },
+    {
+      "topic": "Resilience4j",
+      "type": "theory",
+      "question": "What does CircuitBreaker pattern prevent?",
+      "options": [
+        "All HTTP traffic",
+        "Cascading failures by failing fast when downstream is unhealthy",
+        "SQL injection",
+        "Compilation errors"
+      ],
+      "answer": 1,
+      "explanation": "After failure threshold, circuit opens and calls fail fast or use fallback until half-open retry probes recovery."
+    },
+    {
+      "topic": "Resilience4j",
+      "type": "annotation",
+      "question": "Which annotation applies circuit breaker in Spring Boot 3 resilience4j?",
+      "options": [
+        "@CircuitBreaker(name = \"orders\")",
+        "@Entity",
+        "@GetMapping only",
+        "@PreDestroy"
+      ],
+      "answer": 0,
+      "explanation": "@CircuitBreaker on method with resilience4j.spring.boot3 integration—configure failure rate and wait duration in yaml."
+    },
+    {
+      "topic": "Resilience4j",
+      "type": "theory",
+      "question": "What is Retry in Resilience4j?",
+      "options": [
+        "Infinite loop always",
+        "Configurable retries with backoff for transient failures",
+        "Deletes database",
+        "JWT refresh"
+      ],
+      "answer": 1,
+      "explanation": "@Retry attempts failed calls per policy—use only for idempotent operations to avoid duplicate side effects."
+    },
+    {
+      "topic": "RabbitMQ",
+      "type": "theory",
+      "question": "What is RabbitMQ?",
+      "options": [
+        "Relational database",
+        "Message broker implementing AMQP for async messaging",
+        "IDE plugin",
+        "JWT library"
+      ],
+      "answer": 1,
+      "explanation": "Producers publish to exchanges; queues bind and consumers process messages asynchronously for decoupling."
+    },
+    {
+      "topic": "RabbitMQ",
+      "type": "theory",
+      "question": "Exchange types in RabbitMQ include?",
+      "options": [
+        "Only direct",
+        "direct, fanout, topic, headers",
+        "JWT, OAuth",
+        "GET, POST"
+      ],
+      "answer": 1,
+      "explanation": "direct: routing key match; fanout: broadcast; topic: pattern routing; headers: header-based routing."
+    },
+    {
+      "topic": "RabbitMQ",
+      "type": "annotation",
+      "question": "What does @RabbitListener do?",
+      "options": [
+        "Creates JPA entity",
+        "Marks method to consume messages from specified queue",
+        "Enables Eureka",
+        "Validates DTO"
+      ],
+      "answer": 1,
+      "explanation": "@RabbitListener(queues = \"order.created\") registers consumer container invoking method per message."
+    },
+    {
+      "topic": "Spring Boot REST",
+      "type": "annotation",
+      "question": "What does application.properties spring.jpa.hibernate.ddl-auto=validate do?",
+      "options": [
+        "Creates schema",
+        "Checks schema matches entities without changing DB",
+        "Deletes tables",
+        "Disables JPA"
+      ],
+      "answer": 1,
+      "explanation": "validate fails startup if mappings mismatch schema—good with Flyway-managed production schema."
+    },
+    {
+      "topic": "Spring Boot REST",
+      "type": "theory",
+      "question": "What is Actuator starter used for?",
+      "options": [
+        "UI themes",
+        "Production-ready endpoints: health, metrics, info",
+        "ORM only",
+        "Feign only"
+      ],
+      "answer": 1,
+      "explanation": "spring-boot-starter-actuator exposes /actuator/health and metrics integrated with Micrometer monitoring."
+    },
+    {
+      "topic": "JPA Repository",
+      "type": "theory",
+      "question": "What is save() behavior for entity with null id?",
+      "options": [
+        "Always update",
+        "persist (insert) new entity; non-null id may merge/update",
+        "Deletes row",
+        "No-op"
+      ],
+      "answer": 1,
+      "explanation": "Spring Data save uses EntityManager persist/merge: new entity inserted, detached existing may merge."
+    },
+    {
+      "topic": "Security Filter Chain",
+      "type": "code",
+      "question": "In SecurityFilterChain bean, authorizeHttpRequests().anyRequest().authenticated() means?",
+      "options": [
+        "All requests public",
+        "All requests need authenticated user unless other matchers permit",
+        "Disables security",
+        "Only static files secured"
+      ],
+      "answer": 1,
+      "explanation": "RequestMatchers can permitAll for /public/**; anyRequest().authenticated() requires logged-in/principal for rest.",
+      "code": "http.authorizeHttpRequests(auth -> auth\n  .requestMatchers(\"/public/**\").permitAll()\n  .anyRequest().authenticated());"
+    },
+    {
+      "topic": "JWT Basics",
+      "type": "theory",
+      "question": "Where should clients send JWT in HTTP?",
+      "options": [
+        "Cookie only always",
+        "Authorization: Bearer <token> header typically",
+        "SQL WHERE clause",
+        "Path variable"
+      ],
+      "answer": 1,
+      "explanation": "Bearer scheme in Authorization header is standard for stateless APIs. Secure cookies possible with caution (CSRF)."
+    },
+    {
+      "topic": "Eureka",
+      "type": "theory",
+      "question": "What is self-preservation mode in Eureka?",
+      "options": [
+        "Deletes all instances",
+        "Protects registry when many heartbeats fail (network partition) to avoid mass eviction",
+        "Encrypts JWT",
+        "JPA feature"
+      ],
+      "answer": 1,
+      "explanation": "When too many instances miss renewals, Eureka assumes network issue and keeps stale entries temporarily."
+    },
+    {
+      "topic": "Feign",
+      "type": "theory",
+      "question": "What is a Feign fallback or fallbackFactory?",
+      "options": [
+        "JPA callback",
+        "Provides default response when remote call fails (resilience)",
+        "Hibernate cache",
+        "Swagger tag"
+      ],
+      "answer": 1,
+      "explanation": "Fallback implements degraded behavior when circuit open or error—return cached data or friendly error."
+    },
+    {
+      "topic": "Gateway",
+      "type": "code",
+      "question": "Route predicate Path=/api/orders/** routes to?",
+      "options": [
+        "Random service",
+        "Configured URI (e.g., lb://order-service) when path matches",
+        "Database",
+        "Rabbit queue"
+      ],
+      "answer": 1,
+      "explanation": "Spring Cloud Gateway RouteLocator defines predicates (Path, Header) and filters forwarding to downstream URIs."
+    },
+    {
+      "topic": "Resilience4j",
+      "type": "theory",
+      "question": "Bulkhead pattern purpose?",
+      "options": [
+        "Merge databases",
+        "Limit concurrent calls to resource pool preventing thread exhaustion",
+        "JWT signing",
+        "HTML escaping"
+      ],
+      "answer": 1,
+      "explanation": "Bulkhead isolates thread pools so one slow dependency cannot starve entire application."
+    },
+    {
+      "topic": "RabbitMQ",
+      "type": "theory",
+      "question": "Why use durable queue?",
+      "options": [
+        "Faster always",
+        "Queue survives broker restart (messages need persistent delivery mode too)",
+        "No consumers needed",
+        "Replaces transactions"
+      ],
+      "answer": 1,
+      "explanation": "durable=true on queue declaration survives restart; persistent messages survive with deliveryMode=2."
+    },
+    {
+      "topic": "RabbitMQ",
+      "type": "theory",
+      "question": "Acknowledgment (ACK) in consuming means?",
+      "options": [
+        "Ignore message",
+        "Consumer confirms successful processing; broker removes message",
+        "Publish only",
+        "JWT verify"
+      ],
+      "answer": 1,
+      "explanation": "Manual ack after processing prevents message loss on consumer crash. auto ack risks loss if processing fails after ack."
+    },
+    {
+      "topic": "@PreAuthorize",
+      "type": "code",
+      "question": "Who can call deleteOrder when annotation is @PreAuthorize(\"hasAuthority('ORDER_DELETE')\")?",
+      "options": [
+        "Anyone anonymous",
+        "Authenticated user with ORDER_DELETE authority",
+        "All authenticated users",
+        "Only Eureka server"
+      ],
+      "answer": 1,
+      "explanation": "Method security checks granted authorities on Authentication before invoking deleteOrder.",
+      "code": "@PreAuthorize(\"hasAuthority('ORDER_DELETE')\")\npublic void deleteOrder(Long id) { ... }"
+    },
+    {
+      "topic": "JPA Repository",
+      "type": "annotation",
+      "question": "What does @Transactional on service class do?",
+      "options": [
+        "Starts HTTP server",
+        "Defines transaction boundary; one persistence context per method typically",
+        "Creates Feign client",
+        "Opens Swagger"
+      ],
+      "answer": 1,
+      "explanation": "Spring @Transactional wraps method in DB transaction—commit on success, rollback on unchecked exceptions per propagation rules."
+    },
+    {
+      "topic": "Spring Security",
+      "type": "theory",
+      "question": "CSRF protection in REST stateless JWT APIs is often?",
+      "options": [
+        "Always required for Bearer token APIs",
+        "Disabled when session-less and using tokens; still needed for cookie session apps",
+        "Replaced by Eureka",
+        "Same as circuit breaker"
+      ],
+      "answer": 1,
+      "explanation": "CSRF targets cookie-based sessions. Pure Bearer JWT APIs often disable CSRF; cookie auth must keep protection."
+    },
+    {
+      "topic": "Gateway",
+      "type": "theory",
+      "question": "Load balancer prefix lb:// in Gateway URI means?",
+      "options": [
+        "Local file path",
+        "Use Spring Cloud LoadBalancer with service discovery",
+        "LDAP bind",
+        "Log backup"
+      ],
+      "answer": 1,
+      "explanation": "lb://order-service resolves instances from registry and load-balances requests reactively (WebFlux gateway)."
+    }
+  ]
+}

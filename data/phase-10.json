@@ -1,0 +1,554 @@
+{
+  "id": "phase-10",
+  "title": "Phase 10 — Web Basics & TypeScript Foundations",
+  "questions": [
+    {
+      "topic": "HTML Semantics",
+      "type": "theory",
+      "question": "Which element should wrap the primary navigation links for a site?",
+      "options": [
+        "<div class=\"nav\">",
+        "<section>",
+        "<nav>",
+        "<header>"
+      ],
+      "answer": 2,
+      "explanation": "<nav> is the semantic landmark for major navigation blocks."
+    },
+    {
+      "topic": "HTML Semantics",
+      "type": "theory",
+      "question": "Where should the page's main unique content live?",
+      "options": [
+        "<section>",
+        "<main>",
+        "<article>",
+        "<div role=\"main\">"
+      ],
+      "answer": 1,
+      "explanation": "<main> identifies the dominant content; avoid multiple per page unless hidden."
+    },
+    {
+      "topic": "HTML Semantics",
+      "type": "theory",
+      "question": "Which element is most appropriate for a self-contained blog post preview?",
+      "options": [
+        "<section>",
+        "<article>",
+        "<aside>",
+        "<div>"
+      ],
+      "answer": 1,
+      "explanation": "<article> represents independent, distributable content."
+    },
+    {
+      "topic": "HTML Semantics",
+      "type": "theory",
+      "question": "What is the correct way to associate a <label> with an input when they are siblings?",
+      "options": [
+        "Use name attribute on label",
+        "Wrap input inside label only",
+        "Set label for equal to input id",
+        "Use aria-label on input"
+      ],
+      "answer": 2,
+      "explanation": "for/id pairing improves accessibility and click target size."
+    },
+    {
+      "topic": "HTML Forms",
+      "type": "theory",
+      "question": "Which input type enforces a numeric range in supporting browsers without JavaScript?",
+      "options": [
+        "type=\"text\" pattern",
+        "type=\"number\" with min/max",
+        "type=\"range\" only",
+        "type=\"tel\""
+      ],
+      "answer": 1,
+      "explanation": "number inputs honor min, max, and step for native validation."
+    },
+    {
+      "topic": "HTML Forms",
+      "type": "code",
+      "question": "What happens when this form is submitted?",
+      "options": [
+        "GET to /save?x=1",
+        "POST to /save with body x=1",
+        "Nothing; method missing",
+        "GET to current URL"
+      ],
+      "answer": 0,
+      "explanation": "Forms default to method=\"get\"; without a method attribute the browser issues GET with query parameters.",
+      "code": "<form action=\"/save\"><input name=\"x\" value=\"1\"><button>Go</button></form>"
+    },
+    {
+      "topic": "HTML Forms",
+      "type": "theory",
+      "question": "Which attribute makes a field required for native constraint validation?",
+      "options": [
+        "validate",
+        "mandatory",
+        "required",
+        "aria-required=\"true\""
+      ],
+      "answer": 2,
+      "explanation": "required triggers built-in validation on submit."
+    },
+    {
+      "topic": "HTML Forms",
+      "type": "theory",
+      "question": "What does autocomplete=\"off\" on a form primarily affect?",
+      "options": [
+        "Server-side validation",
+        "Browser suggestion of previously entered values",
+        "Tab order",
+        "CSRF tokens"
+      ],
+      "answer": 1,
+      "explanation": "It hints browsers not to autofill; behavior varies by browser and field type."
+    },
+    {
+      "topic": "HTML Forms",
+      "type": "theory",
+      "question": "For grouping related radio buttons, which is correct?",
+      "options": [
+        "Same id on each input",
+        "Same name on each input in the group",
+        "Wrap in <fieldset type=\"radio\">",
+        "Use type=\"checkbox\" with shared class"
+      ],
+      "answer": 1,
+      "explanation": "Radios with the same name are mutually exclusive in a group."
+    },
+    {
+      "topic": "CSS Flexbox",
+      "type": "theory",
+      "question": "Which property aligns flex items along the cross axis in a row flex container?",
+      "options": [
+        "justify-content",
+        "align-items",
+        "align-content",
+        "flex-direction"
+      ],
+      "answer": 1,
+      "explanation": "align-items controls cross-axis alignment; justify-content is main axis."
+    },
+    {
+      "topic": "CSS Flexbox",
+      "type": "code",
+      "question": "In a row flex container, which item will grow to fill leftover space?",
+      "options": [
+        ".a only",
+        ".b only",
+        ".b and .c equally",
+        "All three"
+      ],
+      "answer": 1,
+      "explanation": "flex-grow: 1 on .b allows it to absorb free space; .a has grow 0.",
+      "code": ".a { flex: 0 1 auto; }\n.b { flex: 1 1 auto; }\n.c { flex: 0 0 100px; }"
+    },
+    {
+      "topic": "CSS Flexbox",
+      "type": "theory",
+      "question": "What does justify-content: space-between do?",
+      "options": [
+        "Adds equal margin around each item",
+        "First at start, last at end, equal space between",
+        "Centers the group",
+        "Wraps items to new lines"
+      ],
+      "answer": 1,
+      "explanation": "space-between distributes free space between items, not at edges."
+    },
+    {
+      "topic": "CSS Flexbox",
+      "type": "theory",
+      "question": "Which value of flex-direction stacks items vertically with main axis top-to-bottom?",
+      "options": [
+        "row-reverse",
+        "column",
+        "column-reverse",
+        "block"
+      ],
+      "answer": 1,
+      "explanation": "column sets main axis vertically."
+    },
+    {
+      "topic": "CSS Grid",
+      "type": "theory",
+      "question": "Which property defines track sizes for columns?",
+      "options": [
+        "grid-template-rows",
+        "grid-auto-columns",
+        "grid-template-columns",
+        "grid-column-gap"
+      ],
+      "answer": 2,
+      "explanation": "grid-template-columns explicitly sizes column tracks."
+    },
+    {
+      "topic": "CSS Grid",
+      "type": "code",
+      "question": "How many columns does this create?\ngrid-template-columns: repeat(3, 1fr);",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Depends on item count"
+      ],
+      "answer": 2,
+      "explanation": "repeat(3, 1fr) creates three equal fractional columns."
+    },
+    {
+      "topic": "CSS Grid",
+      "type": "theory",
+      "question": "What does grid-area: 1 / 2 / 3 / 4 mean?",
+      "options": [
+        "Row start 1, col start 2, row end 3, col end 4",
+        "Column span 2, row span 3",
+        "Grid line names",
+        "Padding shorthand"
+      ],
+      "answer": 0,
+      "explanation": "grid-area shorthand is row-start / col-start / row-end / col-end."
+    },
+    {
+      "topic": "CSS Grid",
+      "type": "theory",
+      "question": "Which unit fr represents in CSS Grid?",
+      "options": [
+        "Fixed rem fraction",
+        "Fraction of free space in the grid container",
+        "Frame rate",
+        "Font-relative em"
+      ],
+      "answer": 1,
+      "explanation": "fr distributes remaining space after non-flexible tracks."
+    },
+    {
+      "topic": "Tailwind CSS",
+      "type": "theory",
+      "question": "What does the class `flex items-center justify-between` apply?",
+      "options": [
+        "Block layout with centered text",
+        "Flex container, cross-axis center, main-axis space-between",
+        "Grid with centered items",
+        "Inline flex only on children"
+      ],
+      "answer": 1,
+      "explanation": "flex creates flex container; items-center and justify-between are flex utilities."
+    },
+    {
+      "topic": "Tailwind CSS",
+      "type": "theory",
+      "question": "In Tailwind, how do you apply hover styles?",
+      "options": [
+        "hover:flex",
+        "hover:bg-blue-500",
+        ":hover in @apply only",
+        "data-hover attribute"
+      ],
+      "answer": 1,
+      "explanation": "Variant prefixes like hover: precede utility names."
+    },
+    {
+      "topic": "Tailwind CSS",
+      "type": "theory",
+      "question": "What is the purpose of `@tailwind base` in an input CSS file?",
+      "options": [
+        "Import Google Fonts",
+        "Inject Preflight/base styles from Tailwind",
+        "Enable JIT only",
+        "Define custom breakpoints"
+      ],
+      "answer": 1,
+      "explanation": "@tailwind directives pull in Tailwind's layers (base, components, utilities)."
+    },
+    {
+      "topic": "Tailwind CSS",
+      "type": "theory",
+      "question": "Which class adds padding on all sides at the `md` breakpoint and above?",
+      "options": [
+        "md:p-4",
+        "p-md-4",
+        "p-4-md",
+        "@md p-4"
+      ],
+      "answer": 0,
+      "explanation": "Responsive variants prefix utilities: md:p-4."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "theory",
+      "question": "What is the result of typeof null in JavaScript?",
+      "options": [
+        "\"null\"",
+        "\"undefined\"",
+        "\"object\"",
+        "\"number\""
+      ],
+      "answer": 2,
+      "explanation": "typeof null is a long-standing quirk returning \"object\"."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "code",
+      "question": "What is logged?\nconsole.log([1, 2] + [3, 4]);",
+      "options": [
+        "[1,2,3,4]",
+        "\"1,23,4\"",
+        "7",
+        "NaN"
+      ],
+      "answer": 1,
+      "explanation": "Arrays coerce to strings via toString, producing \"1,2\" + \"3,4\"."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "theory",
+      "question": "Which statement about `const` is true?",
+      "options": [
+        "The binding cannot be reassigned; object properties may still change",
+        "Values are deeply frozen",
+        "const must be initialized at declaration in all engines",
+        "const hoists like var"
+      ],
+      "answer": 0,
+      "explanation": "const prevents rebinding, not mutation of object contents."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "code",
+      "question": "What does this print?\nfor (var i = 0; i < 3; i++) {}\nconsole.log(i);",
+      "options": [
+        "undefined",
+        "0",
+        "2",
+        "3"
+      ],
+      "answer": 3,
+      "explanation": "var is function-scoped; i remains 3 after the loop."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "theory",
+      "question": "What does Array.prototype.map return?",
+      "options": [
+        "The same array mutated",
+        "A new array with transformed elements",
+        "A single aggregated value",
+        "An iterator"
+      ],
+      "answer": 1,
+      "explanation": "map always returns a new array of the same length."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "theory",
+      "question": "Which compares two values without type coercion?",
+      "options": [
+        "==",
+        "===",
+        "Object.is only for objects",
+        "compare()"
+      ],
+      "answer": 1,
+      "explanation": "Strict equality === does not coerce types."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "code",
+      "question": "What is the value of `a` after execution?\nlet a = 1;\nfunction f() { a = 2; }\nf();",
+      "options": [
+        "1",
+        "2",
+        "undefined",
+        "ReferenceError"
+      ],
+      "answer": 1,
+      "explanation": "f closes over the outer binding and assigns 2."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "theory",
+      "question": "What does the spread operator ...obj do when obj is a plain object in an object literal?",
+      "options": [
+        "Clones deeply",
+        "Copies enumerable own properties into the new object",
+        "Spreads array indices only",
+        "Throws if obj is frozen"
+      ],
+      "answer": 1,
+      "explanation": "Object spread copies enumerable own properties (shallow)."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "What is the main purpose of TypeScript?",
+      "options": [
+        "Replace JavaScript runtime",
+        "Add static types checked at compile time",
+        "Bundle CSS",
+        "Provide a DOM polyfill"
+      ],
+      "answer": 1,
+      "explanation": "TypeScript is a typed superset that compiles to JavaScript."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "code",
+      "question": "What error does TypeScript report?\nlet x: number = \"5\";",
+      "options": [
+        "None; string is assignable",
+        "Type 'string' is not assignable to type 'number'",
+        "Runtime NaN",
+        "Implicit any"
+      ],
+      "answer": 1,
+      "explanation": "Explicit annotation number rejects string literal."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "What does the `interface` keyword create?",
+      "options": [
+        "A runtime class",
+        "A structural type shape for compile-time checking",
+        "A sealed enum",
+        "A namespace only"
+      ],
+      "answer": 1,
+      "explanation": "Interfaces describe object shapes and are erased at compile time."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "How is `type Alias = { id: string }` different from an equivalent interface?",
+      "options": [
+        "Interfaces cannot be extended",
+        "type can express unions and primitives; interface is mainly for object shapes",
+        "type exists at runtime",
+        "interface enforces private fields"
+      ],
+      "answer": 1,
+      "explanation": "type aliases are more flexible for unions/intersections; interfaces support declaration merging."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "code",
+      "question": "What is the inferred type of `t`?\nconst t = [1, \"a\"] as const;",
+      "options": [
+        "(number | string)[]",
+        "readonly [1, \"a\"]",
+        "any[]",
+        "[number, string] mutable"
+      ],
+      "answer": 1,
+      "explanation": "as const makes the tuple readonly with literal types."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "What does `?` on a property mean in an interface?",
+      "options": [
+        "Property must be null",
+        "Property may be undefined (optional)",
+        "Readonly property",
+        "Deprecated"
+      ],
+      "answer": 1,
+      "explanation": "Optional properties may be omitted or explicitly undefined."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "Which utility type makes all properties readonly?",
+      "options": [
+        "Partial<T>",
+        "Readonly<T>",
+        "Pick<T,K>",
+        "Record<K,V>"
+      ],
+      "answer": 1,
+      "explanation": "Readonly<T> maps properties to readonly variants."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "What is `never` used for?",
+      "options": [
+        "Any value including null",
+        "Values that should never occur; exhaustiveness checks",
+        "Empty object",
+        "void return only"
+      ],
+      "answer": 1,
+      "explanation": "never represents impossible types and helps exhaustive switch checking."
+    },
+    {
+      "topic": "HTML Semantics",
+      "type": "theory",
+      "question": "Which attribute provides accessible name when visible label text is insufficient?",
+      "options": [
+        "title only",
+        "aria-labelledby or aria-label",
+        "role=\"label\"",
+        "alt on any element"
+      ],
+      "answer": 1,
+      "explanation": "ARIA naming attributes expose accessible names to assistive tech."
+    },
+    {
+      "topic": "CSS Flexbox",
+      "type": "theory",
+      "question": "What does flex-wrap: wrap enable?",
+      "options": [
+        "Items shrink below min size",
+        "Items move to additional flex lines when they overflow",
+        "Reverses main axis",
+        "Changes display to grid"
+      ],
+      "answer": 1,
+      "explanation": "wrap allows multi-line flex layouts."
+    },
+    {
+      "topic": "CSS Grid",
+      "type": "theory",
+      "question": "Which property gaps both rows and columns in modern CSS Grid?",
+      "options": [
+        "gap",
+        "grid-gap only (deprecated name)",
+        "margin on items",
+        "grid-spacing"
+      ],
+      "answer": 0,
+      "explanation": "gap is the standard shorthand; grid-gap is legacy alias."
+    },
+    {
+      "topic": "JavaScript Basics",
+      "type": "theory",
+      "question": "What does optional chaining `obj?.prop` return if obj is null?",
+      "options": [
+        "Throws TypeError",
+        "undefined",
+        "null",
+        "false"
+      ],
+      "answer": 1,
+      "explanation": "Optional chaining short-circuits to undefined when base is nullish."
+    },
+    {
+      "topic": "TypeScript",
+      "type": "theory",
+      "question": "What does `strictNullChecks` enable?",
+      "options": [
+        "Disables null entirely",
+        "null and undefined are distinct types not assignable to other types without narrowing",
+        "Makes all fields optional",
+        "Removes any"
+      ],
+      "answer": 1,
+      "explanation": "With strictNullChecks, null/undefined must be handled explicitly."
+    }
+  ]
+}

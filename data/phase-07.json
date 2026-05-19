@@ -1,0 +1,552 @@
+{
+  "questions": [
+    {
+      "topic": "Hibernate Fetch",
+      "type": "theory",
+      "question": "What is the N+1 select problem?",
+      "options": [
+        "One query returns N tables",
+        "Loading N parent rows triggers N additional queries for children",
+        "Using N databases",
+        "Having N+1 indexes"
+      ],
+      "answer": 1,
+      "explanation": "E.g., fetch 100 Orders (1 query) then lazy-load each Order's items (100 queries). Fix with join fetch, @EntityGraph, or batch size."
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "annotation",
+      "question": "What does FetchType.LAZY mean for @OneToMany?",
+      "options": [
+        "Collection loads immediately with parent",
+        "Collection loads when accessed and session is open",
+        "No SQL is ever run",
+        "Uses only native queries"
+      ],
+      "answer": 1,
+      "explanation": "LAZY proxies the collection until accessed. Access outside an open session causes LazyInitializationException unless initialized earlier."
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "annotation",
+      "question": "What does FetchType.EAGER imply?",
+      "options": [
+        "Always better for performance",
+        "Associated data loaded with parent; can cause large joins or cartesian products",
+        "Disables SQL",
+        "Only works with Mockito"
+      ],
+      "answer": 1,
+      "explanation": "EAGER fetches association with parent load. Convenient but can over-fetch and hurt performance—often prefer LAZY + explicit fetch plans."
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "code",
+      "question": "Which JPQL keyword reduces N+1 when loading authors and books?",
+      "options": [
+        "GROUP BY only",
+        "JOIN FETCH",
+        "DISTINCT DELETE",
+        "CACHE ONLY"
+      ],
+      "answer": 1,
+      "explanation": "JOIN FETCH loads association in the same query: SELECT a FROM Author a JOIN FETCH a.books"
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "theory",
+      "question": "What is Hibernate batch fetching (e.g., @BatchSize)?",
+      "options": [
+        "Deleting in batches only",
+        "Loading multiple lazy collections or entities in fewer SQL round-trips",
+        "HTTP batch API",
+        "JUnit batch tests"
+      ],
+      "answer": 1,
+      "explanation": "@BatchSize on class or collection lets Hibernate load multiple uninitialized proxies/collections in one IN-clause query."
+    },
+    {
+      "topic": "Hibernate Cascade",
+      "type": "theory",
+      "question": "What does CascadeType.REMOVE do?",
+      "options": [
+        "Removes only the parent row",
+        "Deleting parent may delete associated children per mapping",
+        "Removes the database",
+        "Removes mocks"
+      ],
+      "answer": 1,
+      "explanation": "REMOVE cascades delete to associated entities—dangerous on @ManyToOne if misapplied. OrphanRemoval handles unlinked children in @OneToMany."
+    },
+    {
+      "topic": "Hibernate Cascade",
+      "type": "annotation",
+      "question": "What is orphanRemoval = true on @OneToMany?",
+      "options": [
+        "Children without parent reference are deleted when relationship changes",
+        "Prevents all deletes",
+        "Removes Hibernate cache",
+        "Same as @Transactional"
+      ],
+      "answer": 0,
+      "explanation": "orphanRemoval deletes child rows removed from the parent's collection when the unit of work flushes—distinct from cascade REMOVE semantics."
+    },
+    {
+      "topic": "Hibernate Cascade",
+      "type": "theory",
+      "question": "Which cascade type propagates merge from parent to children?",
+      "options": [
+        "CascadeType.DETACH only",
+        "CascadeType.MERGE",
+        "CascadeType.REFRESH only for HTTP",
+        "CascadeType.SECURITY"
+      ],
+      "answer": 1,
+      "explanation": "MERGE reattaches detached graphs: merging parent can merge children if cascade includes MERGE."
+    },
+    {
+      "topic": "Hibernate Cache",
+      "type": "theory",
+      "question": "What is the first-level (L1) cache in Hibernate?",
+      "options": [
+        "Cluster-wide Redis",
+        "Session-scoped persistence context; identity map for entities in that Session",
+        "Browser cache",
+        "CDN"
+      ],
+      "answer": 1,
+      "explanation": "Each Session/EntityManager has an L1 cache: repeated get by id within same transaction returns same instance without extra SELECT."
+    },
+    {
+      "topic": "Hibernate Cache",
+      "type": "theory",
+      "question": "What does second-level (L2) cache require?",
+      "options": [
+        "Nothing; enabled by default for all entities",
+        "Provider (e.g., Ehcache), entity/cache region configuration, often read-mostly data",
+        "Only @Mock beans",
+        "Spring MVC"
+      ],
+      "answer": 1,
+      "explanation": "L2 is SessionFactory-scoped shared cache across sessions. Configure cache provider, @Cacheable entities, and concurrency strategy."
+    },
+    {
+      "topic": "Hibernate Cache",
+      "type": "theory",
+      "question": "When is query cache useful?",
+      "options": [
+        "For every write-heavy query",
+        "When identical queries repeat with same parameters and underlying data changes infrequently",
+        "Never with JPA",
+        "Only in unit tests"
+      ],
+      "answer": 1,
+      "explanation": "Query cache stores result ids; still needs L2 for entities. Invalidate carefully when data changes or use short TTL."
+    },
+    {
+      "topic": "Hibernate Cache",
+      "type": "annotation",
+      "question": "What does @Cache(usage = CacheConcurrencyStrategy.READ_ONLY) suggest?",
+      "options": [
+        "Entity is updated every second",
+        "Data is immutable after insert; safe optimized read cache",
+        "Disables L1 cache",
+        "Enables write-through only"
+      ],
+      "answer": 1,
+      "explanation": "READ_ONLY suits reference data never updated. READ_WRITE/NONSTRICT_READ_WRITE handle updates with versioning considerations."
+    },
+    {
+      "topic": "Spring DI",
+      "type": "theory",
+      "question": "What is Dependency Injection in Spring?",
+      "options": [
+        "Developers always use new in constructors manually",
+        "Spring container provides dependencies to objects instead of them creating collaborators",
+        "A SQL feature",
+        "JUnit feature"
+      ],
+      "answer": 1,
+      "explanation": "IoC container wires beans via constructor, setter, or field injection based on configuration (XML, annotations, Java config)."
+    },
+    {
+      "topic": "Spring DI",
+      "type": "theory",
+      "question": "Which injection style is generally recommended in modern Spring?",
+      "options": [
+        "Field injection only",
+        "Constructor injection for required dependencies",
+        "Static injection",
+        "ThreadLocal injection only"
+      ],
+      "answer": 1,
+      "explanation": "Constructor injection makes dependencies explicit, eases unit testing, and allows immutable fields. Field injection is harder to test without Spring."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "annotation",
+      "question": "What does @Component stereotype indicate?",
+      "options": [
+        "A database entity",
+        "A Spring-managed bean detected by component scanning",
+        "A JUnit test",
+        "A servlet filter only"
+      ],
+      "answer": 1,
+      "explanation": "@Component is generic stereotype. Specializations: @Service, @Repository, @Controller."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "annotation",
+      "question": "Difference between @Component and @Bean?",
+      "options": [
+        "No difference",
+        "@Component on class; @Bean on method in @Configuration defining factory-created instance",
+        "@Bean only for entities",
+        "@Component only in XML"
+      ],
+      "answer": 1,
+      "explanation": "@Bean methods programmatically register objects (third-party classes). @Component marks your class for classpath scanning."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "annotation",
+      "question": "What does @Autowired do?",
+      "options": [
+        "Starts the JVM",
+        "Injects matching bean by type (and qualifier/name if needed)",
+        "Creates database tables",
+        "Compiles templates"
+      ],
+      "answer": 1,
+      "explanation": "@Autowired resolves dependencies from the ApplicationContext. Use @Qualifier or @Primary when multiple beans of same type exist."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "annotation",
+      "question": "When are two beans of the same interface ambiguous?",
+      "options": [
+        "Never",
+        "When multiple implementations exist without @Primary or @Qualifier",
+        "Only in JUnit",
+        "Only with @Entity"
+      ],
+      "answer": 1,
+      "explanation": "Spring throws NoUniqueBeanDefinitionException unless @Primary marks default or @Qualifier disambiguates injection point."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "annotation",
+      "question": "What does @Scope(\"prototype\") mean?",
+      "options": [
+        "One instance per application",
+        "New instance created each time bean is requested/injected (prototype)",
+        "Bean is not managed",
+        "Runs only in tests"
+      ],
+      "answer": 1,
+      "explanation": "Default singleton = one shared instance. Prototype creates a new object per getBean/injection—watch memory with long-lived singletons holding prototypes."
+    },
+    {
+      "topic": "Spring Lifecycle",
+      "type": "theory",
+      "question": "What happens during Spring bean initialization order broadly?",
+      "options": [
+        "Random order",
+        "Instantiate → populate properties → BeanPostProcessor before init → @PostConstruct/custom init → ready",
+        "Only @Test runs",
+        "Deploy to Eureka first"
+      ],
+      "answer": 1,
+      "explanation": "Container creates bean, injects dependencies, applies BeanPostProcessors, calls initialization callbacks (@PostConstruct, InitializingBean), then bean is usable."
+    },
+    {
+      "topic": "Spring Lifecycle",
+      "type": "annotation",
+      "question": "Which annotation marks a method to run after dependency injection?",
+      "options": [
+        "@PreDestroy",
+        "@PostConstruct",
+        "@BeforeEach",
+        "@Scheduled only"
+      ],
+      "answer": 1,
+      "explanation": "@PostConstruct (javax/jakarta.annotation) runs after injection. @PreDestroy runs on shutdown for cleanup."
+    },
+    {
+      "topic": "Spring Lifecycle",
+      "type": "theory",
+      "question": "What is a BeanPostProcessor?",
+      "options": [
+        "A JPA repository",
+        "Callback hook to customize beans before/after initialization",
+        "HTTP interceptor only",
+        "Mockito plugin"
+      ],
+      "answer": 1,
+      "explanation": "BeanPostProcessors can wrap or modify beans (e.g., @Autowired processing, AOP proxies) in postProcessBefore/AfterInitialization."
+    },
+    {
+      "topic": "Spring Config",
+      "type": "annotation",
+      "question": "What does @Configuration provide?",
+      "options": [
+        "Marks test class",
+        "Declares class as source of @Bean definitions and CGLIB-enhanced singleton semantics",
+        "Enables Hibernate only",
+        "Disables component scan"
+      ],
+      "answer": 1,
+      "explanation": "@Configuration classes define @Bean methods. Full @Configuration CGLIB-proxies @Bean methods so singletons call each other correctly."
+    },
+    {
+      "topic": "Spring Config",
+      "type": "annotation",
+      "question": "What does @ComponentScan do?",
+      "options": [
+        "Scans hard drives",
+        "Registers @Component and stereotype classes in specified base packages",
+        "Runs SQL scripts",
+        "Opens HTTP port"
+      ],
+      "answer": 1,
+      "explanation": "@ComponentScan on @SpringBootApplication or @Configuration tells Spring where to find annotated beans."
+    },
+    {
+      "topic": "Spring Config",
+      "type": "theory",
+      "question": "What is ApplicationContext?",
+      "options": [
+        "A Git repo",
+        "Spring IoC container providing bean factory, events, internationalization, and more",
+        "A database connection",
+        "Mockito context"
+      ],
+      "answer": 1,
+      "explanation": "ApplicationContext extends BeanFactory with enterprise features: event publication, resource loading, and environment abstraction."
+    },
+    {
+      "topic": "Spring DI",
+      "type": "code",
+      "question": "Which constructor will Spring use for injection?",
+      "options": [
+        "No constructor; fails",
+        "The single constructor with parameters (implicit autowire in Spring 4.3+)",
+        "Only default no-arg if present",
+        "Random constructor"
+      ],
+      "answer": 1,
+      "explanation": "If a class has one constructor, Spring autowires it without @Autowired. Multiple constructors need @Autowired on chosen one.",
+      "code": "@Service\npublic class OrderService {\n  private final OrderRepository repo;\n  public OrderService(OrderRepository repo) {\n    this.repo = repo;\n  }\n}"
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "theory",
+      "question": "What is the default scope for Spring beans?",
+      "options": [
+        "prototype",
+        "singleton",
+        "request",
+        "session always"
+      ],
+      "answer": 1,
+      "explanation": "Unless @Scope specifies otherwise, beans are singletons within the container (one instance per Spring context, not JVM-global static)."
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "theory",
+      "question": "What causes LazyInitializationException?",
+      "options": [
+        "Using @Autowired",
+        "Accessing uninitialized lazy association outside persistence context/session",
+        "Using @Valid",
+        "Running JUnit"
+      ],
+      "answer": 1,
+      "explanation": "Close session then call order.getItems().size() → exception. Fix: fetch join, @Transactional service method, or DTO projection."
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "annotation",
+      "question": "What does @EntityGraph accomplish?",
+      "options": [
+        "Defines REST routes",
+        "Declares fetch plan (attributes to load) for repository query",
+        "Replaces @Entity",
+        "Configures RabbitMQ"
+      ],
+      "answer": 1,
+      "explanation": "@EntityGraph on Spring Data method specifies which associations to fetch eagerly for that query without changing global EAGER mapping."
+    },
+    {
+      "topic": "Spring Lifecycle",
+      "type": "annotation",
+      "question": "What does @PreDestroy indicate?",
+      "options": [
+        "Run before bean creation",
+        "Cleanup hook before bean removal from container",
+        "Run before each HTTP request always",
+        "JUnit teardown"
+      ],
+      "answer": 1,
+      "explanation": "@PreDestroy methods release resources (close connections) when the context shuts down or bean is discarded."
+    },
+    {
+      "topic": "Spring DI",
+      "type": "annotation",
+      "question": "What is @Qualifier used for?",
+      "options": [
+        "Qualify test scores",
+        "Select specific bean when multiple candidates share a type",
+        "Validate DTOs",
+        "Enable caching"
+      ],
+      "answer": 1,
+      "explanation": "@Qualifier(\"emailNotifier\") pairs with @Autowired to inject the named bean implementation."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "annotation",
+      "question": "Why use @Repository stereotype?",
+      "options": [
+        "Marks MVC controller",
+        "Indicates persistence layer; enables exception translation to DataAccessException",
+        "Creates Feign client",
+        "JWT signing"
+      ],
+      "answer": 1,
+      "explanation": "@Repository is semantic @Component plus persistence exception translation via PersistenceExceptionTranslationPostProcessor."
+    },
+    {
+      "topic": "Hibernate Cascade",
+      "type": "theory",
+      "question": "Should you cascade ALL on every association?",
+      "options": [
+        "Yes, always",
+        "No—cascade only operations you intend to propagate; misuse causes accidental deletes/updates",
+        "Only on @Controller",
+        "Required by JPA spec always"
+      ],
+      "answer": 1,
+      "explanation": "CascadeType.ALL propagates persist, merge, remove, refresh, detach. Apply narrowly—especially avoid careless REMOVE on wide graphs."
+    },
+    {
+      "topic": "Spring Config",
+      "type": "theory",
+      "question": "Difference between BeanFactory and ApplicationContext?",
+      "options": [
+        "Identical",
+        "ApplicationContext adds events, i18n, AOP autoproxy, and is what Spring Boot uses",
+        "BeanFactory is for Angular",
+        "ApplicationContext cannot load beans"
+      ],
+      "answer": 1,
+      "explanation": "BeanFactory is minimal IoC. ApplicationContext is the rich container used in practice (AnnotationConfigApplicationContext, etc.)."
+    },
+    {
+      "topic": "Spring DI",
+      "type": "theory",
+      "question": "What is inversion of control (IoC)?",
+      "options": [
+        "Database controls the UI",
+        "Framework controls object creation and wiring; app code receives dependencies",
+        "Controllers invert HTTP",
+        "Caches invert keys"
+      ],
+      "answer": 1,
+      "explanation": "IoC means the container manages lifecycle and dependencies rather than each class doing new Collaborator() itself."
+    },
+    {
+      "topic": "Hibernate Cache",
+      "type": "theory",
+      "question": "Why cache immutable reference data (countries, codes)?",
+      "options": [
+        "Writes are frequent",
+        "Reduces database load for read-heavy stable data",
+        "Required for Mockito",
+        "Replaces transactions"
+      ],
+      "answer": 1,
+      "explanation": "L2 cache shines for rarely changed lookup tables accessed across many requests—always tune eviction and consistency."
+    },
+    {
+      "topic": "Spring Lifecycle",
+      "type": "theory",
+      "question": "What does DisposableBean interface provide?",
+      "options": [
+        "Initialization callback",
+        "destroy() callback for cleanup; prefer @PreDestroy in modern code",
+        "JWT validation",
+        "Feign fallback"
+      ],
+      "answer": 1,
+      "explanation": "Implementing DisposableBean defines destroy(). @PreDestroy is the annotation-based equivalent preferred in application code."
+    },
+    {
+      "topic": "Spring Beans",
+      "type": "code",
+      "question": "How many PaymentService beans exist at runtime (default scope)?",
+      "options": [
+        "Three",
+        "One singleton shared",
+        "Zero",
+        "One per injection point always new"
+      ],
+      "answer": 1,
+      "explanation": "@Service defaults to singleton: one instance in the context; all injection points share it unless @Scope prototype.",
+      "code": "@Service\nclass PaymentService {}\n// injected in OrderService and InvoiceService"
+    },
+    {
+      "topic": "Hibernate Fetch",
+      "type": "theory",
+      "question": "What is select fetch vs join fetch tradeoff?",
+      "options": [
+        "No tradeoff",
+        "Join fetch: one query, risk of duplicate rows; select: extra queries but simpler result set",
+        "Join always forbidden",
+        "Select always one query"
+      ],
+      "answer": 1,
+      "explanation": "JOIN FETCH can duplicate parent rows with multiple children (use DISTINCT). SELECT fetch uses separate queries—batching mitigates N+1."
+    },
+    {
+      "topic": "Spring DI",
+      "type": "annotation",
+      "question": "What does @Primary resolve?",
+      "options": [
+        "Primary key in DB",
+        "Default bean when multiple implementations match injection by type",
+        "First test method",
+        "Main class only"
+      ],
+      "answer": 1,
+      "explanation": "@Primary on one @Service implementation makes it the default when autowiring PaymentGateway without @Qualifier."
+    },
+    {
+      "topic": "Spring Config",
+      "type": "annotation",
+      "question": "What does @PropertySource add?",
+      "options": [
+        "HTTP routes",
+        "Loads properties file into Spring Environment",
+        "Mockito stubs",
+        "JPA entities"
+      ],
+      "answer": 1,
+      "explanation": "@PropertySource(\"classpath:app.properties\") exposes keys for @Value and Environment.getProperty()."
+    },
+    {
+      "topic": "Hibernate Cascade",
+      "type": "annotation",
+      "question": "CascadeType.PERSIST vs REMOVE— which is safer to use widely?",
+      "options": [
+        "REMOVE on all relations",
+        "PERSIST on parent-child composition where child has no meaning alone",
+        "Neither exists",
+        "Both on @ManyToOne from child to parent always"
+      ],
+      "answer": 1,
+      "explanation": "PERSIST on composition (Order-LineItem) is common. REMOVE cascade from child to parent @ManyToOne is usually wrong and dangerous."
+    }
+  ]
+}

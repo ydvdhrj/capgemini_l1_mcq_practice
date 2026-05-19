@@ -1,0 +1,554 @@
+{
+  "id": "phase-12",
+  "title": "Phase 12 — Angular Routing, HTTP, RxJS & Security",
+  "questions": [
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "Which module historically provided Router (still imported in many apps)?",
+      "options": [
+        "HttpClientModule",
+        "RouterModule.forRoot(routes)",
+        "FormsModule",
+        "BrowserAnimationsModule"
+      ],
+      "answer": 1,
+      "explanation": "RouterModule.forRoot registers root routes and location strategy."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "What does `{ path: '**', component: NotFoundComponent }` typically do?",
+      "options": [
+        "Matches empty path",
+        "Wildcard catch-all for unknown URLs",
+        "Guards login",
+        "Lazy loads module"
+      ],
+      "answer": 1,
+      "explanation": "** is a wildcard route; order matters—usually last."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "How do you navigate programmatically?",
+      "options": [
+        "location.href only",
+        "Router.navigate() or navigateByUrl()",
+        "HttpClient.get",
+        "NgZone.run"
+      ],
+      "answer": 1,
+      "explanation": "Router service performs in-app navigation."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "code",
+      "question": "Route: `{ path: 'users/:id', component: UserComponent }`. URL `/users/42`. How to read id?",
+      "options": [
+        "route.data",
+        "route.snapshot.paramMap.get('id')",
+        "router.url string split",
+        "@Input id only"
+      ],
+      "answer": 1,
+      "explanation": "paramMap exposes route parameters like id.",
+      "code": "// Inject ActivatedRoute"
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "What is lazy loading a feature module?",
+      "options": [
+        "Loading all bundles upfront",
+        "Loading module JS chunk on demand when route activates",
+        "Caching HTTP",
+        "Preloading images"
+      ],
+      "answer": 1,
+      "explanation": "loadChildren triggers dynamic import of feature module."
+    },
+    {
+      "topic": "NgModules",
+      "type": "theory",
+      "question": "What does `declarations` array in @NgModule contain?",
+      "options": [
+        "Imported modules",
+        "Components/directives/pipes belonging to this module",
+        "Services only",
+        "Routes"
+      ],
+      "answer": 1,
+      "explanation": "declarations register components/directives/pipes owned by the module."
+    },
+    {
+      "topic": "NgModules",
+      "type": "theory",
+      "question": "What is the difference between `imports` and `providers` in NgModule?",
+      "options": [
+        "No difference",
+        "imports: other modules; providers: DI tokens for this module scope",
+        "imports: routes",
+        "providers: templates"
+      ],
+      "answer": 1,
+      "explanation": "imports compose module functionality; providers register services."
+    },
+    {
+      "topic": "NgModules",
+      "type": "theory",
+      "question": "In standalone components, what replaces NgModule `imports`?",
+      "options": [
+        "Nothing",
+        "Component imports: [] array of other standalone/directives/modules",
+        "providers only",
+        "bootstrap array"
+      ],
+      "answer": 1,
+      "explanation": "Standalone components list dependencies in their imports."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "What does HttpClient return by default for get<T>()?",
+      "options": [
+        "Promise<T>",
+        "Observable<T>",
+        "T synchronously",
+        "EventSource"
+      ],
+      "answer": 1,
+      "explanation": "HttpClient methods return Observables."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "How do you send JSON body with POST?",
+      "options": [
+        "Always automatic",
+        "http.post(url, bodyObject) with default serializer",
+        "Only FormData",
+        "query params only"
+      ],
+      "answer": 1,
+      "explanation": "HttpClient serializes plain objects to JSON with appropriate headers."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "What does `observe: 'response'` option return?",
+      "options": [
+        "Body only",
+        "Full HttpResponse including headers and status",
+        "Blob always",
+        "void"
+      ],
+      "answer": 1,
+      "explanation": "observe response wraps body with status/headers."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "Where are HTTP interceptors registered?",
+      "options": [
+        "In component styles",
+        "HTTP_INTERCEPTORS multi provider",
+        "RouterModule",
+        "AppComponent template"
+      ],
+      "answer": 1,
+      "explanation": "Multi-provider HTTP_INTERCEPTORS chain requests/responses."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "What does Observable represent?",
+      "options": [
+        "A single cached value",
+        "A lazy stream of values over time",
+        "A Promise replacement only",
+        "DOM event list"
+      ],
+      "answer": 1,
+      "explanation": "Observables push multiple values asynchronously."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "What does `subscribe()` do?",
+      "options": [
+        "Creates Observable",
+        "Starts execution and listens for emissions/errors/complete",
+        "Unsubscribes automatically always",
+        "Converts to Promise always"
+      ],
+      "answer": 1,
+      "explanation": "Subscription begins producer side effects for cold observables."
+    },
+    {
+      "topic": "RxJS",
+      "type": "code",
+      "question": "What does pipe(map(x => x * 2)) do?",
+      "options": [
+        "Subscribes immediately",
+        "Transforms each emitted value",
+        "Filters nulls only",
+        "Caches last value"
+      ],
+      "answer": 1,
+      "explanation": "map applies a projection function per emission.",
+      "code": "source$.pipe(map(x => x * 2))"
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "When should you use `switchMap` vs `mergeMap`?",
+      "options": [
+        "Identical",
+        "switchMap cancels prior inner observable; mergeMap subscribes to all",
+        "mergeMap cancels prior",
+        "switchMap only for arrays"
+      ],
+      "answer": 1,
+      "explanation": "switchMap is ideal for search/autocomplete; mergeMap for parallel ops."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "What does `async` pipe do in templates?",
+      "options": [
+        "Blocks UI",
+        "Subscribes to Observable/Promise and marks view for check",
+        "Converts Observable to array",
+        "Caches HTTP"
+      ],
+      "answer": 1,
+      "explanation": "async pipe manages subscribe/unsubscribe in templates."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "What is the purpose of `takeUntil(destroy$)`?",
+      "options": [
+        "Retry failed HTTP",
+        "Complete subscription when destroy$ emits (avoid leaks)",
+        "Debounce clicks",
+        "Parse JSON"
+      ],
+      "answer": 1,
+      "explanation": "Pattern ties stream lifetime to component destruction."
+    },
+    {
+      "topic": "JWT & Interceptors",
+      "type": "theory",
+      "question": "What is a typical responsibility of an auth interceptor?",
+      "options": [
+        "Compile TypeScript",
+        "Attach Authorization: Bearer <token> header to outgoing requests",
+        "Define routes",
+        "Style components"
+      ],
+      "answer": 1,
+      "explanation": "Interceptors mutate requests/responses in the chain."
+    },
+    {
+      "topic": "JWT & Interceptors",
+      "type": "theory",
+      "question": "Where is a JWT usually stored in SPA debates—common secure-ish pattern?",
+      "options": [
+        "localStorage (XSS risk) vs httpOnly cookie (CSRF considerations)",
+        "URL query always",
+        "sessionStorage only for server secrets",
+        "IndexedDB for private keys"
+      ],
+      "answer": 0,
+      "explanation": "Storage choice trades XSS vs CSRF; httpOnly cookies need CSRF protection."
+    },
+    {
+      "topic": "JWT & Interceptors",
+      "type": "theory",
+      "question": "On 401 from API, an interceptor might?",
+      "options": [
+        "Ignore",
+        "Trigger logout or token refresh flow",
+        "Delete the database",
+        "Disable Angular CD"
+      ],
+      "answer": 1,
+      "explanation": "Global handling can refresh token or redirect to login."
+    },
+    {
+      "topic": "Route Guards",
+      "type": "theory",
+      "question": "What does `canActivate` guard control?",
+      "options": [
+        "Whether a route may be activated",
+        "Whether component can render CSS",
+        "HTTP caching",
+        "Form validity"
+      ],
+      "answer": 0,
+      "explanation": "canActivate returns boolean/UrlTree/Observable to allow navigation."
+    },
+    {
+      "topic": "Route Guards",
+      "type": "theory",
+      "question": "What does `canDeactivate` guard protect?",
+      "options": [
+        "Login page",
+        "Leaving a route with unsaved changes",
+        "Lazy loading",
+        "HTTP errors"
+      ],
+      "answer": 1,
+      "explanation": "canDeactivate prompts before navigating away from a component."
+    },
+    {
+      "topic": "Route Guards",
+      "type": "theory",
+      "question": "A guard returning `UrlTree` does what?",
+      "options": [
+        "Throws error",
+        "Redirects navigation to parsed route",
+        "Cancels app",
+        "Opens modal"
+      ],
+      "answer": 1,
+      "explanation": "UrlTree redirect is built-in router behavior."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "What is `routerLinkActive` used for?",
+      "options": [
+        "Disable links",
+        "Apply CSS class when link's route is active",
+        "Prefetch lazy modules",
+        "Validate forms"
+      ],
+      "answer": 1,
+      "explanation": "routerLinkActive toggles classes for active route links."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "Child routes are configured how?",
+      "options": [
+        "Only in AppModule constructor",
+        "children: [] under a parent route",
+        "Guards array",
+        "HttpInterceptor"
+      ],
+      "answer": 1,
+      "explanation": "Nested routes render in parent router-outlet or named outlets."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "How to pass query params?",
+      "options": [
+        "Only string concat",
+        "HttpParams with get(url, { params })",
+        "POST body",
+        "@Input"
+      ],
+      "answer": 1,
+      "explanation": "HttpParams builds encoded query strings safely."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "What does `of(1,2,3)` create?",
+      "options": [
+        "Promise",
+        "Synchronous cold Observable emitting those values then complete",
+        "Subject hot only",
+        "BehaviorSubject"
+      ],
+      "answer": 1,
+      "explanation": "of emits arguments synchronously then completes."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "Difference between Subject and BehaviorSubject?",
+      "options": [
+        "Subject stores last value for late subscribers",
+        "BehaviorSubject requires initial value and replays latest to new subscribers",
+        "Identical",
+        "Subject is deprecated"
+      ],
+      "answer": 1,
+      "explanation": "BehaviorSubject holds current value for new subscribers."
+    },
+    {
+      "topic": "NgModules",
+      "type": "theory",
+      "question": "What does `exports` in NgModule do?",
+      "options": [
+        "Export to npm",
+        "Makes declared/imported artifacts available to importing modules",
+        "HTTP export",
+        "Build AOT"
+      ],
+      "answer": 1,
+      "explanation": "exports expose components/directives/pipes to other modules."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "Error handling pattern for failed HTTP?",
+      "options": [
+        "catchError in pipe",
+        "try/catch around subscribe only works for sync",
+        "ignore status",
+        "router.navigate"
+      ],
+      "answer": 0,
+      "explanation": "catchError operator transforms errors in Observable chain."
+    },
+    {
+      "topic": "JWT & Interceptors",
+      "type": "theory",
+      "question": "JWT payload is typically?",
+      "options": [
+        "Encrypted always",
+        "Base64url-encoded JSON claims (signed, not encrypted by default)",
+        "Binary protobuf",
+        "Plain HTML"
+      ],
+      "answer": 1,
+      "explanation": "JWTs are signed; payload is readable unless JWE used."
+    },
+    {
+      "topic": "Route Guards",
+      "type": "theory",
+      "question": "`canMatch` guard (modern) differs from `canActivate` by?",
+      "options": [
+        "No difference",
+        "canMatch decides if route config matches before loading (e.g., role-based routes)",
+        "Only for children",
+        "Runs after destroy"
+      ],
+      "answer": 1,
+      "explanation": "canMatch filters which route config applies."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "Named router outlet syntax?",
+      "options": [
+        "routerLink=\"/path(primary)\"",
+        "routerLink with outlet name in array or routerLinkActive",
+        "outlet=\"name\" on HttpClient",
+        "*ngIf outlet"
+      ],
+      "answer": 1,
+      "explanation": "Auxiliary routes use (outletName) in link arrays."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "What does `debounceTime(300)` help with?",
+      "options": [
+        "Login guard",
+        "Wait for pause in emissions (e.g., search input)",
+        "Retry HTTP 3 times",
+        "Parse JWT"
+      ],
+      "answer": 1,
+      "explanation": "debounceTime delays emissions until silence window."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "Testing HttpClient in Angular commonly uses?",
+      "options": [
+        "Real network only",
+        "HttpClientTestingModule and HttpTestingController",
+        "RouterTestingModule",
+        "No mocking possible"
+      ],
+      "answer": 1,
+      "explanation": "HttpTestingController expects and flushes mock requests."
+    },
+    {
+      "topic": "Angular Routing",
+      "type": "theory",
+      "question": "PreloadingStrategy purpose?",
+      "options": [
+        "Block navigation",
+        "Load lazy modules in background after initial navigation",
+        "Delete cache",
+        "Validate JWT"
+      ],
+      "answer": 1,
+      "explanation": "Preload improves perceived performance for lazy routes."
+    },
+    {
+      "topic": "RxJS",
+      "type": "theory",
+      "question": "Unsubscribing is important because?",
+      "options": [
+        "Observables use no memory",
+        "Leaked subscriptions keep handlers alive and may cause duplicate work",
+        "Angular forbids subscribe",
+        "AOT requires it"
+      ],
+      "answer": 1,
+      "explanation": "Active subscriptions retain references and side effects."
+    },
+    {
+      "topic": "Route Guards",
+      "type": "theory",
+      "question": "Functional guard `canActivate: [authGuard]` where authGuard is?",
+      "options": [
+        "Class with @Injectable only",
+        "CanActivateFn injected via inject() returning boolean/UrlTree",
+        "Pipe",
+        "Component method in template"
+      ],
+      "answer": 1,
+      "explanation": "Modern functional guards use CanActivateFn."
+    },
+    {
+      "topic": "JWT & Interceptors",
+      "type": "theory",
+      "question": "CSRF token pattern when using cookies for auth?",
+      "options": [
+        "Not needed",
+        "Send custom header/token that malicious sites cannot read cross-origin",
+        "Disable HTTPS",
+        "Use JWT in URL"
+      ],
+      "answer": 1,
+      "explanation": "Double-submit cookie or custom header mitigates CSRF with cookies."
+    },
+    {
+      "topic": "NgModules",
+      "type": "theory",
+      "question": "SharedModule anti-pattern to avoid?",
+      "options": [
+        "Re-exporting CommonModule + many components creating huge import graph",
+        "Providing services once",
+        "Exporting RouterModule",
+        "Using forChild"
+      ],
+      "answer": 0,
+      "explanation": "Kitchen-sink SharedModule causes unnecessary bundle bloat."
+    },
+    {
+      "topic": "HttpClient",
+      "type": "theory",
+      "question": "`reportProgress: true` enables?",
+      "options": [
+        "Router events",
+        "Upload/download progress events",
+        "JWT refresh",
+        "Change detection off"
+      ],
+      "answer": 1,
+      "explanation": "Progress events useful for large file uploads."
+    }
+  ]
+}

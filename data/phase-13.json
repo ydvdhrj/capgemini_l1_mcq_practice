@@ -1,0 +1,553 @@
+{
+  "id": "phase-13",
+  "title": "Phase 13 — Docker, Git & Application Architecture",
+  "questions": [
+    {
+      "topic": "Docker Basics",
+      "type": "theory",
+      "question": "What is a Docker image?",
+      "options": [
+        "A running process",
+        "Read-only template with filesystem layers and metadata to create containers",
+        "A volume mount",
+        "A network bridge"
+      ],
+      "answer": 1,
+      "explanation": "Images are immutable templates; containers are runtime instances."
+    },
+    {
+      "topic": "Docker Basics",
+      "type": "theory",
+      "question": "What is a container?",
+      "options": [
+        "Virtual machine with own kernel",
+        "Isolated process(es) using image filesystem and namespaces/cgroups",
+        "Dockerfile text file",
+        "Registry account"
+      ],
+      "answer": 1,
+      "explanation": "Containers share the host kernel but isolate process, FS, network."
+    },
+    {
+      "topic": "Dockerfile",
+      "type": "theory",
+      "question": "What does `FROM node:20-alpine` specify?",
+      "options": [
+        "Expose port",
+        "Base image for subsequent instructions",
+        "Run command",
+        "Volume"
+      ],
+      "answer": 1,
+      "explanation": "FROM sets the parent image layer stack."
+    },
+    {
+      "topic": "Dockerfile",
+      "type": "theory",
+      "question": "Difference between `COPY` and `ADD`?",
+      "options": [
+        "ADD can fetch URLs and auto-extract tar archives; COPY is preferred for simple file copy",
+        "COPY downloads URLs",
+        "ADD always faster",
+        "Identical"
+      ],
+      "answer": 0,
+      "explanation": "COPY is recommended unless ADD-specific features needed."
+    },
+    {
+      "topic": "Dockerfile",
+      "type": "code",
+      "question": "What does this Dockerfile excerpt do?",
+      "options": [
+        "Sets env only",
+        "Sets working dir, copies manifests, installs deps in image layer",
+        "Runs container",
+        "Creates volume"
+      ],
+      "answer": 1,
+      "explanation": "WORKDIR changes cwd; RUN executes during build.",
+      "code": "WORKDIR /app\nCOPY package*.json ./\nRUN npm ci"
+    },
+    {
+      "topic": "Dockerfile",
+      "type": "theory",
+      "question": "Why combine RUN instructions with `&&` in one layer?",
+      "options": [
+        "Required by Docker",
+        "Reduce image layers and size",
+        "Enable GPU",
+        "Mount secrets"
+      ],
+      "answer": 1,
+      "explanation": "Fewer layers often mean smaller images."
+    },
+    {
+      "topic": "Docker Volumes",
+      "type": "theory",
+      "question": "What problem do named volumes solve?",
+      "options": [
+        "Faster CPU",
+        "Persist data beyond container lifecycle",
+        "Replace networks",
+        "Build cache only"
+      ],
+      "answer": 1,
+      "explanation": "Volumes store data outside container writable layer."
+    },
+    {
+      "topic": "Docker Volumes",
+      "type": "theory",
+      "question": "Bind mount vs named volume?",
+      "options": [
+        "Same",
+        "Bind mounts host path directly; named volume managed by Docker",
+        "Bind mount is read-only always",
+        "Volume only in Dockerfile"
+      ],
+      "answer": 1,
+      "explanation": "Bind mounts tie to specific host paths; volumes are portable."
+    },
+    {
+      "topic": "Docker Networking",
+      "type": "theory",
+      "question": "Default network driver for containers on same host communicating by name?",
+      "options": [
+        "host",
+        "bridge (user-defined bridge enables DNS between containers)",
+        "null",
+        "overlay only"
+      ],
+      "answer": 1,
+      "explanation": "Custom bridge networks provide automatic DNS between linked containers."
+    },
+    {
+      "topic": "Docker Networking",
+      "type": "theory",
+      "question": "What does `docker run -p 8080:80` mean?",
+      "options": [
+        "Container port 8080 to host 80",
+        "Host port 8080 maps to container port 80",
+        "Both UDP only",
+        "Internal network only"
+      ],
+      "answer": 1,
+      "explanation": "Format is host:container for port publishing."
+    },
+    {
+      "topic": "Docker Networking",
+      "type": "theory",
+      "question": "`--network host` implies?",
+      "options": [
+        "No network",
+        "Container shares host network namespace (no port mapping isolation)",
+        "Creates overlay swarm",
+        "Deletes bridge"
+      ],
+      "answer": 1,
+      "explanation": "host mode removes separate network namespace."
+    },
+    {
+      "topic": "Docker Basics",
+      "type": "theory",
+      "question": "What is Docker Compose primarily for?",
+      "options": [
+        "Replace Git",
+        "Define multi-container apps in YAML and run with one command",
+        "Compile Java",
+        "Kubernetes replacement in prod always"
+      ],
+      "answer": 1,
+      "explanation": "Compose orchestrates multiple services locally/dev."
+    },
+    {
+      "topic": "Git Basics",
+      "type": "theory",
+      "question": "What does `git branch feature` create?",
+      "options": [
+        "Deletes main",
+        "A new branch pointer at current HEAD without switching",
+        "Merges to main",
+        "Tags a release"
+      ],
+      "answer": 1,
+      "explanation": "branch creates ref; checkout -b also switches."
+    },
+    {
+      "topic": "Git Basics",
+      "type": "theory",
+      "question": "What is `git merge feature` into main?",
+      "options": [
+        "Rebases history linearly always",
+        "Integrates feature commits into current branch, often creating merge commit",
+        "Deletes feature",
+        "Stashes changes"
+      ],
+      "answer": 1,
+      "explanation": "merge combines histories of two branches."
+    },
+    {
+      "topic": "Git Rebase",
+      "type": "theory",
+      "question": "What does interactive rebase `git rebase -i main` on a feature branch do?",
+      "options": [
+        "Only fast-forward",
+        "Replays commits on top of main, allowing squash/edit/reorder",
+        "Pushes to remote automatically",
+        "Creates tag"
+      ],
+      "answer": 1,
+      "explanation": "Interactive rebase rewrites commits for cleaner history."
+    },
+    {
+      "topic": "Git Rebase",
+      "type": "theory",
+      "question": "Golden rule of rebasing shared branches?",
+      "options": [
+        "Always rebase main on team branches",
+        "Avoid rebasing commits already pushed that others may have pulled",
+        "Rebase instead of merge always",
+        "Never use merge"
+      ],
+      "answer": 1,
+      "explanation": "Rewriting public history forces collaborators to recover."
+    },
+    {
+      "topic": "Git Stash",
+      "type": "theory",
+      "question": "What does `git stash push -m \"wip\"` do?",
+      "options": [
+        "Commits to main",
+        "Saves working directory/index changes temporarily and cleans tree",
+        "Deletes untracked files always",
+        "Creates branch"
+      ],
+      "answer": 1,
+      "explanation": "stash shelves uncommitted work."
+    },
+    {
+      "topic": "Git Stash",
+      "type": "theory",
+      "question": "How to reapply latest stash keeping it in stash list?",
+      "options": [
+        "git stash drop",
+        "git stash apply",
+        "git stash clear",
+        "git cherry-pick stash"
+      ],
+      "answer": 1,
+      "explanation": "apply restores; pop applies and removes."
+    },
+    {
+      "topic": "Git Workflow",
+      "type": "theory",
+      "question": "What is a fast-forward merge?",
+      "options": [
+        "Always creates merge commit",
+        "Main pointer moves forward when feature has no divergent commits",
+        "Requires rebase",
+        "Forbidden"
+      ],
+      "answer": 1,
+      "explanation": "FF possible when target branch is direct ancestor."
+    },
+    {
+      "topic": "Git Workflow",
+      "type": "theory",
+      "question": "`git pull` is equivalent to?",
+      "options": [
+        "push + tag",
+        "fetch + merge (or rebase if configured) into current branch",
+        "stash only",
+        "clone"
+      ],
+      "answer": 1,
+      "explanation": "pull integrates remote changes after fetching."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "In layered architecture, where should business rules live?",
+      "options": [
+        "Presentation/UI layer",
+        "Domain/service layer",
+        "Database triggers only",
+        "CDN"
+      ],
+      "answer": 1,
+      "explanation": "Domain layer encapsulates business logic independent of UI/DB."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "What is separation of concerns?",
+      "options": [
+        "One giant class",
+        "Dividing system into parts with distinct responsibilities and minimal coupling",
+        "Microservices only",
+        "No interfaces"
+      ],
+      "answer": 1,
+      "explanation": "SoC improves maintainability and testability."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "REST API statelessness means?",
+      "options": [
+        "No database",
+        "Each request contains all context server needs; server stores no client session state",
+        "No HTTP",
+        "Single endpoint"
+      ],
+      "answer": 1,
+      "explanation": "Stateless servers scale horizontally; state in client/tokens/DB."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "Monolith vs microservices trade-off?",
+      "options": [
+        "Microservices always simpler locally",
+        "Monolith simpler deploy/debug; microservices enable independent scaling/teams at operational cost",
+        "Monolith cannot scale",
+        "Identical ops cost"
+      ],
+      "answer": 1,
+      "explanation": "Microservices add network, deployment, and observability complexity."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "What is an API gateway role?",
+      "options": [
+        "Database index",
+        "Single entry routing, auth, rate limiting to backend services",
+        "CSS bundler",
+        "Git server"
+      ],
+      "answer": 1,
+      "explanation": "Gateway centralizes cross-cutting edge concerns."
+    },
+    {
+      "topic": "Docker Basics",
+      "type": "theory",
+      "question": "`.dockerignore` purpose?",
+      "options": [
+        "Ignore Git branches",
+        "Exclude files from build context like .gitignore",
+        "Stop containers",
+        "Network ACL"
+      ],
+      "answer": 1,
+      "explanation": "Smaller context speeds build and avoids leaking secrets."
+    },
+    {
+      "topic": "Dockerfile",
+      "type": "theory",
+      "question": "Multi-stage build benefit?",
+      "options": [
+        "More layers always bigger",
+        "Separate build and runtime images to shrink final image",
+        "Requires two hosts",
+        "Disables caching"
+      ],
+      "answer": 1,
+      "explanation": "Final stage copies artifacts without build tools."
+    },
+    {
+      "topic": "Docker Basics",
+      "type": "theory",
+      "question": "`docker exec -it container bash` does?",
+      "options": [
+        "Build image",
+        "Run interactive command inside running container",
+        "Delete volume",
+        "Create network"
+      ],
+      "answer": 1,
+      "explanation": "exec attaches a process to an existing container."
+    },
+    {
+      "topic": "Git Basics",
+      "type": "theory",
+      "question": "What does `git cherry-pick <commit>` do?",
+      "options": [
+        "Deletes commit",
+        "Applies specific commit's changes onto current branch",
+        "Merges all branches",
+        "Stashes"
+      ],
+      "answer": 1,
+      "explanation": "cherry-pick copies one commit's patch."
+    },
+    {
+      "topic": "Git Basics",
+      "type": "theory",
+      "question": "Merge conflict occurs when?",
+      "options": [
+        "Empty repo",
+        "Same lines changed differently on both branches being integrated",
+        "Using Git LFS",
+        "Fast-forward only"
+      ],
+      "answer": 1,
+      "explanation": "Git cannot auto-merge divergent edits."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "CQRS stands for?",
+      "options": [
+        "Cache Query Remote Service",
+        "Command Query Responsibility Segregation—separate read/write models",
+        "Continuous Quality Review System",
+        "Container Queue Routing"
+      ],
+      "answer": 1,
+      "explanation": "CQRS splits commands from queries, often with different models."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "Event-driven architecture uses?",
+      "options": [
+        "Only synchronous REST",
+        "Producers emit events consumers react to asynchronously",
+        "No messaging",
+        "Single thread only"
+      ],
+      "answer": 1,
+      "explanation": "Loose coupling via events/message brokers."
+    },
+    {
+      "topic": "Docker Networking",
+      "type": "theory",
+      "question": "Two containers on default bridge can talk by container name without user-defined network?",
+      "options": [
+        "Yes always",
+        "No—DNS by name works on user-defined bridge networks, not default bridge",
+        "Only with Kubernetes",
+        "Only host mode"
+      ],
+      "answer": 1,
+      "explanation": "Legacy default bridge lacks automatic DNS between containers."
+    },
+    {
+      "topic": "Docker Volumes",
+      "type": "theory",
+      "question": "`docker compose down -v`?",
+      "options": [
+        "Stops only",
+        "Stops and removes containers and named volumes declared in compose",
+        "Builds images",
+        "Pushes registry"
+      ],
+      "answer": 1,
+      "explanation": "-v removes volumes defined in the compose file."
+    },
+    {
+      "topic": "Git Rebase",
+      "type": "theory",
+      "question": "After rebase, pushing feature branch may require?",
+      "options": [
+        "git push --force-with-lease (if branch was published)",
+        "git pull --ff-only only",
+        "git stash",
+        "Nothing ever"
+      ],
+      "answer": 0,
+      "explanation": "Rewritten history needs force-with-lease carefully."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "Twelve-factor app config principle?",
+      "options": [
+        "Hardcode in JAR",
+        "Store config in environment, strict separation from code",
+        "Use only XML",
+        "Embed in Docker image only"
+      ],
+      "answer": 1,
+      "explanation": "Config varies per deploy; env vars are standard."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "Horizontal vs vertical scaling?",
+      "options": [
+        "Vertical: more machines; Horizontal: bigger CPU",
+        "Horizontal: add instances; Vertical: bigger single machine",
+        "Same",
+        "Only for monoliths"
+      ],
+      "answer": 1,
+      "explanation": "Horizontal scale-out adds nodes; vertical scale-up adds resources."
+    },
+    {
+      "topic": "Docker Basics",
+      "type": "theory",
+      "question": "Image layer caching during build invalidates when?",
+      "options": [
+        "Never",
+        "Instruction or prior copied file changes",
+        "Container stops",
+        "Git merge"
+      ],
+      "answer": 1,
+      "explanation": "Changed Dockerfile line or input files bust cache from that step."
+    },
+    {
+      "topic": "Git Workflow",
+      "type": "theory",
+      "question": "What is `origin` in Git?",
+      "options": [
+        "Local branch only",
+        "Default remote name for cloned repository",
+        "Tag prefix",
+        "Stash name"
+      ],
+      "answer": 1,
+      "explanation": "origin typically points to the remote you cloned from."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "Circuit breaker pattern prevents?",
+      "options": [
+        "Git conflicts",
+        "Cascading failures by failing fast when downstream is unhealthy",
+        "SQL injection",
+        "Docker layer bloat"
+      ],
+      "answer": 1,
+      "explanation": "Stops hammering failing dependencies."
+    },
+    {
+      "topic": "Dockerfile",
+      "type": "theory",
+      "question": "Why run app as non-root USER in container?",
+      "options": [
+        "Faster builds",
+        "Limit blast radius if container is compromised",
+        "Required for bridge network",
+        "Enables privileged mode"
+      ],
+      "answer": 1,
+      "explanation": "Least privilege reduces impact of escapes/vulns."
+    },
+    {
+      "topic": "Application Architecture",
+      "type": "theory",
+      "question": "Idempotent API operation means?",
+      "options": [
+        "Always fails",
+        "Multiple identical requests have same effect as one",
+        "Encrypted only",
+        "No logging"
+      ],
+      "answer": 1,
+      "explanation": "Idempotency safe for retries (e.g., PUT with stable id)."
+    }
+  ]
+}

@@ -1,0 +1,557 @@
+{
+  "questions": [
+    {
+      "topic": "Spring MVC",
+      "type": "theory",
+      "question": "What pattern does Spring MVC implement for web apps?",
+      "options": [
+        "Singleton only",
+        "Model-View-Controller separation of concerns",
+        "Microservices registry",
+        "ORM only"
+      ],
+      "answer": 1,
+      "explanation": "DispatcherServlet routes requests to @Controller handlers, binds data to Model, and resolves Views (or REST body)."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "Which annotation marks a class as a web controller in Spring MVC?",
+      "options": [
+        "@Entity",
+        "@Controller or @RestController",
+        "@Repository",
+        "@FeignClient"
+      ],
+      "answer": 1,
+      "explanation": "@Controller returns view names; @RestController = @Controller + @ResponseBody for JSON/XML APIs."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "What does @RequestMapping on a class do?",
+      "options": [
+        "Starts transaction",
+        "Prefixes URL paths for all handler methods in the class",
+        "Creates JPA table",
+        "Enables cache"
+      ],
+      "answer": 1,
+      "explanation": "Class-level @RequestMapping(\"/api/orders\") combines with method-level mappings to form full paths."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "Difference between @GetMapping and @RequestMapping(method=GET)?",
+      "options": [
+        "No difference in behavior for GET",
+        "@GetMapping is composed shortcut; same HTTP GET mapping",
+        "@GetMapping only works in Boot",
+        "@RequestMapping cannot use GET"
+      ],
+      "answer": 1,
+      "explanation": "@GetMapping is a specialized @RequestMapping with method GET—cleaner and preferred in modern Spring."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "code",
+      "question": "What will this endpoint return path variable id for GET /products/7?",
+      "options": [
+        "null",
+        "\"7\" as String",
+        "7L only if Long declared",
+        "Error always"
+      ],
+      "answer": 1,
+      "explanation": "@PathVariable binds URI template variable. Type conversion can parse \"7\" to Long if parameter is Long id.",
+      "code": "@GetMapping(\"/products/{id}\")\npublic Product get(@PathVariable Long id) { ... }"
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "code",
+      "question": "How is query parameter page bound?",
+      "options": [
+        "From request body JSON only",
+        "@RequestParam name=page from query string ?page=2",
+        "From path only",
+        "From header only"
+      ],
+      "answer": 1,
+      "explanation": "@RequestParam(\"page\") int page reads ?page=2. defaultValue and required=false are optional attributes.",
+      "code": "@GetMapping(\"/items\")\npublic List<Item> list(@RequestParam(defaultValue=\"0\") int page) { ... }"
+    },
+    {
+      "topic": "Model",
+      "type": "theory",
+      "question": "What is the Model in Spring MVC used for?",
+      "options": [
+        "Database schema",
+        "Passing attributes from controller to view (server-side rendering)",
+        "JWT storage",
+        "Docker image"
+      ],
+      "answer": 1,
+      "explanation": "Model (or ModelAndView) holds request-scoped attributes for Thymeleaf/JSP views. REST APIs often return DTOs directly without Model."
+    },
+    {
+      "topic": "Model",
+      "type": "code",
+      "question": "In Thymeleaf view, how is user accessed if added as below?",
+      "options": [
+        "${user} from model attribute name",
+        "Only via session",
+        "Cannot pass objects",
+        "Via @Autowired"
+      ],
+      "answer": 1,
+      "explanation": "model.addAttribute(\"user\", user) exposes user in template as ${user} (name matches attribute key).",
+      "code": "model.addAttribute(\"user\", user);\nreturn \"profile\"; // resolves profile.html"
+    },
+    {
+      "topic": "Validation",
+      "type": "annotation",
+      "question": "What does @Valid on a controller parameter do?",
+      "options": [
+        "Starts Hibernate session",
+        "Triggers Bean Validation (JSR-380) on the object",
+        "Creates mock",
+        "Parses JWT"
+      ],
+      "answer": 1,
+      "explanation": "@Valid runs constraints like @NotNull, @Size on the argument. Combine with BindingResult to handle errors without exception."
+    },
+    {
+      "topic": "Validation",
+      "type": "annotation",
+      "question": "Which annotation rejects null and blank strings on a field?",
+      "options": [
+        "@Lazy",
+        "@NotBlank",
+        "@Fetch",
+        "@Autowired"
+      ],
+      "answer": 1,
+      "explanation": "@NotBlank (javax/jakarta.validation) ensures trimmed length > 0. @NotNull allows empty string; @NotEmpty for collections."
+    },
+    {
+      "topic": "Validation",
+      "type": "code",
+      "question": "How should validation errors be handled when using @Valid without exception?",
+      "options": [
+        "Ignore errors",
+        "Check BindingResult.hasErrors() after @Valid",
+        "Delete the database",
+        "Use @PreAuthorize"
+      ],
+      "answer": 1,
+      "explanation": "Signature: method(@Valid @RequestBody Dto dto, BindingResult br). If br.hasErrors(), return 400 with field errors.",
+      "code": "public ResponseEntity<?> create(@Valid @RequestBody UserDto dto,\n  BindingResult result) {\n  if (result.hasErrors()) return badRequest(result);\n  ...\n}"
+    },
+    {
+      "topic": "Exception Handling",
+      "type": "annotation",
+      "question": "What does @ExceptionHandler on a controller method do?",
+      "options": [
+        "Handles all JVM errors",
+        "Maps specific exceptions to response for that controller",
+        "Replaces @Controller",
+        "Enables Feign"
+      ],
+      "answer": 1,
+      "explanation": "@ExceptionHandler(IllegalArgumentException.class) in @ControllerAdvice or controller returns structured error response."
+    },
+    {
+      "topic": "Exception Handling",
+      "type": "annotation",
+      "question": "Why use @ControllerAdvice?",
+      "options": [
+        "Per-request caching only",
+        "Global exception handling and model binding across controllers",
+        "Database migration",
+        "RabbitMQ config"
+      ],
+      "answer": 1,
+      "explanation": "@ControllerAdvice centralizes @ExceptionHandler, @InitBinder, @ModelAttribute methods for all or selected controllers."
+    },
+    {
+      "topic": "Exception Handling",
+      "type": "code",
+      "question": "What HTTP status fits ResourceNotFoundException handler returning NOT_FOUND?",
+      "options": [
+        "200",
+        "404",
+        "500 always",
+        "301"
+      ],
+      "answer": 1,
+      "explanation": "@ResponseStatus(HttpStatus.NOT_FOUND) or ResponseEntity.status(404) signals client the resource id does not exist.",
+      "code": "@ExceptionHandler(ResourceNotFoundException.class)\n@ResponseStatus(HttpStatus.NOT_FOUND)\npublic ErrorDto handleNotFound(ResourceNotFoundException ex) { ... }"
+    },
+    {
+      "topic": "DTOs",
+      "type": "theory",
+      "question": "Why use DTOs instead of exposing JPA entities in REST APIs?",
+      "options": [
+        "DTOs are slower always",
+        "Decouple persistence model, control serialized fields, avoid lazy-load and circular JSON",
+        "JPA forbids entities",
+        "DTOs replace database"
+      ],
+      "answer": 1,
+      "explanation": "Entities carry persistence annotations and associations; DTOs expose stable API contracts and prevent leaking internal structure."
+    },
+    {
+      "topic": "DTOs",
+      "type": "theory",
+      "question": "What is a common way to map Entity to DTO?",
+      "options": [
+        "Manual mapping, MapStruct, or ModelMapper",
+        "Only Hibernate automatic",
+        "Copy file in OS",
+        "JWT decode"
+      ],
+      "answer": 0,
+      "explanation": "Teams use explicit mappers (MapStruct compile-time), libraries, or hand-written conversion in service layer."
+    },
+    {
+      "topic": "Pagination",
+      "type": "theory",
+      "question": "What does Spring Data Pageable represent?",
+      "options": [
+        "Single entity id",
+        "Request for a page: page number, size, and optional Sort",
+        "Full table dump",
+        "Cache key only"
+      ],
+      "answer": 1,
+      "explanation": "Pageable encapsulates page, size, sort. Repository methods return Page<T> with content and total elements."
+    },
+    {
+      "topic": "Pagination",
+      "type": "code",
+      "question": "Which repository method signature supports pagination?",
+      "options": [
+        "findAll() only",
+        "Page<Product> findAll(Pageable pageable)",
+        "void deleteAll(Pageable)",
+        "Product findPage(int)"
+      ],
+      "answer": 1,
+      "explanation": "Spring Data derives queries; Pageable adds LIMIT/OFFSET (or cursor) and count query for totals.",
+      "code": "Page<Product> findByCategory(String cat, Pageable pageable);"
+    },
+    {
+      "topic": "Pagination",
+      "type": "theory",
+      "question": "What metadata does Page<T> typically include?",
+      "options": [
+        "Only list content",
+        "content, totalElements, totalPages, number, size",
+        "JWT claims",
+        "SQL dialect"
+      ],
+      "answer": 1,
+      "explanation": "Page interface provides getContent(), getTotalElements(), getTotalPages(), isFirst(), isLast() for API pagination wrappers."
+    },
+    {
+      "topic": "Swagger",
+      "type": "theory",
+      "question": "What is OpenAPI (Swagger) used for in Spring projects?",
+      "options": [
+        "ORM mapping",
+        "Describing REST API contract; generating UI docs and clients",
+        "Unit testing only",
+        "Message queuing"
+      ],
+      "answer": 1,
+      "explanation": "OpenAPI documents paths, schemas, security. springdoc-openapi exposes /swagger-ui and /v3/api-docs."
+    },
+    {
+      "topic": "Swagger",
+      "type": "annotation",
+      "question": "Which springdoc annotation documents operation summary on a controller method?",
+      "options": [
+        "@Operation",
+        "@Entity",
+        "@Transactional",
+        "@RabbitListener"
+      ],
+      "answer": 0,
+      "explanation": "@Operation(summary = \"...\") from io.swagger.v3.oas.annotations documents individual endpoints in OpenAPI."
+    },
+    {
+      "topic": "Swagger",
+      "type": "annotation",
+      "question": "What does @Schema on a DTO field control?",
+      "options": [
+        "SQL column type only",
+        "API documentation: description, example, required",
+        "Bean scope",
+        "Fetch type"
+      ],
+      "answer": 1,
+      "explanation": "@Schema(description, example, requiredMode) enriches generated OpenAPI for clients and Swagger UI."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "What does @RequestBody do?",
+      "options": [
+        "Writes HTML view",
+        "Deserializes HTTP body (JSON) to Java object via HttpMessageConverter",
+        "Reads path variable",
+        "Injects Spring bean"
+      ],
+      "answer": 1,
+      "explanation": "@RequestBody uses Jackson (for JSON) to map body to parameter type. Often paired with @Valid."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "What does @ResponseBody do?",
+      "options": [
+        "Returns view name",
+        "Serializes return value directly to HTTP response body",
+        "Starts transaction",
+        "Validates JWT"
+      ],
+      "answer": 1,
+      "explanation": "@ResponseBody selects HttpMessageConverter to write JSON/XML. @RestController applies it class-wide."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "theory",
+      "question": "What is DispatcherServlet's role?",
+      "options": [
+        "JPA provider",
+        "Front controller delegating to handler mappings, adapters, and view resolvers",
+        "RabbitMQ broker",
+        "Docker daemon"
+      ],
+      "answer": 1,
+      "explanation": "DispatcherServlet is the single entry servlet mapping requests to @RequestMapping handlers and handling response rendering."
+    },
+    {
+      "topic": "Validation",
+      "type": "annotation",
+      "question": "What does @Email validate?",
+      "options": [
+        "Password strength",
+        "String matches email format per Bean Validation",
+        "Database email uniqueness",
+        "SMTP send"
+      ],
+      "answer": 1,
+      "explanation": "@Email checks basic email pattern (configurable). Uniqueness still needs service/repository check."
+    },
+    {
+      "topic": "Validation",
+      "type": "theory",
+      "question": "What is Method Validation (@Validated on class)?",
+      "options": [
+        "Validates HTTP headers only",
+        "Validates method parameters and return values on service layer with @Valid constraints",
+        "Hibernate only feature",
+        "JUnit plugin"
+      ],
+      "answer": 1,
+      "explanation": "@Validated on @Service enables @NotNull parameters on methods via AOP MethodValidationPostProcessor."
+    },
+    {
+      "topic": "Exception Handling",
+      "type": "theory",
+      "question": "When is @ResponseStatus insufficient compared to ResponseEntity?",
+      "options": [
+        "Never",
+        "When you need custom headers, body shape, or dynamic status per call",
+        "Always",
+        "For GET only"
+      ],
+      "answer": 1,
+      "explanation": "ResponseEntity lets you build status, headers, and body programmatically; @ResponseStatus is declarative fixed status."
+    },
+    {
+      "topic": "DTOs",
+      "type": "code",
+      "question": "Why avoid returning List<Entity> with bidirectional @OneToMany in JSON?",
+      "options": [
+        "Faster serialization",
+        "Infinite recursion / huge graphs (Jackson JsonIgnore or DTOs needed)",
+        "Illegal in Spring",
+        "Entities cannot serialize"
+      ],
+      "answer": 1,
+      "explanation": "Parent→children→parent causes StackOverflow or huge payloads. Use DTOs or @JsonIgnore on back-reference."
+    },
+    {
+      "topic": "Pagination",
+      "type": "code",
+      "question": "Client sends GET /api/users?page=1&size=20&sort=name,asc. What binds sort?",
+      "options": [
+        "Nothing",
+        "Pageable or PageableDefault with Sort parameter",
+        "Only @PathVariable",
+        "@PreAuthorize"
+      ],
+      "answer": 1,
+      "explanation": "Spring MVC resolves Pageable from query params page, size, sort automatically when argument is present."
+    },
+    {
+      "topic": "Swagger",
+      "type": "theory",
+      "question": "Where is springdoc OpenAPI JSON typically exposed?",
+      "options": [
+        "/actuator/health only",
+        "/v3/api-docs",
+        "/h2-console",
+        "/eureka"
+      ],
+      "answer": 1,
+      "explanation": "springdoc-openapi serves OpenAPI 3 JSON at /v3/api-docs and Swagger UI at /swagger-ui.html or /swagger-ui/index.html."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "What does @ModelAttribute on a method parameter do?",
+      "options": [
+        "JWT claim",
+        "Binds request parameters/form fields to object",
+        "Creates singleton bean",
+        "Enables L2 cache"
+      ],
+      "answer": 1,
+      "explanation": "@ModelAttribute binds query/form data to command object—common in traditional MVC forms, less in pure REST JSON."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "theory",
+      "question": "Content negotiation in REST means?",
+      "options": [
+        "Negotiating salary",
+        "Selecting response format (JSON/XML) via Accept header or produces attribute",
+        "Database lock",
+        "Git merge"
+      ],
+      "answer": 1,
+      "explanation": "@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) limits mapping to clients accepting that media type."
+    },
+    {
+      "topic": "Exception Handling",
+      "type": "annotation",
+      "question": "What does ProblemDetail (RFC 7807) provide in Spring 6+?",
+      "options": [
+        "ORM mapping file",
+        "Standardized machine-readable error body (type, title, status, detail)",
+        "Feign client",
+        "Queue name"
+      ],
+      "answer": 1,
+      "explanation": "ProblemDetail helps consistent API errors instead of ad-hoc JSON shapes across services."
+    },
+    {
+      "topic": "Validation",
+      "type": "annotation",
+      "question": "What does @Size(min=8) on password enforce?",
+      "options": [
+        "Email format",
+        "String length or collection size constraints",
+        "Primary key",
+        "HTTP timeout"
+      ],
+      "answer": 1,
+      "explanation": "@Size validates character length for strings or element count for collections per min/max attributes."
+    },
+    {
+      "topic": "DTOs",
+      "type": "theory",
+      "question": "Record types as DTOs in Java 16+ offer?",
+      "options": [
+        "Mutable setters by default",
+        "Compact immutable data carriers good for API responses",
+        "JPA entity replacement always",
+        "Automatic DB schema"
+      ],
+      "answer": 1,
+      "explanation": "Records provide equals/hashCode/toString and accessors—nice for read-only API DTOs with validation on compact constructors."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "code",
+      "question": "What status should POST /orders return on successful creation with body?",
+      "options": [
+        "200 OK always",
+        "201 Created with Location header often",
+        "204 always",
+        "500"
+      ],
+      "answer": 1,
+      "explanation": "REST convention: 201 Created for new resource; Location header may point to GET /orders/{id}.",
+      "code": "return ResponseEntity.created(uri).body(orderDto);"
+    },
+    {
+      "topic": "Swagger",
+      "type": "annotation",
+      "question": "What does @Tag on a controller class do?",
+      "options": [
+        "JPA table name",
+        "Groups endpoints in OpenAPI documentation",
+        "Rabbit exchange",
+        "Security role"
+      ],
+      "answer": 1,
+      "explanation": "@Tag(name = \"Orders\") organizes operations in Swagger UI sidebar sections."
+    },
+    {
+      "topic": "Pagination",
+      "type": "theory",
+      "question": "Offset pagination drawback on large tables?",
+      "options": [
+        "Too fast",
+        "Deep pages (high OFFSET) scan many rows and slow down",
+        "Cannot sort",
+        "Breaks JSON"
+      ],
+      "answer": 1,
+      "explanation": "OFFSET 100000 LIMIT 20 still scans skipped rows. Cursor/keyset pagination scales better for infinite feeds."
+    },
+    {
+      "topic": "Exception Handling",
+      "type": "theory",
+      "question": "Should generic Exception handler expose stack traces to clients?",
+      "options": [
+        "Yes, always in production",
+        "No—log server-side; return safe message to avoid information leakage",
+        "Required by OpenAPI",
+        "Only in dev with care"
+      ],
+      "answer": 1,
+      "explanation": "Production APIs return generic errors; detailed traces belong in logs and monitoring, not public responses."
+    },
+    {
+      "topic": "Spring MVC",
+      "type": "annotation",
+      "question": "What does consumes attribute on @PostMapping specify?",
+      "options": [
+        "Response type",
+        "Required Content-Type of request (e.g., application/json)",
+        "Database dialect",
+        "Cache region"
+      ],
+      "answer": 1,
+      "explanation": "consumes = APPLICATION_JSON_VALUE maps only when client sends matching Content-Type header."
+    },
+    {
+      "topic": "Validation",
+      "type": "theory",
+      "question": "Custom constraint in Bean Validation requires?",
+      "options": [
+        "Only @NotNull",
+        "@Constraint annotation + ConstraintValidator implementation",
+        "@Controller only",
+        "pom packaging war"
+      ],
+      "answer": 1,
+      "explanation": "Define annotation annotated with @Constraint(validatedBy=...) and implement ConstraintValidator<A, T> for logic."
+    }
+  ]
+}
