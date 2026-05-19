@@ -1,6 +1,8 @@
 # L1 Training MCQ Practice
 
-Interactive MCQ practice app for the full L1 training curriculum — **13 phases** (546 questions) + **3 comprehensive timed tests** (180 questions).
+Interactive MCQ practice app for the Capgemini L1 training curriculum — **13 phases** (546 questions) + **3 comprehensive timed tests** (180 questions).
+
+**Repository:** [github.com/ydvdhrj/capgemini_l1_mcq_practice](https://github.com/ydvdhrj/capgemini_l1_mcq_practice)
 
 ## Prerequisites
 
@@ -14,11 +16,9 @@ Interactive MCQ practice app for the full L1 training curriculum — **13 phases
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/l1-mcq-practice.git
-cd l1-mcq-practice
+git clone https://github.com/ydvdhrj/capgemini_l1_mcq_practice.git
+cd capgemini_l1_mcq_practice
 ```
-
-Replace `YOUR_USERNAME` with your GitHub username after you create the repo.
 
 ### 2. Start a local server
 
